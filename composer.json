@@ -1,0 +1,25 @@
+{
+    "name": "merkushin/wpstreak",
+    "description": "Maintain your writing streak",
+    "type": "project",
+    "license": "GPL-3.0",
+	"minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Merkushin\\Wpstreak\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Dmitry Merkushin",
+            "email": "merkushin@gmail.com"
+        }
+    ],
+    "require": {
+        "merkushin/wpal": "dev-main",
+        "humbug/php-scoper": "^0.17.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "9.6.x-dev"
+    }
+}
