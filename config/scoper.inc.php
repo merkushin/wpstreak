@@ -43,6 +43,7 @@ return [
             ->in('vendor'),
         Finder::create()->append([
             'composer.json',
+            'vendor/humbug/php-scoper/vendor-hotfix/.gitkeep',
         ]),
 
     ],
