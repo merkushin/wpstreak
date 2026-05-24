@@ -1,0 +1,195 @@
+.wpstreak-panel {
+  --wpstreak-bg: linear-gradient(135deg, #102a43 0%, #1f4b99 52%, #ff7a59 100%);
+  --wpstreak-text: #f8fbff;
+  --wpstreak-muted: rgba(248, 251, 255, 0.78);
+  --wpstreak-soft: rgba(255, 255, 255, 0.14);
+  --wpstreak-strong: rgba(255, 255, 255, 0.24);
+  color: var(--wpstreak-text);
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(260px, 0.9fr);
+  gap: 24px;
+  margin: 16px 0 24px;
+  padding: 24px 28px;
+  border: 0;
+  border-radius: 20px;
+  background: var(--wpstreak-bg);
+  box-shadow: 0 20px 45px rgba(16, 42, 67, 0.18);
+  overflow: hidden;
+}
+.wpstreak-panel::before,
+.wpstreak-panel::after {
+  content: "";
+  position: absolute;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+}
+.wpstreak-panel::before {
+  top: -48px;
+  right: -24px;
+  width: 180px;
+  height: 180px;
+}
+.wpstreak-panel::after {
+  left: -56px;
+  bottom: -80px;
+  width: 220px;
+  height: 220px;
+}
+.wpstreak-panel * {
+  box-sizing: border-box;
+  color: inherit;
+}
+.wpstreak-panel__lead,
+.wpstreak-panel__meta {
+  position: relative;
+  z-index: 1;
+}
+.wpstreak-panel__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--wpstreak-text);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.wpstreak-panel.notice .wpstreak-panel__title {
+  margin: 16px 0 10px;
+  color: var(--wpstreak-text);
+  font-size: 31px;
+  line-height: 1.05;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+.wpstreak-panel.notice .wpstreak-panel__description {
+  margin: 0;
+  max-width: 54ch;
+  color: var(--wpstreak-muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+.wpstreak-panel__stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+.wpstreak-panel__stat {
+  padding: 14px 16px;
+  border: 1px solid var(--wpstreak-soft);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+}
+.wpstreak-panel__stat-label {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--wpstreak-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.wpstreak-panel__stat-value {
+  display: block;
+  color: var(--wpstreak-text);
+  font-size: 20px;
+  line-height: 1.1;
+  font-weight: 800;
+}
+.wpstreak-panel__meta {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  border: 1px solid var(--wpstreak-strong);
+  border-radius: 18px;
+  background: rgba(8, 26, 49, 0.24);
+  backdrop-filter: blur(10px);
+}
+.wpstreak-panel__score {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  margin-bottom: 12px;
+  color: var(--wpstreak-text);
+}
+.wpstreak-panel__score-value {
+  font-size: 68px;
+  line-height: 0.9;
+  font-weight: 900;
+  letter-spacing: -0.06em;
+}
+.wpstreak-panel__score-unit {
+  padding-bottom: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--wpstreak-muted);
+}
+.wpstreak-panel__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--wpstreak-text);
+}
+.wpstreak-panel__status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #ffd166;
+  box-shadow: 0 0 0 6px rgba(255, 209, 102, 0.18);
+}
+.wpstreak-panel.is-hot .wpstreak-panel__status-dot {
+  background: #7ef7c3;
+  box-shadow: 0 0 0 6px rgba(126, 247, 195, 0.18);
+}
+.wpstreak-panel__progress-copy {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+  color: var(--wpstreak-muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.wpstreak-panel__progress-track {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  overflow: hidden;
+}
+.wpstreak-panel__progress-bar {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #ffd166 0%, #ff7a59 100%);
+}
+@media (max-width: 960px) {
+  .wpstreak-panel {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 640px) {
+  .wpstreak-panel {
+    padding: 20px;
+  }
+  .wpstreak-panel__title {
+    font-size: 26px;
+  }
+  .wpstreak-panel__stats {
+    grid-template-columns: 1fr;
+  }
+  .wpstreak-panel__score-value {
+    font-size: 56px;
+  }
+}

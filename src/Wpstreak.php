@@ -60,8 +60,15 @@ class Wpstreak {
 	}
 
 	public function enqueue_admin_scripts() {
-		$this->assets->wp_enqueue_script(
-			'wpplugin-admin-scripts',
+    $this->assets->wp_enqueue_style(
+      'wpplugin-admin-styles',
+      $this->plugins->plugin_dir_url( $this->plugin_file ) . '/assets/dist/styles/admin.css',
+      [],
+      '1.0.0'
+    );
+
+			$this->assets->wp_enqueue_script(
+				'wpplugin-admin-scripts',
 			$this->plugins->plugin_dir_url( $this->plugin_file ) . '/assets/dist/javascript/admin.js',
 			[],
 			'1.0.0',
@@ -82,17 +89,23 @@ class Wpstreak {
 	public function add_streak_panel() {
 		$screen = $this->screen->get_current_screen();
 
-		// Check if we are on the post list page
-		if ($screen->base !== 'edit' && $screen->post_type !== 'post') {
+		if ( ! $screen || $screen->base !== 'edit' || $screen->post_type !== 'post' ) {
 			return;
 		}
 
-		// count current post streak
-		$streak = $this->streak->get_streak();
+		$summary = $this->streak->get_summary();
+		$streak = (int) $summary['streak'];
+		$is_active_today = (bool) $summary['is_active_today'];
+		$last_post_date = $summary['last_post_date'];
+		$next_milestone = (int) $summary['next_milestone'];
+		$progress = 0 === $next_milestone ? 0 : min( 100, (int) round( ( $streak / $next_milestone ) * 100 ) );
+		$accent_class = $is_active_today ? 'is-hot' : 'is-warm';
+		$day_label = 1 === $streak ? 'day' : 'days';
+		$status = $summary['status'];
+		$last_post_label = $last_post_date
+			? \date( 'M j, Y', \strtotime( $last_post_date ) )
+			: 'No published posts yet';
 
-		echo '<div class="custom-panel notice notice-info" style="padding: 15px; margin-bottom: 20px;">
-		<h2 style="margin-top:0;">Current Streak</h2>
-		<p>Your current writing streak is <strong>' . $streak . '</strong> days.</p>
-		</div>';
+    include __DIR__ . '/views/streak_panel.php';
 	}
 }
