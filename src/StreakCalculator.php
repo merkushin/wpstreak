@@ -28,22 +28,22 @@ class StreakCalculator {
 			}
 		}
 
-		$last_post_date = empty( $days ) ? null : (string) max( array_keys( $days ) );
+		$last_post_date  = empty( $days ) ? null : (string) max( array_keys( $days ) );
 		$is_active_today = isset( $days[ $today ] );
 
 		// The streak survives until the end of the day after the last post.
-		$day = $is_active_today ? $today : $this->previous_day( $today );
+		$day    = $is_active_today ? $today : $this->previous_day( $today );
 		$streak = 0;
 		while ( isset( $days[ $day ] ) ) {
-			$streak++;
+			++$streak;
 			$day = $this->previous_day( $day );
 		}
 
 		return [
-			'streak' => $streak,
-			'last_post_date' => $last_post_date,
+			'streak'          => $streak,
+			'last_post_date'  => $last_post_date,
 			'is_active_today' => $is_active_today,
-			'next_milestone' => $this->next_milestone( $streak ),
+			'next_milestone'  => $this->next_milestone( $streak ),
 		];
 	}
 

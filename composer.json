@@ -14,8 +14,10 @@
 		"merkushin/wpal": "^0.7"
 	},
 	"require-dev": {
+		"phpcompatibility/phpcompatibility-wp": "^2.1",
 		"phpunit/phpunit": "^9.6",
-		"veronalabs/wp-scoper": "^1.4"
+		"veronalabs/wp-scoper": "^1.4",
+		"wp-coding-standards/wpcs": "^3.4"
 	},
 	"autoload": {
 		"psr-4": {
@@ -33,7 +35,8 @@
 		},
 		"sort-packages": true,
 		"allow-plugins": {
-			"veronalabs/wp-scoper": false
+			"veronalabs/wp-scoper": false,
+			"dealerdirect/phpcodesniffer-composer-installer": true
 		}
 	},
 	"extra": {
@@ -51,6 +54,8 @@
 		}
 	},
 	"scripts": {
-		"test": "phpunit"
+		"test": "phpunit",
+		"lint": "phpcs",
+		"lint:fix": "phpcbf"
 	}
 }

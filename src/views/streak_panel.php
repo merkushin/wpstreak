@@ -16,17 +16,17 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$statuses = [
-	'start' => __( 'Start your next streak', 'wpstreak' ),
+$wpstreak_statuses = [
+	'start'   => __( 'Start your next streak', 'wpstreak' ),
 	'on_fire' => __( 'You are on fire today', 'wpstreak' ),
-	'alive' => __( 'You are still alive, publish today to keep it going', 'wpstreak' ),
+	'alive'   => __( 'You are still alive, publish today to keep it going', 'wpstreak' ),
 ];
 ?>
 <div class="wpstreak-panel notice <?php echo esc_attr( $accent_class ); ?>">
 	<div class="wpstreak-panel__lead">
 		<div class="wpstreak-panel__eyebrow"><?php esc_html_e( 'Writing momentum', 'wpstreak' ); ?></div>
 		<h2 class="wpstreak-panel__title"><?php esc_html_e( 'Protect the streak. Build the habit.', 'wpstreak' ); ?></h2>
-		<p class="wpstreak-panel__description"><?php echo esc_html( $statuses[ $status_key ] ); ?></p>
+		<p class="wpstreak-panel__description"><?php echo esc_html( $wpstreak_statuses[ $status_key ] ); ?></p>
 		<div class="wpstreak-panel__stats">
 			<div class="wpstreak-panel__stat">
 				<span class="wpstreak-panel__stat-label"><?php esc_html_e( 'Current run', 'wpstreak' ); ?></span>

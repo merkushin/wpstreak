@@ -29,7 +29,7 @@ class StreakTest extends TestCase {
 	private $post_dates;
 
 	protected function setUp(): void {
-		$this->transient = $this->createMock( Transient::class );
+		$this->transient  = $this->createMock( Transient::class );
 		$this->post_types = $this->createMock( PostTypes::class );
 		$this->post_dates = $this->createMock( PublishedPostDates::class );
 
@@ -65,7 +65,7 @@ class StreakTest extends TestCase {
 
 		$this->assertEquals(
 			[
-				'save_post' => [ $streak, 'clear_cache' ],
+				'save_post'   => [ $streak, 'clear_cache' ],
 				'delete_post' => [ $streak, 'clear_cache' ],
 			],
 			$registered
@@ -73,8 +73,18 @@ class StreakTest extends TestCase {
 	}
 
 	public function testGetSummary_CachedToday_ReturnsCachedSummary(): void {
-		$cached = [ 'streak' => 5, 'last_post_date' => '2026-03-02', 'is_active_today' => true, 'next_milestone' => 7 ];
-		$this->transient->method( 'get_transient' )->willReturn( [ 'date' => '2026-03-02', 'summary' => $cached ] );
+		$cached = [
+			'streak'          => 5,
+			'last_post_date'  => '2026-03-02',
+			'is_active_today' => true,
+			'next_milestone'  => 7,
+		];
+		$this->transient->method( 'get_transient' )->willReturn(
+			[
+				'date'    => '2026-03-02',
+				'summary' => $cached,
+			]
+		);
 
 		$this->post_dates->expects( $this->never() )->method( 'get_dates' );
 
@@ -82,8 +92,18 @@ class StreakTest extends TestCase {
 	}
 
 	public function testGetSummary_CachedYesterday_Recalculates(): void {
-		$stale = [ 'streak' => 5, 'last_post_date' => '2026-03-01', 'is_active_today' => true, 'next_milestone' => 7 ];
-		$this->transient->method( 'get_transient' )->willReturn( [ 'date' => '2026-03-01', 'summary' => $stale ] );
+		$stale = [
+			'streak'          => 5,
+			'last_post_date'  => '2026-03-01',
+			'is_active_today' => true,
+			'next_milestone'  => 7,
+		];
+		$this->transient->method( 'get_transient' )->willReturn(
+			[
+				'date'    => '2026-03-01',
+				'summary' => $stale,
+			]
+		);
 		$this->post_dates->method( 'get_dates' )->willReturn( [ '2026-03-01' ] );
 
 		$summary = ( new Streak( $this->post_dates ) )->get_summary();
@@ -102,8 +122,13 @@ class StreakTest extends TestCase {
 			->with(
 				Streak::TRANSIENT_KEY,
 				[
-					'date' => '2026-03-02',
-					'summary' => [ 'streak' => 2, 'last_post_date' => '2026-03-02', 'is_active_today' => true, 'next_milestone' => 3 ],
+					'date'    => '2026-03-02',
+					'summary' => [
+						'streak'          => 2,
+						'last_post_date'  => '2026-03-02',
+						'is_active_today' => true,
+						'next_milestone'  => 3,
+					],
 				],
 				$this->greaterThan( 0 )
 			)
