@@ -12,7 +12,10 @@ Requirements: PHP 7.4+, Composer 2, Node.js 20.9+, WP-CLI (for translations).
 make install   # composer install && npm ci
 make build-js  # build assets into assets/dist
 make test      # run PHPUnit
+make lint      # WordPress Coding Standards and PHP 7.4+ compatibility (make lint-fix to auto-fix)
 ```
+
+CI (`.github/workflows/ci.yml`) runs the linter, checks that `languages/wpstreak.pot` is up to date, runs the tests on PHP 7.4–8.4 and builds the plugin zip, uploaded as the `wpstreak` artifact.
 
 In a development checkout the plugin loads `vendor/autoload.php`, so it can be symlinked into a local WordPress install as-is.
 

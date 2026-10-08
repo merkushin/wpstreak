@@ -3,10 +3,13 @@ BUILD_DIR := build/$(PLUGIN)
 ZIP       := $(PLUGIN).zip
 WP        ?= wp
 
+POT_ARGS := --slug=$(PLUGIN) --domain=$(PLUGIN) --include=wpstreak.php,src --exclude=build,vendor,node_modules,tests \
+	--headers='{"Report-Msgid-Bugs-To":"https://github.com/merkushin/wpstreak/issues"}'
+
 # Files and directories that ship in the plugin zip.
 DIST_FILES := wpstreak.php uninstall.php src languages LICENSE
 
-.PHONY: all install build-js test i18n i18n-compile dist clean
+.PHONY: all install build-js test lint lint-fix i18n i18n-check i18n-compile dist clean
 
 all: dist
 
@@ -20,12 +23,26 @@ build-js:
 test:
 	vendor/bin/phpunit
 
+# WordPress Coding Standards and PHP 7.4+ compatibility, see phpcs.xml.dist.
+lint:
+	vendor/bin/phpcs
+
+lint-fix:
+	vendor/bin/phpcbf
+
 # Regenerates languages/wpstreak.pot from the sources and merges it into every .po file.
 # Run after changing translatable strings, then translate the new entries.
 i18n:
-	$(WP) i18n make-pot . languages/$(PLUGIN).pot --slug=$(PLUGIN) --domain=$(PLUGIN) --include=wpstreak.php,src \
-		--headers='{"Report-Msgid-Bugs-To":"https://github.com/merkushin/wpstreak/issues"}'
+	$(WP) i18n make-pot . languages/$(PLUGIN).pot $(POT_ARGS)
 	$(WP) i18n update-po languages/$(PLUGIN).pot languages
+
+# Fails when languages/wpstreak.pot is out of date with the sources (ignores the creation date).
+i18n-check:
+	mkdir -p build
+	$(WP) i18n make-pot . build/$(PLUGIN).pot $(POT_ARGS)
+	grep -v '^"POT-Creation-Date:' languages/$(PLUGIN).pot > build/expected.pot
+	grep -v '^"POT-Creation-Date:' build/$(PLUGIN).pot > build/actual.pot
+	diff -u build/expected.pot build/actual.pot || (echo "languages/$(PLUGIN).pot is out of date, run 'make i18n'." && exit 1)
 
 # Compiles .po files into the .mo and .l10n.php files WordPress loads.
 i18n-compile:
