@@ -22,16 +22,16 @@ class StreakCalculatorTest extends TestCase {
 
 	public function provide_streaks(): array {
 		return [
-			'no posts' => [ [], 0, false ],
-			'only today' => [ [ '2026-03-02' ], 1, true ],
-			'only yesterday keeps the streak alive' => [ [ '2026-03-01' ], 1, false ],
-			'two days ago breaks the streak' => [ [ '2026-02-28' ], 0, false ],
+			'no posts'                                 => [ [], 0, false ],
+			'only today'                               => [ [ '2026-03-02' ], 1, true ],
+			'only yesterday keeps the streak alive'    => [ [ '2026-03-01' ], 1, false ],
+			'two days ago breaks the streak'           => [ [ '2026-02-28' ], 0, false ],
 			'consecutive days across a month boundary' => [ [ '2026-03-02', '2026-03-01', '2026-02-28', '2026-02-27' ], 4, true ],
-			'gap stops the count' => [ [ '2026-03-02', '2026-03-01', '2026-02-27' ], 2, true ],
-			'consecutive up to yesterday' => [ [ '2026-03-01', '2026-02-28', '2026-02-27' ], 3, false ],
+			'gap stops the count'                      => [ [ '2026-03-02', '2026-03-01', '2026-02-27' ], 2, true ],
+			'consecutive up to yesterday'              => [ [ '2026-03-01', '2026-02-28', '2026-02-27' ], 3, false ],
 			'duplicate days count once and do not break the streak' => [ [ '2026-03-02', '2026-03-02', '2026-03-01', '2026-03-01', '2026-02-28' ], 3, true ],
-			'unsorted input' => [ [ '2026-02-28', '2026-03-02', '2026-03-01' ], 3, true ],
-			'future dates are ignored' => [ [ '2026-03-05', '2026-03-01' ], 1, false ],
+			'unsorted input'                           => [ [ '2026-02-28', '2026-03-02', '2026-03-01' ], 3, true ],
+			'future dates are ignored'                 => [ [ '2026-03-05', '2026-03-01' ], 1, false ],
 		];
 	}
 
@@ -58,7 +58,7 @@ class StreakCalculatorTest extends TestCase {
 	 */
 	public function testCalculate_GivenStreak_ReturnsNextMilestone( int $streak, int $expected ): void {
 		$dates = [];
-		$day = new \DateTimeImmutable( self::TODAY );
+		$day   = new \DateTimeImmutable( self::TODAY );
 		for ( $i = 0; $i < $streak; $i++ ) {
 			$dates[] = $day->modify( "-{$i} days" )->format( 'Y-m-d' );
 		}

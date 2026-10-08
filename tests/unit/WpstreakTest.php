@@ -46,11 +46,11 @@ class WpstreakTest extends TestCase {
 	private $streak;
 
 	protected function setUp(): void {
-		$this->assets = $this->createMock( Assets::class );
-		$this->screen = $this->createMock( Screen::class );
+		$this->assets       = $this->createMock( Assets::class );
+		$this->screen       = $this->createMock( Screen::class );
 		$this->localization = $this->createMock( Localization::class );
-		$this->dates = $this->createMock( Dates::class );
-		$this->streak = $this->createMock( Streak::class );
+		$this->dates        = $this->createMock( Dates::class );
+		$this->streak       = $this->createMock( Streak::class );
 
 		$plugins = $this->createMock( Plugins::class );
 		$plugins->method( 'plugin_dir_url' )->with( self::PLUGIN_FILE )->willReturn( self::PLUGIN_URL );
@@ -107,7 +107,7 @@ class WpstreakTest extends TestCase {
 		$this->assertEquals(
 			[
 				'admin_enqueue_scripts' => [ $plugin, 'enqueue_admin_assets' ],
-				'all_admin_notices' => [ $plugin, 'render_streak_panel' ],
+				'all_admin_notices'     => [ $plugin, 'render_streak_panel' ],
 			],
 			$registered
 		);
@@ -159,7 +159,12 @@ class WpstreakTest extends TestCase {
 	public function testRenderStreakPanel_PostsScreen_RendersLocalizedSummary(): void {
 		$this->screen->method( 'get_current_screen' )->willReturn( (object) [ 'id' => 'edit-post' ] );
 		$this->streak->method( 'get_summary' )->willReturn(
-			[ 'streak' => 1234, 'last_post_date' => '2026-03-01', 'is_active_today' => false, 'next_milestone' => 1250 ]
+			[
+				'streak'          => 1234,
+				'last_post_date'  => '2026-03-01',
+				'is_active_today' => false,
+				'next_milestone'  => 1250,
+			]
 		);
 		$this->localization->method( 'number_format_i18n' )->willReturnCallback(
 			function ( $number ): string {
@@ -189,7 +194,12 @@ class WpstreakTest extends TestCase {
 	public function testRenderStreakPanel_NoPosts_RendersEmptyState(): void {
 		$this->screen->method( 'get_current_screen' )->willReturn( (object) [ 'id' => 'edit-post' ] );
 		$this->streak->method( 'get_summary' )->willReturn(
-			[ 'streak' => 0, 'last_post_date' => null, 'is_active_today' => false, 'next_milestone' => 3 ]
+			[
+				'streak'          => 0,
+				'last_post_date'  => null,
+				'is_active_today' => false,
+				'next_milestone'  => 3,
+			]
 		);
 		$this->localization->method( 'number_format_i18n' )->willReturnCallback(
 			function ( $number ): string {
@@ -211,8 +221,8 @@ class WpstreakTest extends TestCase {
 	public function provide_other_screens(): array {
 		return [
 			'pages list' => [ (object) [ 'id' => 'edit-page' ] ],
-			'dashboard' => [ (object) [ 'id' => 'dashboard' ] ],
-			'no screen' => [ null ],
+			'dashboard'  => [ (object) [ 'id' => 'dashboard' ] ],
+			'no screen'  => [ null ],
 		];
 	}
 }

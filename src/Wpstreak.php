@@ -71,15 +71,15 @@ class Wpstreak {
 	private $streak;
 
 	public function __construct( string $plugin_file, ?Streak $streak = null ) {
-		$this->plugin_file = $plugin_file;
-		$this->hooks = ServiceFactory::create_hooks();
-		$this->assets = ServiceFactory::create_assets();
-		$this->plugins = ServiceFactory::create_plugins();
-		$this->screen = ServiceFactory::create_screen();
+		$this->plugin_file  = $plugin_file;
+		$this->hooks        = ServiceFactory::create_hooks();
+		$this->assets       = ServiceFactory::create_assets();
+		$this->plugins      = ServiceFactory::create_plugins();
+		$this->screen       = ServiceFactory::create_screen();
 		$this->localization = ServiceFactory::create_localization();
-		$this->dates = ServiceFactory::create_dates();
-		$this->options = ServiceFactory::create_options();
-		$this->streak = $streak ?? new Streak();
+		$this->dates        = ServiceFactory::create_dates();
+		$this->options      = ServiceFactory::create_options();
+		$this->streak       = $streak ?? new Streak();
 	}
 
 	public function init(): void {
@@ -112,19 +112,19 @@ class Wpstreak {
 			return;
 		}
 
-		$summary = $this->streak->get_summary();
-		$streak = $summary['streak'];
+		$summary         = $this->streak->get_summary();
+		$streak          = $summary['streak'];
 		$is_active_today = $summary['is_active_today'];
-		$next_milestone = $summary['next_milestone'];
-		$progress = min( 100, (int) round( ( $streak / $next_milestone ) * 100 ) );
+		$next_milestone  = $summary['next_milestone'];
+		$progress        = min( 100, (int) round( ( $streak / $next_milestone ) * 100 ) );
 
 		// The view holds all translatable text; it receives raw values plus their localized formatting.
-		$accent_class = $is_active_today ? 'is-hot' : 'is-warm';
-		$status_key = $this->get_status_key( $streak, $is_active_today );
-		$streak_label = $this->format_number( $streak );
+		$accent_class         = $is_active_today ? 'is-hot' : 'is-warm';
+		$status_key           = $this->get_status_key( $streak, $is_active_today );
+		$streak_label         = $this->format_number( $streak );
 		$next_milestone_label = $this->format_number( $next_milestone );
-		$progress_label = $this->format_number( $progress );
-		$last_post_label = $this->format_date( $summary['last_post_date'] );
+		$progress_label       = $this->format_number( $progress );
+		$last_post_label      = $this->format_date( $summary['last_post_date'] );
 
 		include __DIR__ . '/views/streak_panel.php';
 	}
@@ -154,7 +154,7 @@ class Wpstreak {
 	 * Formats a day (Y-m-d) with the site's date format and locale.
 	 */
 	private function format_date( ?string $date ): ?string {
-		$utc = new \DateTimeZone( 'UTC' );
+		$utc    = new \DateTimeZone( 'UTC' );
 		$parsed = null === $date ? false : \DateTimeImmutable::createFromFormat( '!Y-m-d', $date, $utc );
 
 		if ( ! $parsed ) {

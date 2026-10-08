@@ -46,10 +46,10 @@ class Streak {
 	private $calculator;
 
 	public function __construct( ?PublishedPostDates $post_dates = null, ?StreakCalculator $calculator = null ) {
-		$this->hooks = ServiceFactory::create_hooks();
-		$this->transient = ServiceFactory::create_transient();
+		$this->hooks      = ServiceFactory::create_hooks();
+		$this->transient  = ServiceFactory::create_transient();
 		$this->post_types = ServiceFactory::create_post_types();
-		$this->dates = ServiceFactory::create_dates();
+		$this->dates      = ServiceFactory::create_dates();
 		$this->post_dates = $post_dates ?? new PublishedPostDates();
 		$this->calculator = $calculator ?? new StreakCalculator();
 	}
@@ -76,7 +76,7 @@ class Streak {
 		$this->transient->set_transient(
 			self::TRANSIENT_KEY,
 			[
-				'date' => $today,
+				'date'    => $today,
 				'summary' => $summary,
 			],
 			self::CACHE_TTL
