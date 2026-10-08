@@ -1,25 +1,56 @@
 {
-    "name": "merkushin/wpstreak",
-    "description": "Maintain your writing streak",
-    "type": "project",
-    "license": "GPL-3.0",
-	"minimum-stability": "dev",
-    "autoload": {
-        "psr-4": {
-            "Merkushin\\Wpstreak\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Dmitry Merkushin",
-            "email": "merkushin@gmail.com"
-        }
-    ],
-    "require": {
-        "merkushin/wpal": "dev-main",
-        "humbug/php-scoper": "^0.18.19"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "9.6.x-dev"
-    }
+	"name": "merkushin/wpstreak",
+	"description": "Maintain your writing streak",
+	"type": "wordpress-plugin",
+	"license": "GPL-2.0-or-later",
+	"authors": [
+		{
+			"name": "Dmitry Merkushin",
+			"email": "merkushin@gmail.com"
+		}
+	],
+	"require": {
+		"php": ">=7.4",
+		"merkushin/wpal": "^0.7"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^9.6",
+		"veronalabs/wp-scoper": "^1.4"
+	},
+	"autoload": {
+		"psr-4": {
+			"Merkushin\\Wpstreak\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"MerkushinTest\\Wpstreak\\": "tests/unit/"
+		}
+	},
+	"config": {
+		"platform": {
+			"php": "7.4"
+		},
+		"sort-packages": true,
+		"allow-plugins": {
+			"veronalabs/wp-scoper": false
+		}
+	},
+	"extra": {
+		"wp-scoper": {
+			"namespace_prefix": "Merkushin\\Wpstreak\\Vendor",
+			"packages": [
+				"merkushin/wpal"
+			],
+			"target_directory": "vendor-prefixed",
+			"exclude_patterns": [
+				"/llms\\.txt$/",
+				"/\\.neon\\.dist$/",
+				"/^docs\\//"
+			]
+		}
+	},
+	"scripts": {
+		"test": "phpunit"
+	}
 }

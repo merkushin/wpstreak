@@ -1,22 +1,35 @@
-all: build-js prefix archive 
+PLUGIN    := wpstreak
+BUILD_DIR := build/$(PLUGIN)
+ZIP       := $(PLUGIN).zip
 
-.PHONY: build-js
+# Files and directories that ship in the plugin zip.
+DIST_FILES := wpstreak.php src LICENSE
+
+.PHONY: all install build-js test dist clean
+
+all: dist
+
+install:
+	composer install
+	npm ci
+
 build-js:
-	npm install
 	npm run build
 
-.PHONY: prefix
-prefix:
-	composer install --no-dev
-	php -d memory_limit=512M vendor/bin/php-scoper add-prefix --force --config=./config/scoper.inc.php
-	cd build && composer dump-autoload
-
-.PHONY: archive
-archive:
-	mv build wpstreak
-	zip -r wpstreak.zip wpstreak
-	rm -rf wpstreak
-
-.PHONY: test
 test:
-	vendor/bin/phpunit --bootstrap=./vendor/autoload.php tests
+	vendor/bin/phpunit
+
+# Builds a release zip in a separate directory, so the working copy is never modified:
+# copies the plugin files, installs runtime dependencies, prefixes them with wp-scoper
+# into vendor-prefixed/ and drops vendor/ and the Composer files.
+dist: clean install build-js
+	mkdir -p $(BUILD_DIR)/assets
+	cp -R $(DIST_FILES) composer.json composer.lock $(BUILD_DIR)/
+	cp -R assets/dist $(BUILD_DIR)/assets/
+	composer install --working-dir=$(BUILD_DIR) --no-dev --no-plugins --no-scripts --no-autoloader --no-interaction --quiet
+	vendor/bin/wp-scoper $(BUILD_DIR)
+	rm -rf $(BUILD_DIR)/vendor $(BUILD_DIR)/composer.json $(BUILD_DIR)/composer.lock
+	cd build && zip -rq ../$(ZIP) $(PLUGIN)
+
+clean:
+	rm -rf build $(ZIP)
