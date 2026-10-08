@@ -1,9 +1,12 @@
 <?php
 /*
  * Plugin Name: WP Streak
+ * Description: Shows your current writing streak above the Posts list.
+ * Version:     1.0.0
+ * Text Domain: wpstreak
+ * Domain Path: /languages
  *
- * @version   1.0.0
- * @since     1.0.0
+ * @since 1.0.0
 */
 
 namespace Merkushin\Wpstreak;
