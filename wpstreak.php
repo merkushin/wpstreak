@@ -8,6 +8,8 @@
 
 namespace Merkushin\Wpstreak;
 
+defined( 'ABSPATH' ) || exit;
+
 // Release builds ship dependencies prefixed by wp-scoper in vendor-prefixed/;
 // a development checkout uses the regular Composer autoloader.
 if ( file_exists( __DIR__ . '/vendor-prefixed/autoload.php' ) ) {
@@ -16,8 +18,4 @@ if ( file_exists( __DIR__ . '/vendor-prefixed/autoload.php' ) ) {
 	require_once __DIR__ . '/vendor/autoload.php';
 }
 
-use Merkushin\Wpstreak\Wpstreak;
-
-$plugin_file = __FILE__;
-$plugin = new Wpstreak( $plugin_file );
-add_action( 'init', [ $plugin, 'init' ] );
+add_action( 'init', [ new Wpstreak( __FILE__ ), 'init' ] );

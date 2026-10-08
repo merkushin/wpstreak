@@ -2,16 +2,18 @@
 
 namespace Merkushin\Wpstreak;
 
+use Merkushin\Wpal\Service\Dates;
 use Merkushin\Wpal\Service\Hooks;
 use Merkushin\Wpal\Service\PostTypes;
 use Merkushin\Wpal\Service\Transient;
 use Merkushin\Wpal\ServiceFactory;
 
+defined( 'ABSPATH' ) || exit;
+
 class Streak {
-  /**
-   * @var string
-   */
-	private const TRANSIENT_KEY = 'writing_streak_summary';
+	public const TRANSIENT_KEY = 'wpstreak_summary';
+
+	private const CACHE_TTL = 86400;
 
 	/**
 	 * @var Hooks
@@ -28,118 +30,67 @@ class Streak {
 	 */
 	private $post_types;
 
-	public function __construct() {
+	/**
+	 * @var Dates
+	 */
+	private $dates;
+
+	/**
+	 * @var PublishedPostDates
+	 */
+	private $post_dates;
+
+	/**
+	 * @var StreakCalculator
+	 */
+	private $calculator;
+
+	public function __construct( ?PublishedPostDates $post_dates = null, ?StreakCalculator $calculator = null ) {
 		$this->hooks = ServiceFactory::create_hooks();
 		$this->transient = ServiceFactory::create_transient();
 		$this->post_types = ServiceFactory::create_post_types();
+		$this->dates = ServiceFactory::create_dates();
+		$this->post_dates = $post_dates ?? new PublishedPostDates();
+		$this->calculator = $calculator ?? new StreakCalculator();
 	}
 
-	public function init() {
+	public function init(): void {
 		$this->hooks->add_action( 'save_post', [ $this, 'clear_cache' ] );
 		$this->hooks->add_action( 'delete_post', [ $this, 'clear_cache' ] );
 	}
 
-	public function get_streak() {
-		$summary = $this->get_summary();
-
-		return $summary['streak'];
-	}
-
+	/**
+	 * @return array{streak: int, last_post_date: ?string, is_active_today: bool, next_milestone: int}
+	 */
 	public function get_summary(): array {
-		global $wpdb;
+		$today = (string) $this->dates->current_time( 'Y-m-d' );
 
-		$summary = $this->transient->get_transient( self::TRANSIENT_KEY );
-
-		if ( $summary !== false && is_array( $summary ) ) {
-			return $summary;
+		// The cache is tied to the day it was computed on, so the streak is never stale after midnight.
+		$cached = $this->transient->get_transient( self::TRANSIENT_KEY );
+		if ( is_array( $cached ) && ( $cached['date'] ?? null ) === $today && is_array( $cached['summary'] ?? null ) ) {
+			return $cached['summary'];
 		}
 
-		// Query published post dates
-		$results = $wpdb->get_col("
-			SELECT DATE(post_date) 
-			FROM {$wpdb->posts} 
-			WHERE post_status = 'publish' 
-			AND post_type = 'post' 
-			ORDER BY post_date DESC
-			");
+		$summary = $this->calculator->calculate( $this->post_dates->get_dates(), $today );
 
-		$today = \date( 'Y-m-d' );
-		$yesterday = \date( 'Y-m-d', \strtotime( '-1 day' ) );
-		$last_post_date = empty( $results ) ? null : $results[0];
-
-		if ( empty( $results ) ) {
-			$summary = [
-				'streak' => 0,
-				'last_post_date' => null,
-				'is_active_today' => false,
-				'status' => 'Start your next streak',
-				'next_milestone' => 3,
-			];
-
-			$this->transient->set_transient( self::TRANSIENT_KEY, $summary, HOUR_IN_SECONDS );
-
-			return $summary;
-		}
-
-		$streak = 0;
-		$previous_date = null;
-
-		foreach ( $results as $date ) {
-			if ( $streak === 0 ) {
-				if ( $date === $today || $date === $yesterday ) {
-					$streak++;
-					$previous_date = $date;
-				} else {
-					break;
-				}
-			} else {
-				if ( $date === \date( 'Y-m-d', \strtotime( "{$previous_date} -1 day" ) ) ) {
-					$streak++;
-					$previous_date = $date;
-				} else {
-					break;
-				}
-			}
-		}
-
-		$is_active_today = $last_post_date === $today;
-
-		if ( $streak === 0 ) {
-			$status = 'Start your next streak';
-		} elseif ( $is_active_today ) {
-			$status = 'You are on fire today';
-		} else {
-			$status = 'You are still alive, publish today to keep it going';
-		}
-
-		$summary = [
-			'streak' => $streak,
-			'last_post_date' => $last_post_date,
-			'is_active_today' => $is_active_today,
-			'status' => $status,
-			'next_milestone' => $this->get_next_milestone( $streak ),
-		];
-
-		$this->transient->set_transient( self::TRANSIENT_KEY, $summary, HOUR_IN_SECONDS );
+		$this->transient->set_transient(
+			self::TRANSIENT_KEY,
+			[
+				'date' => $today,
+				'summary' => $summary,
+			],
+			self::CACHE_TTL
+		);
 
 		return $summary;
 	}
 
-	public function clear_cache( $post_id ) {
-		if ( ! is_null( $post_id ) && $this->post_types->get_post_type( $post_id ) === 'post' ) {
+	/**
+	 * @param int|string $post_id
+	 */
+	public function clear_cache( $post_id ): void {
+		if ( 'post' === $this->post_types->get_post_type( (int) $post_id ) ) {
 			$this->transient->delete_transient( self::TRANSIENT_KEY );
 		}
-	}
-
-	private function get_next_milestone( int $streak ): int {
-		$milestones = [ 3, 7, 14, 30, 50, 100 ];
-
-		foreach ( $milestones as $milestone ) {
-			if ( $streak < $milestone ) {
-				return $milestone;
-			}
-		}
-
-		return ( (int) \floor( $streak / 25 ) + 1 ) * 25;
 	}
 }

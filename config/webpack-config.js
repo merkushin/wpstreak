@@ -2,13 +2,8 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const config = {
-  // Entry points: one for frontend and one for the admin area.
+  // Entry points. The keys replace the [name] portion of the output config below.
   entry: {
-    // frontend and admin keys will replace the [name] portion of the output config below.
-    frontend: [
-      './assets/javascript/frontend/index.js',
-      './assets/styles/frontend/index.css'
-    ],
     admin: [
       './assets/javascript/admin/index.js',
       './assets/styles/admin/index.css'

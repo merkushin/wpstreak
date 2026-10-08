@@ -3,7 +3,7 @@ BUILD_DIR := build/$(PLUGIN)
 ZIP       := $(PLUGIN).zip
 
 # Files and directories that ship in the plugin zip.
-DIST_FILES := wpstreak.php src LICENSE
+DIST_FILES := wpstreak.php uninstall.php src LICENSE
 
 .PHONY: all install build-js test dist clean
 
@@ -32,4 +32,4 @@ dist: clean install build-js
 	cd build && zip -rq ../$(ZIP) $(PLUGIN)
 
 clean:
-	rm -rf build $(ZIP)
+	rm -rf build assets/dist $(ZIP)
