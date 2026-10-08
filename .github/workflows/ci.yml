@@ -33,6 +33,9 @@ jobs:
       - name: Translation template is up to date
         run: make i18n-check
 
+      - name: Versions match
+        run: make version-check
+
   test:
     name: Tests (PHP ${{ matrix.php }})
     runs-on: ubuntu-latest
@@ -74,6 +77,13 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: wpstreak
-          path: build/wpstreak
+          name: writing-streak
+          path: build/writing-streak
           if-no-files-found: error
+
+      # The checks WordPress.org runs on submissions, against the built plugin.
+      - name: Plugin Check
+        uses: WordPress/plugin-check-action@v1
+        with:
+          build-dir: build/writing-streak
+          slug: writing-streak
