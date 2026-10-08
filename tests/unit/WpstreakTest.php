@@ -16,9 +16,9 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class WpstreakTest extends TestCase {
-	private const PLUGIN_FILE = '/plugins/wpstreak/wpstreak.php';
+	private const PLUGIN_FILE = '/plugins/writing-streak/writing-streak.php';
 
-	private const PLUGIN_URL = 'https://example.com/wp-content/plugins/wpstreak/';
+	private const PLUGIN_URL = 'https://example.com/wp-content/plugins/writing-streak/';
 
 	/**
 	 * @var Assets&MockObject
@@ -54,7 +54,7 @@ class WpstreakTest extends TestCase {
 
 		$plugins = $this->createMock( Plugins::class );
 		$plugins->method( 'plugin_dir_url' )->with( self::PLUGIN_FILE )->willReturn( self::PLUGIN_URL );
-		$plugins->method( 'plugin_basename' )->with( self::PLUGIN_FILE )->willReturn( 'wpstreak/wpstreak.php' );
+		$plugins->method( 'plugin_basename' )->with( self::PLUGIN_FILE )->willReturn( 'writing-streak/writing-streak.php' );
 
 		$options = $this->createMock( Options::class );
 		$options->method( 'get_option' )->with( 'date_format' )->willReturn( 'd.m.Y' );
@@ -83,7 +83,7 @@ class WpstreakTest extends TestCase {
 		$this->localization
 			->expects( $this->once() )
 			->method( 'load_plugin_textdomain' )
-			->with( 'wpstreak', false, 'wpstreak/languages' );
+			->with( 'writing-streak', false, 'writing-streak/languages' );
 
 		( new Wpstreak( self::PLUGIN_FILE, $this->streak ) )->init();
 	}
@@ -119,11 +119,11 @@ class WpstreakTest extends TestCase {
 		$this->assets
 			->expects( $this->once() )
 			->method( 'wp_enqueue_style' )
-			->with( 'wpstreak-admin', self::PLUGIN_URL . 'assets/dist/styles/admin.css', [], Wpstreak::VERSION );
+			->with( 'writing-streak-admin', self::PLUGIN_URL . 'assets/dist/styles/admin.css', [], Wpstreak::VERSION );
 		$this->assets
 			->expects( $this->once() )
 			->method( 'wp_enqueue_script' )
-			->with( 'wpstreak-admin', self::PLUGIN_URL . 'assets/dist/javascript/admin.js', [], Wpstreak::VERSION, true );
+			->with( 'writing-streak-admin', self::PLUGIN_URL . 'assets/dist/javascript/admin.js', [], Wpstreak::VERSION, true );
 
 		( new Wpstreak( self::PLUGIN_FILE, $this->streak ) )->enqueue_admin_assets();
 	}

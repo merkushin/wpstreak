@@ -1,8 +1,8 @@
 <?php
 /**
- * Removes the data WP Streak stores when the plugin is deleted.
+ * Removes the data Writing Streak stores when the plugin is deleted.
  */
 
 defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 
-delete_transient( 'wpstreak_summary' );
+delete_transient( 'writing_streak_summary' );

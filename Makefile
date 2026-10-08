@@ -1,15 +1,15 @@
-PLUGIN    := wpstreak
+PLUGIN    := writing-streak
 BUILD_DIR := build/$(PLUGIN)
 ZIP       := $(PLUGIN).zip
 WP        ?= wp
 
-POT_ARGS := --slug=$(PLUGIN) --domain=$(PLUGIN) --include=wpstreak.php,src --exclude=build,vendor,node_modules,tests \
+POT_ARGS := --slug=$(PLUGIN) --domain=$(PLUGIN) --include=$(PLUGIN).php,src --exclude=build,vendor,node_modules,tests \
 	--headers='{"Report-Msgid-Bugs-To":"https://github.com/merkushin/wpstreak/issues"}'
 
 # Files and directories that ship in the plugin zip.
-DIST_FILES := wpstreak.php uninstall.php src languages LICENSE
+DIST_FILES := $(PLUGIN).php uninstall.php readme.txt src languages LICENSE
 
-.PHONY: all install build-js test lint lint-fix i18n i18n-check i18n-compile dist clean
+.PHONY: all install build-js test lint lint-fix version-check i18n i18n-check i18n-compile dist clean
 
 all: dist
 
@@ -30,13 +30,26 @@ lint:
 lint-fix:
 	vendor/bin/phpcbf
 
-# Regenerates languages/wpstreak.pot from the sources and merges it into every .po file.
+# The version must match in the plugin header, readme.txt (Stable tag), Wpstreak::VERSION
+# and package.json. With TAG=v1.2.3 (or 1.2.3) it must also match the release tag.
+version-check:
+	@version=$$(sed -n 's/^ \* Version: *//p' $(PLUGIN).php); \
+	for other in \
+		"readme.txt:$$(sed -n 's/^Stable tag: *//p' readme.txt)" \
+		"src/Wpstreak.php:$$(sed -n "s/.*const VERSION = '\(.*\)';/\1/p" src/Wpstreak.php)" \
+		"package.json:$$(php -r 'echo json_decode(file_get_contents("package.json"))->version;')"; do \
+		if [ "$${other#*:}" != "$$version" ]; then echo "$${other%%:*} has version $${other#*:}, $(PLUGIN).php has $$version"; exit 1; fi; \
+	done; \
+	if [ -n "$(TAG)" ] && [ "$(patsubst v%,%,$(TAG))" != "$$version" ]; then echo "Tag $(TAG) does not match version $$version"; exit 1; fi; \
+	echo "Version $$version"
+
+# Regenerates languages/$(PLUGIN).pot from the sources and merges it into every .po file.
 # Run after changing translatable strings, then translate the new entries.
 i18n:
 	$(WP) i18n make-pot . languages/$(PLUGIN).pot $(POT_ARGS)
 	$(WP) i18n update-po languages/$(PLUGIN).pot languages
 
-# Fails when languages/wpstreak.pot is out of date with the sources (ignores the creation date).
+# Fails when languages/$(PLUGIN).pot is out of date with the sources (ignores the creation date).
 i18n-check:
 	mkdir -p build
 	$(WP) i18n make-pot . build/$(PLUGIN).pot $(POT_ARGS)
