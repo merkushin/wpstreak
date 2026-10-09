@@ -94,14 +94,14 @@ msgstr "%s%%"
 #. Plugin URI of the plugin
 #: writing-streak.php
 msgid "https://github.com/merkushin/wpstreak"
-msgstr ""
+msgstr "https://github.com/merkushin/wpstreak"
 
 #. Author of the plugin
 #: writing-streak.php
 msgid "Dmitry Merkushin"
-msgstr ""
+msgstr "Dmitry Merkushin"
 
 #. Plugin Name of the plugin
 #: writing-streak.php
 msgid "Writing Streak"
-msgstr ""
+msgstr "Seria pisania"
