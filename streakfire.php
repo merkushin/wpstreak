@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       Writing Streak
+ * Plugin Name:       Streakfire
  * Plugin URI:        https://github.com/merkushin/wpstreak
  * Description:       Shows your current writing streak above the Posts list.
  * Version:           1.0.0
@@ -9,7 +9,7 @@
  * Author:            Dmitry Merkushin
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       writing-streak
+ * Text Domain:       streakfire
  * Domain Path:       /languages
  *
  * @package Merkushin\Wpstreak

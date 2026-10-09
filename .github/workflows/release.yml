@@ -47,12 +47,12 @@ jobs:
         env:
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
-          SLUG: writing-streak
-          BUILD_DIR: build/writing-streak
+          SLUG: streakfire
+          BUILD_DIR: build/streakfire
           ASSETS_DIR: .wordpress-org
           VERSION: ${{ steps.version.outputs.version }}
 
       - name: GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "${{ github.ref_name }}" writing-streak.zip --title "${{ github.ref_name }}" --generate-notes
+        run: gh release create "${{ github.ref_name }}" streakfire.zip --title "${{ github.ref_name }}" --generate-notes

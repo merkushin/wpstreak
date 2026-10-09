@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Writing Streak 1.0.0\n"
+"Project-Id-Version: Streakfire 1.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/merkushin/wpstreak/issues\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -9,26 +9,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-10-08T18:32:07+00:00\n"
 "PO-Revision-Date: 2026-10-08 00:00+0000\n"
-"Language: pt_PT\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Domain: writing-streak\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Domain: streakfire\n"
 
 #. Description of the plugin
-#: writing-streak.php
+#: streakfire.php
 msgid "Shows your current writing streak above the Posts list."
-msgstr "Mostra a sua sequência de escrita atual acima da lista de artigos."
+msgstr "Mostra sua sequência de escrita atual acima da lista de posts."
 
 #: src/views/streak_panel.php:26
 msgid "Start your next streak"
-msgstr "Comece a sua próxima sequência"
+msgstr "Comece sua próxima sequência"
 
 #: src/views/streak_panel.php:28
 msgid "You are on fire today"
-msgstr "Hoje está imparável"
+msgstr "Você está pegando fogo hoje"
 
 #: src/views/streak_panel.php:30
 msgid "You are still alive, publish today to keep it going"
-msgstr "A sua sequência continua viva, publique hoje para a manter"
+msgstr "Sua sequência continua viva, publique hoje para mantê-la"
 
 #: src/views/streak_panel.php:21
 msgid "Writing momentum"
@@ -57,11 +57,11 @@ msgstr "Última publicação"
 
 #: src/views/streak_panel.php:46
 msgid "No published posts yet"
-msgstr "Ainda não há artigos publicados"
+msgstr "Nenhum post publicado ainda"
 
 #: src/views/streak_panel.php:49
 msgid "Next milestone"
-msgstr "Próximo marco"
+msgstr "Próxima meta"
 
 #. translators: Unit shown after the large streak number, e.g. "12 days".
 #: src/views/streak_panel.php:66
@@ -77,11 +77,11 @@ msgstr "Publicado hoje"
 
 #: src/views/streak_panel.php:72
 msgid "Needs a post today"
-msgstr "Falta publicar hoje"
+msgstr "Falta um post hoje"
 
 #: src/views/streak_panel.php:77
 msgid "Milestone progress"
-msgstr "Progresso até ao marco"
+msgstr "Progresso da meta"
 
 #. translators: %s: Progress towards the next milestone, a number from 0 to 100.
 #: src/views/streak_panel.php:81
@@ -90,16 +90,16 @@ msgid "%s%%"
 msgstr "%s%%"
 
 #. Plugin URI of the plugin
-#: writing-streak.php
+#: streakfire.php
 msgid "https://github.com/merkushin/wpstreak"
 msgstr "https://github.com/merkushin/wpstreak"
 
 #. Author of the plugin
-#: writing-streak.php
+#: streakfire.php
 msgid "Dmitry Merkushin"
 msgstr "Dmitry Merkushin"
 
 #. Plugin Name of the plugin
-#: writing-streak.php
-msgid "Writing Streak"
-msgstr "Sequência de escrita"
+#: streakfire.php
+msgid "Streakfire"
+msgstr "Streakfire"

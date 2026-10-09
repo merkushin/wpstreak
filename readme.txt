@@ -1,4 +1,4 @@
-=== Writing Streak ===
+=== Streakfire ===
 Contributors: merkushin
 Tags: writing, streak, habit, productivity, motivation
 Requires at least: 6.2
@@ -8,11 +8,11 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Shows how many days in a row you have published a post, right above your Posts list.
+Track your writing streak: see how many days in a row you have published a post, right above your Posts list.
 
 == Description ==
 
-Writing Streak turns publishing into a habit. Open **Posts** in your dashboard and a panel shows:
+Streakfire turns publishing into a habit. Open **Posts** in your dashboard and a panel shows:
 
 * **Current run**: how many days in a row you have published at least one post.
 * **Last published**: the date of your latest post.
@@ -25,11 +25,11 @@ There is nothing to configure. The panel only appears on the Posts list screen, 
 
 = Translations =
 
-Writing Streak ships with translations for Chinese (Simplified), Dutch, French, German, Italian, Japanese, Polish, Portuguese (Brazil), Portuguese (Portugal), Russian, Spanish, Turkish and Ukrainian. You can help translate it on [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/writing-streak/).
+Streakfire ships with translations for Chinese (Simplified), Dutch, French, German, Italian, Japanese, Polish, Portuguese (Brazil), Portuguese (Portugal), Russian, Spanish, Turkish and Ukrainian. You can help translate it on [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/streakfire/).
 
 = Privacy =
 
-Writing Streak does not collect, store or send any personal data. It reads the dates of your published posts and caches the result in a transient, which is removed when you delete the plugin.
+Streakfire does not collect, store or send any personal data. It reads the dates of your published posts and caches the result in a transient, which is removed when you delete the plugin.
 
 = Source code =
 
@@ -37,7 +37,7 @@ Development happens on [GitHub](https://github.com/merkushin/wpstreak), includin
 
 == Installation ==
 
-1. In your dashboard, go to **Plugins → Add New Plugin** and search for "Writing Streak", or upload the plugin zip.
+1. In your dashboard, go to **Plugins → Add New Plugin** and search for "Streakfire", or upload the plugin zip.
 2. Activate the plugin.
 3. Go to **Posts** to see your streak.
 

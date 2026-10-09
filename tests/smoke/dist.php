@@ -12,7 +12,7 @@
 declare( strict_types=1 );
 
 $build_dir = rtrim( $argv[1] ?? '', '/' );
-$main_file = $build_dir . '/writing-streak.php';
+$main_file = $build_dir . '/streakfire.php';
 if ( ! is_file( $main_file ) ) {
 	fwrite( STDERR, "Usage: php tests/smoke/dist.php <build-dir>\n" );
 	exit( 1 );
@@ -34,11 +34,11 @@ function load_plugin_textdomain( $domain, $deprecated = false, $path = false ): 
 }
 
 function plugin_basename( string $file ): string {
-	return 'writing-streak/writing-streak.php';
+	return 'streakfire/streakfire.php';
 }
 
 function plugin_dir_url( string $file ): string {
-	return 'https://example.com/wp-content/plugins/writing-streak/';
+	return 'https://example.com/wp-content/plugins/streakfire/';
 }
 
 function get_current_screen() {
