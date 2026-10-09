@@ -29,6 +29,23 @@ function add_action( string $hook, callable $callback ): bool {
 	return true;
 }
 
+function add_filter( string $hook, callable $callback, int $priority = 10, int $accepted_args = 1 ): bool {
+	$GLOBALS['smoke_actions'][ $hook ] = $callback;
+	return true;
+}
+
+function get_user_setting( $name, $default_value = false ) {
+	return $default_value;
+}
+
+function checked( $checked, $current = true, bool $display = true ): string {
+	$result = (string) $checked === (string) $current ? " checked='checked'" : '';
+	if ( $display ) {
+		echo $result;
+	}
+	return $result;
+}
+
 function load_plugin_textdomain( $domain, $deprecated = false, $path = false ): bool {
 	return true;
 }
@@ -138,7 +155,7 @@ if ( ! isset( $GLOBALS['smoke_actions']['init'] ) ) {
 }
 call_user_func( $GLOBALS['smoke_actions']['init'] );
 
-foreach ( [ 'admin_enqueue_scripts', 'all_admin_notices', 'save_post', 'delete_post' ] as $hook ) {
+foreach ( [ 'admin_enqueue_scripts', 'all_admin_notices', 'screen_settings', 'save_post', 'delete_post' ] as $hook ) {
 	if ( ! isset( $GLOBALS['smoke_actions'][ $hook ] ) ) {
 		smoke_fail( "no callback for {$hook}" );
 	}
@@ -156,6 +173,11 @@ foreach ( [ 'Current run 3 days', 'Last published March 2, 2026', 'Next mileston
 	if ( false === strpos( $text, $expected ) ) {
 		smoke_fail( "panel is missing \"{$expected}\": {$text}" );
 	}
+}
+
+$screen_settings = (string) call_user_func( $GLOBALS['smoke_actions']['screen_settings'], '', get_current_screen() );
+if ( false === strpos( $screen_settings, 'id="streakfire-panel-toggle"' ) ) {
+	smoke_fail( 'the Screen Options toggle is missing' );
 }
 
 call_user_func( $GLOBALS['smoke_actions']['save_post'], 1 );

@@ -12,11 +12,12 @@
  * @var bool        $is_active_today
  * @var int         $progress             Milestone progress, 0-100.
  * @var string      $progress_label       $progress formatted for the locale.
+ * @var bool        $is_panel_visible     False when the user hid the panel in Screen Options.
  */
 
 defined( 'ABSPATH' ) || exit;
 ?>
-<div class="streakfire-panel notice <?php echo esc_attr( $accent_class ); ?>">
+<div id="streakfire-panel" class="streakfire-panel notice <?php echo esc_attr( $accent_class ); ?>"<?php echo $is_panel_visible ? '' : ' hidden'; ?>>
 	<div class="streakfire-panel__lead">
 		<div class="streakfire-panel__eyebrow"><?php esc_html_e( 'Writing momentum', 'streakfire' ); ?></div>
 		<h2 class="streakfire-panel__title"><?php esc_html_e( 'Protect the streak. Build the habit.', 'streakfire' ); ?></h2>

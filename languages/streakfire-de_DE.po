@@ -18,73 +18,73 @@ msgstr ""
 msgid "Shows your current writing streak above the Posts list."
 msgstr "Zeigt deine aktuelle Schreibserie über der Beitragsliste an."
 
-#: src/views/streak_panel.php:26
+#: src/views/streak_panel.php:27
 msgid "Start your next streak"
 msgstr "Starte deine nächste Serie"
 
-#: src/views/streak_panel.php:28
+#: src/views/streak_panel.php:29
 msgid "You are on fire today"
 msgstr "Heute bist du in Topform"
 
-#: src/views/streak_panel.php:30
+#: src/views/streak_panel.php:31
 msgid "You are still alive, publish today to keep it going"
 msgstr "Deine Serie lebt noch – veröffentliche heute, um sie fortzusetzen"
 
-#: src/views/streak_panel.php:21
+#: src/views/streak_panel.php:22
 msgid "Writing momentum"
 msgstr "Schreibschwung"
 
-#: src/views/streak_panel.php:22
+#: src/views/streak_panel.php:23
 msgid "Protect the streak. Build the habit."
 msgstr "Schütze die Serie. Bau die Gewohnheit auf."
 
-#: src/views/streak_panel.php:36
+#: src/views/streak_panel.php:37
 msgid "Current run"
 msgstr "Aktuelle Serie"
 
 #. translators: %s: Number of days.
-#: src/views/streak_panel.php:40
-#: src/views/streak_panel.php:53
+#: src/views/streak_panel.php:41
+#: src/views/streak_panel.php:54
 #, php-format
 msgid "%s day"
 msgid_plural "%s days"
 msgstr[0] "%s Tag"
 msgstr[1] "%s Tage"
 
-#: src/views/streak_panel.php:45
+#: src/views/streak_panel.php:46
 msgid "Last published"
 msgstr "Zuletzt veröffentlicht"
 
-#: src/views/streak_panel.php:46
+#: src/views/streak_panel.php:47
 msgid "No published posts yet"
 msgstr "Noch keine veröffentlichten Beiträge"
 
-#: src/views/streak_panel.php:49
+#: src/views/streak_panel.php:50
 msgid "Next milestone"
 msgstr "Nächster Meilenstein"
 
 #. translators: Unit shown after the large streak number, e.g. "12 days".
-#: src/views/streak_panel.php:66
+#: src/views/streak_panel.php:67
 msgctxt "streak counter unit"
 msgid "day"
 msgid_plural "days"
 msgstr[0] "Tag"
 msgstr[1] "Tage"
 
-#: src/views/streak_panel.php:72
+#: src/views/streak_panel.php:73
 msgid "Published today"
 msgstr "Heute veröffentlicht"
 
-#: src/views/streak_panel.php:72
+#: src/views/streak_panel.php:73
 msgid "Needs a post today"
 msgstr "Heute steht noch ein Beitrag aus"
 
-#: src/views/streak_panel.php:77
+#: src/views/streak_panel.php:78
 msgid "Milestone progress"
 msgstr "Fortschritt zum Meilenstein"
 
 #. translators: %s: Progress towards the next milestone, a number from 0 to 100.
-#: src/views/streak_panel.php:81
+#: src/views/streak_panel.php:82
 #, php-format
 msgid "%s%%"
 msgstr "%s %%"
@@ -101,5 +101,10 @@ msgstr "Dmitry Merkushin"
 
 #. Plugin Name of the plugin
 #: streakfire.php
+#: src/views/screen_option.php:11
 msgid "Streakfire"
 msgstr "Streakfire"
+
+#: src/views/screen_option.php:14
+msgid "Writing streak panel"
+msgstr "Schreibserien-Panel"

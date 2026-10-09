@@ -17,6 +17,10 @@
   box-shadow: 0 20px 45px rgba(16, 42, 67, 0.18);
   overflow: hidden;
 }
+/* The panel sets display: grid, which would otherwise override the hidden attribute. */
+.streakfire-panel[hidden] {
+  display: none;
+}
 .streakfire-panel::before,
 .streakfire-panel::after {
   content: "";
