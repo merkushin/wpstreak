@@ -18,73 +18,74 @@ msgstr ""
 msgid "Shows your current writing streak above the Posts list."
 msgstr "Mostra a sua sequência de escrita atual acima da lista de artigos."
 
-#: src/views/streak_panel.php:27
+#: src/views/streak_panel.php:28
 msgid "Start your next streak"
 msgstr "Comece a sua próxima sequência"
 
-#: src/views/streak_panel.php:29
+#: src/views/streak_panel.php:30
 msgid "You are on fire today"
 msgstr "Hoje está imparável"
 
-#: src/views/streak_panel.php:31
+#: src/views/streak_panel.php:32
 msgid "You are still alive, publish today to keep it going"
 msgstr "A sua sequência continua viva, publique hoje para a manter"
 
-#: src/views/streak_panel.php:22
+#: src/views/streak_panel.php:23
 msgid "Writing momentum"
 msgstr "Ritmo de escrita"
 
-#: src/views/streak_panel.php:23
+#: src/views/streak_panel.php:24
 msgid "Protect the streak. Build the habit."
 msgstr "Proteja a sequência. Crie o hábito."
 
-#: src/views/streak_panel.php:37
+#: src/views/streak_panel.php:41
 msgid "Current run"
 msgstr "Sequência atual"
 
 #. translators: %s: Number of days.
-#: src/views/streak_panel.php:41
-#: src/views/streak_panel.php:54
+#: src/views/settings_page.php:81
+#: src/views/streak_panel.php:45
+#: src/views/streak_panel.php:58
 #, php-format
 msgid "%s day"
 msgid_plural "%s days"
 msgstr[0] "%s dia"
 msgstr[1] "%s dias"
 
-#: src/views/streak_panel.php:46
+#: src/views/streak_panel.php:50
 msgid "Last published"
 msgstr "Última publicação"
 
-#: src/views/streak_panel.php:47
+#: src/views/streak_panel.php:51
 msgid "No published posts yet"
 msgstr "Ainda não há artigos publicados"
 
-#: src/views/streak_panel.php:50
+#: src/views/streak_panel.php:54
 msgid "Next milestone"
 msgstr "Próximo marco"
 
 #. translators: Unit shown after the large streak number, e.g. "12 days".
-#: src/views/streak_panel.php:67
+#: src/views/streak_panel.php:71
 msgctxt "streak counter unit"
 msgid "day"
 msgid_plural "days"
 msgstr[0] "dia"
 msgstr[1] "dias"
 
-#: src/views/streak_panel.php:73
+#: src/views/streak_panel.php:77
 msgid "Published today"
 msgstr "Publicado hoje"
 
-#: src/views/streak_panel.php:73
+#: src/views/streak_panel.php:77
 msgid "Needs a post today"
 msgstr "Falta publicar hoje"
 
-#: src/views/streak_panel.php:78
+#: src/views/streak_panel.php:82
 msgid "Milestone progress"
 msgstr "Progresso até ao marco"
 
 #. translators: %s: Progress towards the next milestone, a number from 0 to 100.
-#: src/views/streak_panel.php:82
+#: src/views/streak_panel.php:86
 #, php-format
 msgid "%s%%"
 msgstr "%s%%"
@@ -101,10 +102,173 @@ msgstr "Dmitry Merkushin"
 
 #. Plugin Name of the plugin
 #: streakfire.php
+#: src/Pro/SettingsPage.php:167
+#: src/Pro/SettingsPage.php:168
 #: src/views/screen_option.php:11
+#: src/views/settings_page.php:34
 msgid "Streakfire"
 msgstr "Streakfire"
 
 #: src/views/screen_option.php:14
 msgid "Writing streak panel"
 msgstr "Painel de sequência de escrita"
+
+#: src/Pro/SettingsPage.php:396
+msgid "Sorry, you are not allowed to manage Streakfire."
+msgstr "Lamentamos, mas não tem permissão para gerir o Streakfire."
+
+#: src/views/settings_page.php:23
+msgid "Your site is connected to Streakfire."
+msgstr "O seu site está ligado ao Streakfire."
+
+#: src/views/settings_page.php:24
+msgid "Your site is disconnected from Streakfire. Your streak history is kept in your account."
+msgstr "O seu site foi desligado do Streakfire. O seu histórico de sequências continua guardado na sua conta."
+
+#: src/views/settings_page.php:25
+msgid "Reminder settings saved."
+msgstr "Definições de lembretes guardadas."
+
+#: src/views/settings_page.php:26
+msgid "Connecting didn't work. The link may have expired; please try again."
+msgstr "Não foi possível ligar. O link pode ter expirado; tente novamente."
+
+#: src/views/settings_page.php:27
+msgid "This site is no longer connected to Streakfire. Connect it again to keep using Pro."
+msgstr "Este site já não está ligado ao Streakfire. Volte a ligá-lo para continuar a usar o Pro."
+
+#: src/views/settings_page.php:28
+msgid "Streakfire couldn't be reached. Please try again in a minute."
+msgstr "Não foi possível contactar o Streakfire. Tente novamente dentro de um minuto."
+
+#: src/views/settings_page.php:29
+msgid "Billing isn't available right now. Please try again later."
+msgstr "A faturação não está disponível de momento. Tente novamente mais tarde."
+
+#: src/views/settings_page.php:30
+msgid "Something went wrong. Please try again."
+msgstr "Algo correu mal. Tente novamente."
+
+#: src/views/settings_page.php:41
+msgid "Streakfire Pro"
+msgstr "Streakfire Pro"
+
+#: src/views/settings_page.php:42
+msgid "Never lose a streak by accident. With Streakfire Pro:"
+msgstr "Nunca perca uma sequência por descuido. Com o Streakfire Pro:"
+
+#: src/views/settings_page.php:44
+msgid "You get an email at the hour you choose when you haven't published yet that day."
+msgstr "Recebe um email à hora que escolher quando ainda não tiver publicado nada nesse dia."
+
+#: src/views/settings_page.php:45
+msgid "Your streak history is kept in your Streakfire account, so it survives reinstalls and site moves."
+msgstr "O seu histórico de sequências fica guardado na sua conta Streakfire, por isso sobrevive a reinstalações e mudanças de site."
+
+#. translators: %s: Link to Streakfire's privacy policy.
+#: src/views/settings_page.php:51
+#, php-format
+msgid "Connecting sends Streakfire this site's address, its timezone and the dates you published on, never your posts. Nothing is sent until you connect. %s"
+msgstr "Ao ligar, o Streakfire recebe o endereço deste site, o respetivo fuso horário e as datas em que publicou, nunca os seus artigos. Nada é enviado até ligar. %s"
+
+#: src/views/settings_page.php:52
+msgid "Privacy policy"
+msgstr "Política de privacidade"
+
+#: src/views/settings_page.php:59
+msgid "Connect to Streakfire"
+msgstr "Ligar ao Streakfire"
+
+#: src/views/settings_page.php:63
+msgid "Streakfire couldn't be reached, so some details are missing. Please reload the page in a minute."
+msgstr "Não foi possível contactar o Streakfire, por isso faltam alguns detalhes. Recarregue a página dentro de um minuto."
+
+#: src/views/settings_page.php:68
+msgid "Account"
+msgstr "Conta"
+
+#: src/views/settings_page.php:72
+msgid "Plan"
+msgstr "Plano"
+
+#: src/views/settings_page.php:73
+msgid "Pro"
+msgstr "Pro"
+
+#: src/views/settings_page.php:73
+msgid "Free"
+msgstr "Gratuito"
+
+#: src/views/settings_page.php:77
+msgid "Streak in your account"
+msgstr "Sequência na sua conta"
+
+#: src/views/settings_page.php:87
+msgid "Last synced"
+msgstr "Última sincronização"
+
+#: src/views/settings_page.php:91
+msgid "Not yet"
+msgstr "Ainda não"
+
+#. translators: %s: Time since the last sync, e.g. "5 mins".
+#: src/views/settings_page.php:94
+#, php-format
+msgid "%s ago"
+msgstr "há %s"
+
+#: src/views/settings_page.php:102
+msgid "Reminders"
+msgstr "Lembretes"
+
+#: src/views/settings_page.php:108
+msgid "Email reminder"
+msgstr "Lembrete por email"
+
+#. translators: %s: Account email address.
+#: src/views/settings_page.php:114
+#, php-format
+msgid "Email %s when I haven't published yet"
+msgstr "Enviar email para %s quando ainda não tiver publicado"
+
+#: src/views/settings_page.php:120
+msgid "Send it at"
+msgstr "Enviar às"
+
+#. translators: %s: The site's timezone, e.g. "America/Mexico_City".
+#: src/views/settings_page.php:130
+#, php-format
+msgid "In your site's timezone (%s)."
+msgstr "No fuso horário do seu site (%s)."
+
+#: src/views/settings_page.php:136
+msgid "Save reminders"
+msgstr "Guardar lembretes"
+
+#: src/views/settings_page.php:142
+msgid "Manage subscription"
+msgstr "Gerir subscrição"
+
+#: src/views/settings_page.php:145
+#: src/views/settings_page.php:150
+msgid "Upgrade to Pro"
+msgstr "Atualizar para Pro"
+
+#: src/views/settings_page.php:146
+msgid "Get an email at the hour you choose when you haven't published yet that day."
+msgstr "Receba um email à hora que escolher quando ainda não tiver publicado nada nesse dia."
+
+#: src/views/settings_page.php:154
+#: src/views/settings_page.php:164
+msgid "Disconnect"
+msgstr "Desligar"
+
+#. translators: %s: This site's address.
+#: src/views/settings_page.php:158
+#, php-format
+msgid "Stops sending %s's publishing days to Streakfire. Your streak history stays in your account, and connecting again picks it up."
+msgstr "Deixa de enviar ao Streakfire os dias de publicação de %s. O seu histórico de sequências mantém-se na sua conta e é retomado quando voltar a ligar."
+
+#: src/views/streak_panel.php:37
+msgid "Get an email before your streak breaks"
+msgstr "Receba um email antes de a sua sequência terminar"

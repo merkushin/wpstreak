@@ -18,73 +18,74 @@ msgstr ""
 msgid "Shows your current writing streak above the Posts list."
 msgstr "Yazılar listesinin üzerinde mevcut yazma serinizi gösterir."
 
-#: src/views/streak_panel.php:27
+#: src/views/streak_panel.php:28
 msgid "Start your next streak"
 msgstr "Bir sonraki serinizi başlatın"
 
-#: src/views/streak_panel.php:29
+#: src/views/streak_panel.php:30
 msgid "You are on fire today"
 msgstr "Bugün harikasınız"
 
-#: src/views/streak_panel.php:31
+#: src/views/streak_panel.php:32
 msgid "You are still alive, publish today to keep it going"
 msgstr "Seriniz hâlâ devam ediyor, sürdürmek için bugün yayımlayın"
 
-#: src/views/streak_panel.php:22
+#: src/views/streak_panel.php:23
 msgid "Writing momentum"
 msgstr "Yazma ivmesi"
 
-#: src/views/streak_panel.php:23
+#: src/views/streak_panel.php:24
 msgid "Protect the streak. Build the habit."
 msgstr "Seriyi koruyun. Alışkanlık edinin."
 
-#: src/views/streak_panel.php:37
+#: src/views/streak_panel.php:41
 msgid "Current run"
 msgstr "Mevcut seri"
 
 #. translators: %s: Number of days.
-#: src/views/streak_panel.php:41
-#: src/views/streak_panel.php:54
+#: src/views/settings_page.php:81
+#: src/views/streak_panel.php:45
+#: src/views/streak_panel.php:58
 #, php-format
 msgid "%s day"
 msgid_plural "%s days"
 msgstr[0] "%s gün"
 msgstr[1] "%s gün"
 
-#: src/views/streak_panel.php:46
+#: src/views/streak_panel.php:50
 msgid "Last published"
 msgstr "Son yayımlanan"
 
-#: src/views/streak_panel.php:47
+#: src/views/streak_panel.php:51
 msgid "No published posts yet"
 msgstr "Henüz yayımlanmış yazı yok"
 
-#: src/views/streak_panel.php:50
+#: src/views/streak_panel.php:54
 msgid "Next milestone"
 msgstr "Sonraki hedef"
 
 #. translators: Unit shown after the large streak number, e.g. "12 days".
-#: src/views/streak_panel.php:67
+#: src/views/streak_panel.php:71
 msgctxt "streak counter unit"
 msgid "day"
 msgid_plural "days"
 msgstr[0] "gün"
 msgstr[1] "gün"
 
-#: src/views/streak_panel.php:73
+#: src/views/streak_panel.php:77
 msgid "Published today"
 msgstr "Bugün yayımlandı"
 
-#: src/views/streak_panel.php:73
+#: src/views/streak_panel.php:77
 msgid "Needs a post today"
 msgstr "Bugün bir yazı gerekiyor"
 
-#: src/views/streak_panel.php:78
+#: src/views/streak_panel.php:82
 msgid "Milestone progress"
 msgstr "Hedef ilerlemesi"
 
 #. translators: %s: Progress towards the next milestone, a number from 0 to 100.
-#: src/views/streak_panel.php:82
+#: src/views/streak_panel.php:86
 #, php-format
 msgid "%s%%"
 msgstr "%%%s"
@@ -101,10 +102,173 @@ msgstr "Dmitry Merkushin"
 
 #. Plugin Name of the plugin
 #: streakfire.php
+#: src/Pro/SettingsPage.php:167
+#: src/Pro/SettingsPage.php:168
 #: src/views/screen_option.php:11
+#: src/views/settings_page.php:34
 msgid "Streakfire"
 msgstr "Streakfire"
 
 #: src/views/screen_option.php:14
 msgid "Writing streak panel"
 msgstr "Yazma serisi paneli"
+
+#: src/Pro/SettingsPage.php:396
+msgid "Sorry, you are not allowed to manage Streakfire."
+msgstr "Üzgünüz, Streakfire'ı yönetme yetkiniz yok."
+
+#: src/views/settings_page.php:23
+msgid "Your site is connected to Streakfire."
+msgstr "Siteniz Streakfire'a bağlandı."
+
+#: src/views/settings_page.php:24
+msgid "Your site is disconnected from Streakfire. Your streak history is kept in your account."
+msgstr "Sitenizin Streakfire ile bağlantısı kesildi. Seri geçmişiniz hesabınızda saklanıyor."
+
+#: src/views/settings_page.php:25
+msgid "Reminder settings saved."
+msgstr "Hatırlatma ayarları kaydedildi."
+
+#: src/views/settings_page.php:26
+msgid "Connecting didn't work. The link may have expired; please try again."
+msgstr "Bağlantı kurulamadı. Bağlantının süresi dolmuş olabilir; lütfen tekrar deneyin."
+
+#: src/views/settings_page.php:27
+msgid "This site is no longer connected to Streakfire. Connect it again to keep using Pro."
+msgstr "Bu site artık Streakfire'a bağlı değil. Pro'yu kullanmaya devam etmek için siteyi yeniden bağlayın."
+
+#: src/views/settings_page.php:28
+msgid "Streakfire couldn't be reached. Please try again in a minute."
+msgstr "Streakfire'a ulaşılamadı. Lütfen bir dakika sonra tekrar deneyin."
+
+#: src/views/settings_page.php:29
+msgid "Billing isn't available right now. Please try again later."
+msgstr "Ödeme işlemleri şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin."
+
+#: src/views/settings_page.php:30
+msgid "Something went wrong. Please try again."
+msgstr "Bir şeyler ters gitti. Lütfen tekrar deneyin."
+
+#: src/views/settings_page.php:41
+msgid "Streakfire Pro"
+msgstr "Streakfire Pro"
+
+#: src/views/settings_page.php:42
+msgid "Never lose a streak by accident. With Streakfire Pro:"
+msgstr "Serinizi asla yanlışlıkla kaybetmeyin. Streakfire Pro ile:"
+
+#: src/views/settings_page.php:44
+msgid "You get an email at the hour you choose when you haven't published yet that day."
+msgstr "O gün henüz yayımlamadıysanız seçtiğiniz saatte bir e-posta alırsınız."
+
+#: src/views/settings_page.php:45
+msgid "Your streak history is kept in your Streakfire account, so it survives reinstalls and site moves."
+msgstr "Seri geçmişiniz Streakfire hesabınızda saklanır; böylece yeniden kurulumlarda ve site taşımalarında kaybolmaz."
+
+#. translators: %s: Link to Streakfire's privacy policy.
+#: src/views/settings_page.php:51
+#, php-format
+msgid "Connecting sends Streakfire this site's address, its timezone and the dates you published on, never your posts. Nothing is sent until you connect. %s"
+msgstr "Bağlandığınızda Streakfire'a bu sitenin adresi, saat dilimi ve yayımladığınız tarihler gönderilir; yazılarınız asla gönderilmez. Siz bağlanana kadar hiçbir şey gönderilmez. %s"
+
+#: src/views/settings_page.php:52
+msgid "Privacy policy"
+msgstr "Gizlilik politikası"
+
+#: src/views/settings_page.php:59
+msgid "Connect to Streakfire"
+msgstr "Streakfire'a bağlan"
+
+#: src/views/settings_page.php:63
+msgid "Streakfire couldn't be reached, so some details are missing. Please reload the page in a minute."
+msgstr "Streakfire'a ulaşılamadığı için bazı bilgiler eksik. Lütfen bir dakika sonra sayfayı yeniden yükleyin."
+
+#: src/views/settings_page.php:68
+msgid "Account"
+msgstr "Hesap"
+
+#: src/views/settings_page.php:72
+msgid "Plan"
+msgstr "Plan"
+
+#: src/views/settings_page.php:73
+msgid "Pro"
+msgstr "Pro"
+
+#: src/views/settings_page.php:73
+msgid "Free"
+msgstr "Ücretsiz"
+
+#: src/views/settings_page.php:77
+msgid "Streak in your account"
+msgstr "Hesabınızdaki seri"
+
+#: src/views/settings_page.php:87
+msgid "Last synced"
+msgstr "Son eşitleme"
+
+#: src/views/settings_page.php:91
+msgid "Not yet"
+msgstr "Henüz yok"
+
+#. translators: %s: Time since the last sync, e.g. "5 mins".
+#: src/views/settings_page.php:94
+#, php-format
+msgid "%s ago"
+msgstr "%s önce"
+
+#: src/views/settings_page.php:102
+msgid "Reminders"
+msgstr "Hatırlatmalar"
+
+#: src/views/settings_page.php:108
+msgid "Email reminder"
+msgstr "E-posta hatırlatması"
+
+#. translators: %s: Account email address.
+#: src/views/settings_page.php:114
+#, php-format
+msgid "Email %s when I haven't published yet"
+msgstr "Henüz yayımlamadığımda %s adresine e-posta gönder"
+
+#: src/views/settings_page.php:120
+msgid "Send it at"
+msgstr "Gönderim saati"
+
+#. translators: %s: The site's timezone, e.g. "America/Mexico_City".
+#: src/views/settings_page.php:130
+#, php-format
+msgid "In your site's timezone (%s)."
+msgstr "Sitenizin saat diliminde (%s)."
+
+#: src/views/settings_page.php:136
+msgid "Save reminders"
+msgstr "Hatırlatmaları kaydet"
+
+#: src/views/settings_page.php:142
+msgid "Manage subscription"
+msgstr "Aboneliği yönet"
+
+#: src/views/settings_page.php:145
+#: src/views/settings_page.php:150
+msgid "Upgrade to Pro"
+msgstr "Pro'ya yükselt"
+
+#: src/views/settings_page.php:146
+msgid "Get an email at the hour you choose when you haven't published yet that day."
+msgstr "O gün henüz yayımlamadıysanız seçtiğiniz saatte bir e-posta alın."
+
+#: src/views/settings_page.php:154
+#: src/views/settings_page.php:164
+msgid "Disconnect"
+msgstr "Bağlantıyı kes"
+
+#. translators: %s: This site's address.
+#: src/views/settings_page.php:158
+#, php-format
+msgid "Stops sending %s's publishing days to Streakfire. Your streak history stays in your account, and connecting again picks it up."
+msgstr "%s sitesinin yayın günlerinin Streakfire'a gönderilmesini durdurur. Seri geçmişiniz hesabınızda kalır ve yeniden bağlandığınızda kaldığı yerden devam eder."
+
+#: src/views/streak_panel.php:37
+msgid "Get an email before your streak breaks"
+msgstr "Seriniz bozulmadan önce e-posta alın"

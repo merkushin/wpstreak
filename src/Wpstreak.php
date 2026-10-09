@@ -11,11 +11,12 @@ use Merkushin\Wpal\Service\Plugins;
 use Merkushin\Wpal\Service\Screen;
 use Merkushin\Wpal\Service\UserSettings;
 use Merkushin\Wpal\ServiceFactory;
+use Merkushin\Wpstreak\Pro\Pro;
 
 defined( 'ABSPATH' ) || exit;
 
 class Wpstreak {
-	public const VERSION = '1.0.0';
+	public const VERSION = '1.1.0';
 
 	public const TEXT_DOMAIN = 'streakfire';
 
@@ -82,7 +83,12 @@ class Wpstreak {
 	 */
 	private $streak;
 
-	public function __construct( string $plugin_file, ?Streak $streak = null ) {
+	/**
+	 * @var Pro
+	 */
+	private $pro;
+
+	public function __construct( string $plugin_file, ?Streak $streak = null, ?Pro $pro = null ) {
 		$this->plugin_file   = $plugin_file;
 		$this->hooks         = ServiceFactory::create_hooks();
 		$this->assets        = ServiceFactory::create_assets();
@@ -93,6 +99,7 @@ class Wpstreak {
 		$this->options       = ServiceFactory::create_options();
 		$this->user_settings = ServiceFactory::create_user_settings();
 		$this->streak        = $streak ?? new Streak();
+		$this->pro           = $pro ?? new Pro( self::VERSION );
 	}
 
 	public function init(): void {
@@ -108,6 +115,7 @@ class Wpstreak {
 		$this->hooks->add_filter( 'screen_settings', [ $this, 'add_screen_option' ], 10, 2 );
 
 		$this->streak->init();
+		$this->pro->init();
 	}
 
 	public function enqueue_admin_assets(): void {
@@ -141,6 +149,7 @@ class Wpstreak {
 		$progress_label       = $this->format_number( $progress );
 		$last_post_label      = $this->format_date( $summary['last_post_date'] );
 		$is_panel_visible     = $this->is_panel_visible();
+		$reminders_url        = $this->pro->reminders_url();
 
 		include __DIR__ . '/views/streak_panel.php';
 	}

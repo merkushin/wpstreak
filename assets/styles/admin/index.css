@@ -78,6 +78,20 @@
   font-size: 14px;
   line-height: 1.7;
 }
+.streakfire-panel.notice .streakfire-panel__reminders {
+  margin: 0;
+  font-size: 13px;
+}
+.streakfire-panel__reminders a {
+  color: var(--streakfire-text);
+  text-decoration-color: var(--streakfire-strong);
+  text-underline-offset: 3px;
+}
+.streakfire-panel__reminders a:hover,
+.streakfire-panel__reminders a:focus {
+  color: var(--streakfire-text);
+  text-decoration-color: currentColor;
+}
 .streakfire-panel__stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

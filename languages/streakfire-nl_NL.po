@@ -18,73 +18,74 @@ msgstr ""
 msgid "Shows your current writing streak above the Posts list."
 msgstr "Toont je huidige schrijfreeks boven de lijst met berichten."
 
-#: src/views/streak_panel.php:27
+#: src/views/streak_panel.php:28
 msgid "Start your next streak"
 msgstr "Begin aan je volgende reeks"
 
-#: src/views/streak_panel.php:29
+#: src/views/streak_panel.php:30
 msgid "You are on fire today"
 msgstr "Je bent vandaag lekker bezig"
 
-#: src/views/streak_panel.php:31
+#: src/views/streak_panel.php:32
 msgid "You are still alive, publish today to keep it going"
 msgstr "Je reeks leeft nog, publiceer vandaag om hem voort te zetten"
 
-#: src/views/streak_panel.php:22
+#: src/views/streak_panel.php:23
 msgid "Writing momentum"
 msgstr "Schrijfmomentum"
 
-#: src/views/streak_panel.php:23
+#: src/views/streak_panel.php:24
 msgid "Protect the streak. Build the habit."
 msgstr "Bescherm de reeks. Bouw de gewoonte op."
 
-#: src/views/streak_panel.php:37
+#: src/views/streak_panel.php:41
 msgid "Current run"
 msgstr "Huidige reeks"
 
 #. translators: %s: Number of days.
-#: src/views/streak_panel.php:41
-#: src/views/streak_panel.php:54
+#: src/views/settings_page.php:81
+#: src/views/streak_panel.php:45
+#: src/views/streak_panel.php:58
 #, php-format
 msgid "%s day"
 msgid_plural "%s days"
 msgstr[0] "%s dag"
 msgstr[1] "%s dagen"
 
-#: src/views/streak_panel.php:46
+#: src/views/streak_panel.php:50
 msgid "Last published"
 msgstr "Laatst gepubliceerd"
 
-#: src/views/streak_panel.php:47
+#: src/views/streak_panel.php:51
 msgid "No published posts yet"
 msgstr "Nog geen gepubliceerde berichten"
 
-#: src/views/streak_panel.php:50
+#: src/views/streak_panel.php:54
 msgid "Next milestone"
 msgstr "Volgende mijlpaal"
 
 #. translators: Unit shown after the large streak number, e.g. "12 days".
-#: src/views/streak_panel.php:67
+#: src/views/streak_panel.php:71
 msgctxt "streak counter unit"
 msgid "day"
 msgid_plural "days"
 msgstr[0] "dag"
 msgstr[1] "dagen"
 
-#: src/views/streak_panel.php:73
+#: src/views/streak_panel.php:77
 msgid "Published today"
 msgstr "Vandaag gepubliceerd"
 
-#: src/views/streak_panel.php:73
+#: src/views/streak_panel.php:77
 msgid "Needs a post today"
 msgstr "Vandaag nog een bericht nodig"
 
-#: src/views/streak_panel.php:78
+#: src/views/streak_panel.php:82
 msgid "Milestone progress"
 msgstr "Voortgang naar mijlpaal"
 
 #. translators: %s: Progress towards the next milestone, a number from 0 to 100.
-#: src/views/streak_panel.php:82
+#: src/views/streak_panel.php:86
 #, php-format
 msgid "%s%%"
 msgstr "%s%%"
@@ -101,10 +102,173 @@ msgstr "Dmitry Merkushin"
 
 #. Plugin Name of the plugin
 #: streakfire.php
+#: src/Pro/SettingsPage.php:167
+#: src/Pro/SettingsPage.php:168
 #: src/views/screen_option.php:11
+#: src/views/settings_page.php:34
 msgid "Streakfire"
 msgstr "Streakfire"
 
 #: src/views/screen_option.php:14
 msgid "Writing streak panel"
 msgstr "Schrijfreekspaneel"
+
+#: src/Pro/SettingsPage.php:396
+msgid "Sorry, you are not allowed to manage Streakfire."
+msgstr "Je hebt geen toestemming om Streakfire te beheren."
+
+#: src/views/settings_page.php:23
+msgid "Your site is connected to Streakfire."
+msgstr "Je site is verbonden met Streakfire."
+
+#: src/views/settings_page.php:24
+msgid "Your site is disconnected from Streakfire. Your streak history is kept in your account."
+msgstr "Je site is losgekoppeld van Streakfire. Je reeksgeschiedenis blijft bewaard in je account."
+
+#: src/views/settings_page.php:25
+msgid "Reminder settings saved."
+msgstr "Herinneringsinstellingen opgeslagen."
+
+#: src/views/settings_page.php:26
+msgid "Connecting didn't work. The link may have expired; please try again."
+msgstr "Verbinden is niet gelukt. De link is mogelijk verlopen; probeer het opnieuw."
+
+#: src/views/settings_page.php:27
+msgid "This site is no longer connected to Streakfire. Connect it again to keep using Pro."
+msgstr "Deze site is niet meer verbonden met Streakfire. Verbind hem opnieuw om Pro te blijven gebruiken."
+
+#: src/views/settings_page.php:28
+msgid "Streakfire couldn't be reached. Please try again in a minute."
+msgstr "Streakfire kon niet worden bereikt. Probeer het over een minuut opnieuw."
+
+#: src/views/settings_page.php:29
+msgid "Billing isn't available right now. Please try again later."
+msgstr "Facturering is op dit moment niet beschikbaar. Probeer het later opnieuw."
+
+#: src/views/settings_page.php:30
+msgid "Something went wrong. Please try again."
+msgstr "Er ging iets mis. Probeer het opnieuw."
+
+#: src/views/settings_page.php:41
+msgid "Streakfire Pro"
+msgstr "Streakfire Pro"
+
+#: src/views/settings_page.php:42
+msgid "Never lose a streak by accident. With Streakfire Pro:"
+msgstr "Verlies nooit meer per ongeluk een reeks. Met Streakfire Pro:"
+
+#: src/views/settings_page.php:44
+msgid "You get an email at the hour you choose when you haven't published yet that day."
+msgstr "Je krijgt een e-mail op het uur dat je kiest als je die dag nog niets hebt gepubliceerd."
+
+#: src/views/settings_page.php:45
+msgid "Your streak history is kept in your Streakfire account, so it survives reinstalls and site moves."
+msgstr "Je reeksgeschiedenis wordt bewaard in je Streakfire-account, zodat die herinstallaties en verhuizingen van je site overleeft."
+
+#. translators: %s: Link to Streakfire's privacy policy.
+#: src/views/settings_page.php:51
+#, php-format
+msgid "Connecting sends Streakfire this site's address, its timezone and the dates you published on, never your posts. Nothing is sent until you connect. %s"
+msgstr "Bij het verbinden worden het adres van deze site, de tijdzone en de datums waarop je hebt gepubliceerd naar Streakfire gestuurd, nooit je berichten. Er wordt niets verstuurd totdat je verbinding maakt. %s"
+
+#: src/views/settings_page.php:52
+msgid "Privacy policy"
+msgstr "Privacybeleid"
+
+#: src/views/settings_page.php:59
+msgid "Connect to Streakfire"
+msgstr "Verbinden met Streakfire"
+
+#: src/views/settings_page.php:63
+msgid "Streakfire couldn't be reached, so some details are missing. Please reload the page in a minute."
+msgstr "Streakfire kon niet worden bereikt, daarom ontbreken er enkele gegevens. Laad de pagina over een minuut opnieuw."
+
+#: src/views/settings_page.php:68
+msgid "Account"
+msgstr "Account"
+
+#: src/views/settings_page.php:72
+msgid "Plan"
+msgstr "Pakket"
+
+#: src/views/settings_page.php:73
+msgid "Pro"
+msgstr "Pro"
+
+#: src/views/settings_page.php:73
+msgid "Free"
+msgstr "Gratis"
+
+#: src/views/settings_page.php:77
+msgid "Streak in your account"
+msgstr "Reeks in je account"
+
+#: src/views/settings_page.php:87
+msgid "Last synced"
+msgstr "Laatst gesynchroniseerd"
+
+#: src/views/settings_page.php:91
+msgid "Not yet"
+msgstr "Nog niet"
+
+#. translators: %s: Time since the last sync, e.g. "5 mins".
+#: src/views/settings_page.php:94
+#, php-format
+msgid "%s ago"
+msgstr "%s geleden"
+
+#: src/views/settings_page.php:102
+msgid "Reminders"
+msgstr "Herinneringen"
+
+#: src/views/settings_page.php:108
+msgid "Email reminder"
+msgstr "E-mailherinnering"
+
+#. translators: %s: Account email address.
+#: src/views/settings_page.php:114
+#, php-format
+msgid "Email %s when I haven't published yet"
+msgstr "%s een e-mail sturen als ik nog niets heb gepubliceerd"
+
+#: src/views/settings_page.php:120
+msgid "Send it at"
+msgstr "Versturen om"
+
+#. translators: %s: The site's timezone, e.g. "America/Mexico_City".
+#: src/views/settings_page.php:130
+#, php-format
+msgid "In your site's timezone (%s)."
+msgstr "In de tijdzone van je site (%s)."
+
+#: src/views/settings_page.php:136
+msgid "Save reminders"
+msgstr "Herinneringen opslaan"
+
+#: src/views/settings_page.php:142
+msgid "Manage subscription"
+msgstr "Abonnement beheren"
+
+#: src/views/settings_page.php:145
+#: src/views/settings_page.php:150
+msgid "Upgrade to Pro"
+msgstr "Upgraden naar Pro"
+
+#: src/views/settings_page.php:146
+msgid "Get an email at the hour you choose when you haven't published yet that day."
+msgstr "Krijg een e-mail op het uur dat je kiest als je die dag nog niets hebt gepubliceerd."
+
+#: src/views/settings_page.php:154
+#: src/views/settings_page.php:164
+msgid "Disconnect"
+msgstr "Verbinding verbreken"
+
+#. translators: %s: This site's address.
+#: src/views/settings_page.php:158
+#, php-format
+msgid "Stops sending %s's publishing days to Streakfire. Your streak history stays in your account, and connecting again picks it up."
+msgstr "Stopt met het versturen van de publicatiedagen van %s naar Streakfire. Je reeksgeschiedenis blijft in je account en wordt weer opgepakt als je opnieuw verbinding maakt."
+
+#: src/views/streak_panel.php:37
+msgid "Get an email before your streak breaks"
+msgstr "Krijg een e-mail voordat je reeks breekt"

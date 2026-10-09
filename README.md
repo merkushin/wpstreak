@@ -20,6 +20,17 @@ CI (`.github/workflows/ci.yml`) runs the linter, checks that `languages/streakfi
 
 In a development checkout the plugin loads `vendor/autoload.php`, so it can be symlinked into a local WordPress install as-is.
 
+### Streakfire Pro
+
+The optional Pro features (Settings → Streakfire) talk to the Streakfire service, whose server lives in [creogen/streakfire](https://github.com/creogen/streakfire). To develop against a local copy of it, add to `wp-config.php`:
+
+```php
+define( 'STREAKFIRE_API_URL', 'http://localhost:8080' );  // Called by WordPress itself (from Docker: http://host.docker.internal:8080).
+define( 'STREAKFIRE_SITE_URL', 'http://localhost:8080' ); // Opened in the browser for connecting.
+```
+
+Without an Emailit key, the local server prints the connect email, with its confirmation link, to its log.
+
 ### Translations
 
 All user-facing text lives in `src/views/` and uses the `streakfire` text domain. `languages/` holds the template (`streakfire.pot`) and a `.po` file per locale: de_DE, es_ES, fr_FR, it_IT, ja, nl_NL, pl_PL, pt_BR, pt_PT, ru_RU, tr_TR, uk and zh_CN.
