@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<ruleset name="WP Streak">
-	<description>Coding standards for WP Streak.</description>
+<ruleset name="Writing Streak">
+	<description>Coding standards for Writing Streak.</description>
 
-	<file>wpstreak.php</file>
+	<file>writing-streak.php</file>
 	<file>uninstall.php</file>
 	<file>src</file>
 	<file>tests</file>
@@ -21,7 +21,7 @@
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array">
-				<element value="wpstreak"/>
+				<element value="writing-streak"/>
 			</property>
 		</properties>
 	</rule>
@@ -29,7 +29,7 @@
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<property name="prefixes" type="array">
-				<element value="wpstreak"/>
+				<element value="writing_streak"/>
 				<element value="Merkushin\Wpstreak"/>
 			</property>
 		</properties>

@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
 class Wpstreak {
 	public const VERSION = '1.0.0';
 
-	public const TEXT_DOMAIN = 'wpstreak';
+	public const TEXT_DOMAIN = 'writing-streak';
 
 	/**
 	 * The Posts list screen, where the panel is shown.
@@ -103,8 +103,8 @@ class Wpstreak {
 
 		$url = $this->plugins->plugin_dir_url( $this->plugin_file );
 
-		$this->assets->wp_enqueue_style( 'wpstreak-admin', $url . 'assets/dist/styles/admin.css', [], self::VERSION );
-		$this->assets->wp_enqueue_script( 'wpstreak-admin', $url . 'assets/dist/javascript/admin.js', [], self::VERSION, true );
+		$this->assets->wp_enqueue_style( 'writing-streak-admin', $url . 'assets/dist/styles/admin.css', [], self::VERSION );
+		$this->assets->wp_enqueue_script( 'writing-streak-admin', $url . 'assets/dist/javascript/admin.js', [], self::VERSION, true );
 	}
 
 	public function render_streak_panel(): void {

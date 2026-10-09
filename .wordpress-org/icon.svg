@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#102a43"/>
+      <stop offset="0.55" stop-color="#1f4b99"/>
+      <stop offset="1" stop-color="#ff7a59"/>
+    </linearGradient>
+    <linearGradient id="flame" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#ff7a59"/>
+      <stop offset="1" stop-color="#ffd166"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" fill="url(#bg)"/>
+  <circle cx="214" cy="38" r="70" fill="#fff" fill-opacity="0.08"/>
+  <circle cx="30" cy="236" r="80" fill="#fff" fill-opacity="0.08"/>
+  <!-- Flame -->
+  <path d="M128 40c6 26 30 44 40 66 14 30 4 64-22 78-10 5-24 7-36 5-30-6-48-34-42-64 3-16 12-29 22-40 0 14 6 25 16 30-4-28 8-54 22-75z" fill="url(#flame)"/>
+  <path d="M130 112c4 14 18 24 20 40 3 20-12 36-30 34-16-2-26-18-22-34 2-9 7-15 13-20 0 8 4 14 10 16-2-14 3-26 9-36z" fill="#fff" fill-opacity="0.9"/>
+  <!-- Streak days -->
+  <g fill="#fff">
+    <rect x="52" y="206" width="24" height="10" rx="5" fill-opacity="0.45"/>
+    <rect x="84" y="206" width="24" height="10" rx="5" fill-opacity="0.6"/>
+    <rect x="116" y="206" width="24" height="10" rx="5" fill-opacity="0.75"/>
+    <rect x="148" y="206" width="24" height="10" rx="5" fill-opacity="0.9"/>
+    <rect x="180" y="206" width="24" height="10" rx="5" fill="#7ef7c3"/>
+  </g>
+</svg>
