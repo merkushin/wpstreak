@@ -2,7 +2,8 @@
 /**
  * Settings → Streakfire: connect to Streakfire Pro and manage it.
  *
- * @var string      $notice           Key of a message to show after an action, or ''.
+ * @var string|null $notice_type      'success', 'warning' or 'error'; null when there's no message.
+ * @var string      $notice_message   Message about the last action.
  * @var bool        $is_connected
  * @var bool        $is_reachable     False when the Streakfire API couldn't be reached.
  * @var string      $email            The connected account's email.
@@ -15,26 +16,17 @@
  * @var string      $site_url         This site's address.
  * @var string      $privacy_url      Streakfire's privacy policy.
  * @var string      $action_url       admin-post.php.
+ * @var \Merkushin\Wpstreak\Pro\SettingsPage $this
  */
 
 defined( 'ABSPATH' ) || exit;
 
-$streakfire_notices = [
-	'connected'           => [ 'success', __( 'Your site is connected to Streakfire.', 'streakfire' ) ],
-	'disconnected'        => [ 'success', __( 'Your site is disconnected from Streakfire. Your streak history is kept in your account.', 'streakfire' ) ],
-	'saved'               => [ 'success', __( 'Reminder settings saved.', 'streakfire' ) ],
-	'connect_failed'      => [ 'error', __( 'Connecting didn\'t work. The link may have expired; please try again.', 'streakfire' ) ],
-	'revoked'             => [ 'warning', __( 'This site is no longer connected to Streakfire. Connect it again to keep using Pro.', 'streakfire' ) ],
-	'unreachable'         => [ 'error', __( 'Streakfire couldn\'t be reached. Please try again in a minute.', 'streakfire' ) ],
-	'billing_unavailable' => [ 'error', __( 'Billing isn\'t available right now. Please try again later.', 'streakfire' ) ],
-	'error'               => [ 'error', __( 'Something went wrong. Please try again.', 'streakfire' ) ],
-];
 ?>
 <div class="wrap">
 	<h1><?php esc_html_e( 'Streakfire', 'streakfire' ); ?></h1>
 
-	<?php if ( isset( $streakfire_notices[ $notice ] ) ) : ?>
-		<div class="notice notice-<?php echo esc_attr( $streakfire_notices[ $notice ][0] ); ?> is-dismissible"><p><?php echo esc_html( $streakfire_notices[ $notice ][1] ); ?></p></div>
+	<?php if ( null !== $notice_type ) : ?>
+		<div class="notice notice-<?php echo esc_attr( $notice_type ); ?> is-dismissible"><p><?php echo esc_html( $notice_message ); ?></p></div>
 	<?php endif; ?>
 
 	<?php if ( ! $is_connected ) : ?>
@@ -120,9 +112,7 @@ $streakfire_notices = [
 						<th scope="row"><label for="streakfire-reminder-hour"><?php esc_html_e( 'Send it at', 'streakfire' ); ?></label></th>
 						<td>
 							<select id="streakfire-reminder-hour" name="reminder_hour">
-								<?php for ( $streakfire_hour = 0; $streakfire_hour < 24; $streakfire_hour++ ) : ?>
-									<option value="<?php echo esc_attr( (string) $streakfire_hour ); ?>"<?php selected( $reminder_hour, $streakfire_hour ); ?>><?php echo esc_html( sprintf( '%02d:00', $streakfire_hour ) ); ?></option>
-								<?php endfor; ?>
+								<?php $this->render_hour_options( $reminder_hour ); ?>
 							</select>
 							<p class="description">
 								<?php

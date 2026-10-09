@@ -43,7 +43,7 @@ msgid "Current run"
 msgstr "当前连续"
 
 #. translators: %s: Number of days.
-#: src/views/settings_page.php:81
+#: src/views/settings_page.php:73
 #: src/views/streak_panel.php:45
 #: src/views/streak_panel.php:58
 #, php-format
@@ -103,7 +103,7 @@ msgstr "Dmitry Merkushin"
 #: src/Pro/SettingsPage.php:167
 #: src/Pro/SettingsPage.php:168
 #: src/views/screen_option.php:11
-#: src/views/settings_page.php:34
+#: src/views/settings_page.php:26
 msgid "Streakfire"
 msgstr "Streakfire"
 
@@ -111,158 +111,158 @@ msgstr "Streakfire"
 msgid "Writing streak panel"
 msgstr "连续写作面板"
 
-#: src/Pro/SettingsPage.php:396
+#: src/Pro/SettingsPage.php:432
 msgid "Sorry, you are not allowed to manage Streakfire."
 msgstr "抱歉，您不能管理 Streakfire。"
 
-#: src/views/settings_page.php:23
+#: src/Pro/SettingsPage.php:359
 msgid "Your site is connected to Streakfire."
 msgstr "您的站点已连接到 Streakfire。"
 
-#: src/views/settings_page.php:24
+#: src/Pro/SettingsPage.php:360
 msgid "Your site is disconnected from Streakfire. Your streak history is kept in your account."
 msgstr "您的站点已与 Streakfire 断开连接。您的连续记录历史仍保存在您的账户中。"
 
-#: src/views/settings_page.php:25
+#: src/Pro/SettingsPage.php:361
 msgid "Reminder settings saved."
 msgstr "提醒设置已保存。"
 
-#: src/views/settings_page.php:26
+#: src/Pro/SettingsPage.php:362
 msgid "Connecting didn't work. The link may have expired; please try again."
 msgstr "连接失败。链接可能已过期，请重试。"
 
-#: src/views/settings_page.php:27
+#: src/Pro/SettingsPage.php:363
 msgid "This site is no longer connected to Streakfire. Connect it again to keep using Pro."
 msgstr "此站点已不再连接到 Streakfire。请重新连接以继续使用 Pro。"
 
-#: src/views/settings_page.php:28
+#: src/Pro/SettingsPage.php:364
 msgid "Streakfire couldn't be reached. Please try again in a minute."
 msgstr "无法连接到 Streakfire。请稍后再试。"
 
-#: src/views/settings_page.php:29
+#: src/Pro/SettingsPage.php:365
 msgid "Billing isn't available right now. Please try again later."
 msgstr "付款功能目前不可用。请稍后再试。"
 
-#: src/views/settings_page.php:30
+#: src/Pro/SettingsPage.php:366
 msgid "Something went wrong. Please try again."
 msgstr "出了点问题，请重试。"
 
-#: src/views/settings_page.php:41
+#: src/views/settings_page.php:33
 msgid "Streakfire Pro"
 msgstr "Streakfire Pro"
 
-#: src/views/settings_page.php:42
+#: src/views/settings_page.php:34
 msgid "Never lose a streak by accident. With Streakfire Pro:"
 msgstr "再也不会意外中断连续记录。使用 Streakfire Pro："
 
-#: src/views/settings_page.php:44
+#: src/views/settings_page.php:36
 msgid "You get an email at the hour you choose when you haven't published yet that day."
 msgstr "如果您当天还没有发布，会在您选择的时间收到一封电子邮件。"
 
-#: src/views/settings_page.php:45
+#: src/views/settings_page.php:37
 msgid "Your streak history is kept in your Streakfire account, so it survives reinstalls and site moves."
 msgstr "您的连续记录历史保存在您的 Streakfire 账户中，即使重新安装插件或迁移站点也不会丢失。"
 
 #. translators: %s: Link to Streakfire's privacy policy.
-#: src/views/settings_page.php:51
+#: src/views/settings_page.php:43
 #, php-format
 msgid "Connecting sends Streakfire this site's address, its timezone and the dates you published on, never your posts. Nothing is sent until you connect. %s"
 msgstr "连接后，Streakfire 会收到此站点的地址、时区以及您发布文章的日期，但绝不会收到您的文章内容。在您连接之前，不会发送任何数据。%s"
 
-#: src/views/settings_page.php:52
+#: src/views/settings_page.php:44
 msgid "Privacy policy"
 msgstr "隐私政策"
 
-#: src/views/settings_page.php:59
+#: src/views/settings_page.php:51
 msgid "Connect to Streakfire"
 msgstr "连接到 Streakfire"
 
-#: src/views/settings_page.php:63
+#: src/views/settings_page.php:55
 msgid "Streakfire couldn't be reached, so some details are missing. Please reload the page in a minute."
 msgstr "无法连接到 Streakfire，因此部分信息缺失。请稍后重新加载页面。"
 
-#: src/views/settings_page.php:68
+#: src/views/settings_page.php:60
 msgid "Account"
 msgstr "账户"
 
-#: src/views/settings_page.php:72
+#: src/views/settings_page.php:64
 msgid "Plan"
 msgstr "方案"
 
-#: src/views/settings_page.php:73
+#: src/views/settings_page.php:65
 msgid "Pro"
 msgstr "Pro"
 
-#: src/views/settings_page.php:73
+#: src/views/settings_page.php:65
 msgid "Free"
 msgstr "免费"
 
-#: src/views/settings_page.php:77
+#: src/views/settings_page.php:69
 msgid "Streak in your account"
 msgstr "账户中的连续记录"
 
-#: src/views/settings_page.php:87
+#: src/views/settings_page.php:79
 msgid "Last synced"
 msgstr "上次同步"
 
-#: src/views/settings_page.php:91
+#: src/views/settings_page.php:83
 msgid "Not yet"
 msgstr "尚未同步"
 
 #. translators: %s: Time since the last sync, e.g. "5 mins".
-#: src/views/settings_page.php:94
+#: src/views/settings_page.php:86
 #, php-format
 msgid "%s ago"
 msgstr "%s前"
 
-#: src/views/settings_page.php:102
+#: src/views/settings_page.php:94
 msgid "Reminders"
 msgstr "提醒"
 
-#: src/views/settings_page.php:108
+#: src/views/settings_page.php:100
 msgid "Email reminder"
 msgstr "电子邮件提醒"
 
 #. translators: %s: Account email address.
-#: src/views/settings_page.php:114
+#: src/views/settings_page.php:106
 #, php-format
 msgid "Email %s when I haven't published yet"
 msgstr "当我还没有发布时，发送电子邮件至 %s"
 
-#: src/views/settings_page.php:120
+#: src/views/settings_page.php:112
 msgid "Send it at"
 msgstr "发送时间"
 
 #. translators: %s: The site's timezone, e.g. "America/Mexico_City".
-#: src/views/settings_page.php:130
+#: src/views/settings_page.php:120
 #, php-format
 msgid "In your site's timezone (%s)."
 msgstr "使用您站点的时区（%s）。"
 
-#: src/views/settings_page.php:136
+#: src/views/settings_page.php:126
 msgid "Save reminders"
 msgstr "保存提醒"
 
-#: src/views/settings_page.php:142
+#: src/views/settings_page.php:132
 msgid "Manage subscription"
 msgstr "管理订阅"
 
-#: src/views/settings_page.php:145
-#: src/views/settings_page.php:150
+#: src/views/settings_page.php:135
+#: src/views/settings_page.php:140
 msgid "Upgrade to Pro"
 msgstr "升级到 Pro"
 
-#: src/views/settings_page.php:146
+#: src/views/settings_page.php:136
 msgid "Get an email at the hour you choose when you haven't published yet that day."
 msgstr "如果您当天还没有发布，可在您选择的时间收到一封电子邮件。"
 
+#: src/views/settings_page.php:144
 #: src/views/settings_page.php:154
-#: src/views/settings_page.php:164
 msgid "Disconnect"
 msgstr "断开连接"
 
 #. translators: %s: This site's address.
-#: src/views/settings_page.php:158
+#: src/views/settings_page.php:148
 #, php-format
 msgid "Stops sending %s's publishing days to Streakfire. Your streak history stays in your account, and connecting again picks it up."
 msgstr "停止向 Streakfire 发送 %s 的发布日期。您的连续记录历史将保留在您的账户中，重新连接后即可继续。"

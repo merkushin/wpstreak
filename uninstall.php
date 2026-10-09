@@ -5,21 +5,24 @@
 
 defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 
-delete_transient( 'streakfire_summary' );
+// A closure keeps these variables out of the global scope.
+( static function (): void {
+	delete_transient( 'streakfire_summary' );
 
-// Streakfire Pro. Revoke the site's token, best effort, so it can't be used again.
-$streakfire_connection = get_option( 'streakfire_connection' );
-if ( is_array( $streakfire_connection ) && ! empty( $streakfire_connection['token'] ) && is_string( $streakfire_connection['token'] ) ) {
-	$streakfire_api_url = defined( 'STREAKFIRE_API_URL' ) ? (string) STREAKFIRE_API_URL : 'https://api.streakfire.org';
-	wp_remote_request(
-		$streakfire_api_url . '/v1/site',
-		[
-			'method'  => 'DELETE',
-			'timeout' => 5,
-			'headers' => [ 'Authorization' => 'Bearer ' . $streakfire_connection['token'] ],
-		]
-	);
-}
-delete_option( 'streakfire_connection' );
-wp_clear_scheduled_hook( 'streakfire_sync_days' );
-wp_clear_scheduled_hook( 'streakfire_sync_days_daily' );
+	// Streakfire Pro. Revoke the site's token, best effort, so it can't be used again.
+	$connection = get_option( 'streakfire_connection' );
+	if ( is_array( $connection ) && ! empty( $connection['token'] ) && is_string( $connection['token'] ) ) {
+		$api_url = defined( 'STREAKFIRE_API_URL' ) ? (string) STREAKFIRE_API_URL : 'https://api.streakfire.org';
+		wp_remote_request(
+			$api_url . '/v1/site',
+			[
+				'method'  => 'DELETE',
+				'timeout' => 5,
+				'headers' => [ 'Authorization' => 'Bearer ' . $connection['token'] ],
+			]
+		);
+	}
+	delete_option( 'streakfire_connection' );
+	wp_clear_scheduled_hook( 'streakfire_sync_days' );
+	wp_clear_scheduled_hook( 'streakfire_sync_days_daily' );
+} )();

@@ -317,6 +317,8 @@ class SettingsPage {
 			}
 		}
 
+		[ $notice_type, $notice_message ] = $this->notice( $notice );
+
 		$is_connected     = $this->connection->is_connected();
 		$email            = $this->connection->email();
 		$is_pro           = $this->connection->has_feature( Connection::FEATURE_REMINDERS );
@@ -331,6 +333,40 @@ class SettingsPage {
 		$action_url       = $this->urls->admin_url( 'admin-post.php' );
 
 		include dirname( __DIR__ ) . '/views/settings_page.php';
+	}
+
+	/**
+	 * Prints the reminder hour choices, 00:00 to 23:00.
+	 */
+	public function render_hour_options( int $selected ): void {
+		for ( $hour = 0; $hour < 24; $hour++ ) {
+			printf(
+				'<option value="%1$s"%2$s>%3$s</option>',
+				esc_attr( (string) $hour ),
+				selected( $selected, $hour, false ),
+				esc_html( sprintf( '%02d:00', $hour ) )
+			);
+		}
+	}
+
+	/**
+	 * The message shown after an action redirects back here.
+	 *
+	 * @return array{0: string|null, 1: string} Notice type ('success', 'warning', 'error') or null, and the message.
+	 */
+	private function notice( string $key ): array {
+		$notices = [
+			'connected'           => [ 'success', __( 'Your site is connected to Streakfire.', 'streakfire' ) ],
+			'disconnected'        => [ 'success', __( 'Your site is disconnected from Streakfire. Your streak history is kept in your account.', 'streakfire' ) ],
+			'saved'               => [ 'success', __( 'Reminder settings saved.', 'streakfire' ) ],
+			'connect_failed'      => [ 'error', __( 'Connecting didn\'t work. The link may have expired; please try again.', 'streakfire' ) ],
+			'revoked'             => [ 'warning', __( 'This site is no longer connected to Streakfire. Connect it again to keep using Pro.', 'streakfire' ) ],
+			'unreachable'         => [ 'error', __( 'Streakfire couldn\'t be reached. Please try again in a minute.', 'streakfire' ) ],
+			'billing_unavailable' => [ 'error', __( 'Billing isn\'t available right now. Please try again later.', 'streakfire' ) ],
+			'error'               => [ 'error', __( 'Something went wrong. Please try again.', 'streakfire' ) ],
+		];
+
+		return $notices[ $key ] ?? [ null, '' ];
 	}
 
 	/**
