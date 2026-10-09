@@ -99,7 +99,7 @@ msgstr "https://github.com/merkushin/wpstreak"
 #. Author of the plugin
 #: writing-streak.php
 msgid "Dmitry Merkushin"
-msgstr "Dmitry Merkushin"
+msgstr "Дмитрий Меркушин"
 
 #. Plugin Name of the plugin
 #: writing-streak.php
