@@ -1,4 +1,4 @@
-PLUGIN    := writing-streak
+PLUGIN    := streakfire
 BUILD_DIR := build/$(PLUGIN)
 ZIP       := $(PLUGIN).zip
 WP        ?= wp

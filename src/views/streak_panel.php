@@ -16,74 +16,74 @@
 
 defined( 'ABSPATH' ) || exit;
 ?>
-<div class="writing-streak-panel notice <?php echo esc_attr( $accent_class ); ?>">
-	<div class="writing-streak-panel__lead">
-		<div class="writing-streak-panel__eyebrow"><?php esc_html_e( 'Writing momentum', 'writing-streak' ); ?></div>
-		<h2 class="writing-streak-panel__title"><?php esc_html_e( 'Protect the streak. Build the habit.', 'writing-streak' ); ?></h2>
-		<p class="writing-streak-panel__description">
+<div class="streakfire-panel notice <?php echo esc_attr( $accent_class ); ?>">
+	<div class="streakfire-panel__lead">
+		<div class="streakfire-panel__eyebrow"><?php esc_html_e( 'Writing momentum', 'streakfire' ); ?></div>
+		<h2 class="streakfire-panel__title"><?php esc_html_e( 'Protect the streak. Build the habit.', 'streakfire' ); ?></h2>
+		<p class="streakfire-panel__description">
 			<?php
 			if ( 'start' === $status_key ) {
-				esc_html_e( 'Start your next streak', 'writing-streak' );
+				esc_html_e( 'Start your next streak', 'streakfire' );
 			} elseif ( 'on_fire' === $status_key ) {
-				esc_html_e( 'You are on fire today', 'writing-streak' );
+				esc_html_e( 'You are on fire today', 'streakfire' );
 			} else {
-				esc_html_e( 'You are still alive, publish today to keep it going', 'writing-streak' );
+				esc_html_e( 'You are still alive, publish today to keep it going', 'streakfire' );
 			}
 			?>
 		</p>
-		<div class="writing-streak-panel__stats">
-			<div class="writing-streak-panel__stat">
-				<span class="writing-streak-panel__stat-label"><?php esc_html_e( 'Current run', 'writing-streak' ); ?></span>
-				<span class="writing-streak-panel__stat-value">
+		<div class="streakfire-panel__stats">
+			<div class="streakfire-panel__stat">
+				<span class="streakfire-panel__stat-label"><?php esc_html_e( 'Current run', 'streakfire' ); ?></span>
+				<span class="streakfire-panel__stat-value">
 					<?php
 					/* translators: %s: Number of days. */
-					echo esc_html( sprintf( _n( '%s day', '%s days', $streak, 'writing-streak' ), $streak_label ) );
+					echo esc_html( sprintf( _n( '%s day', '%s days', $streak, 'streakfire' ), $streak_label ) );
 					?>
 				</span>
 			</div>
-			<div class="writing-streak-panel__stat">
-				<span class="writing-streak-panel__stat-label"><?php esc_html_e( 'Last published', 'writing-streak' ); ?></span>
-				<span class="writing-streak-panel__stat-value"><?php echo esc_html( $last_post_label ?? __( 'No published posts yet', 'writing-streak' ) ); ?></span>
+			<div class="streakfire-panel__stat">
+				<span class="streakfire-panel__stat-label"><?php esc_html_e( 'Last published', 'streakfire' ); ?></span>
+				<span class="streakfire-panel__stat-value"><?php echo esc_html( $last_post_label ?? __( 'No published posts yet', 'streakfire' ) ); ?></span>
 			</div>
-			<div class="writing-streak-panel__stat">
-				<span class="writing-streak-panel__stat-label"><?php esc_html_e( 'Next milestone', 'writing-streak' ); ?></span>
-				<span class="writing-streak-panel__stat-value">
+			<div class="streakfire-panel__stat">
+				<span class="streakfire-panel__stat-label"><?php esc_html_e( 'Next milestone', 'streakfire' ); ?></span>
+				<span class="streakfire-panel__stat-value">
 					<?php
 					/* translators: %s: Number of days. */
-					echo esc_html( sprintf( _n( '%s day', '%s days', $next_milestone, 'writing-streak' ), $next_milestone_label ) );
+					echo esc_html( sprintf( _n( '%s day', '%s days', $next_milestone, 'streakfire' ), $next_milestone_label ) );
 					?>
 				</span>
 			</div>
 		</div>
 	</div>
-	<div class="writing-streak-panel__meta">
+	<div class="streakfire-panel__meta">
 		<div>
-			<div class="writing-streak-panel__score">
-				<span class="writing-streak-panel__score-value"><?php echo esc_html( $streak_label ); ?></span>
-				<span class="writing-streak-panel__score-unit">
+			<div class="streakfire-panel__score">
+				<span class="streakfire-panel__score-value"><?php echo esc_html( $streak_label ); ?></span>
+				<span class="streakfire-panel__score-unit">
 					<?php
 					/* translators: Unit shown after the large streak number, e.g. "12 days". */
-					echo esc_html( _nx( 'day', 'days', $streak, 'streak counter unit', 'writing-streak' ) );
+					echo esc_html( _nx( 'day', 'days', $streak, 'streak counter unit', 'streakfire' ) );
 					?>
 				</span>
 			</div>
-			<div class="writing-streak-panel__status">
-				<span class="writing-streak-panel__status-dot"></span>
-				<span><?php echo esc_html( $is_active_today ? __( 'Published today', 'writing-streak' ) : __( 'Needs a post today', 'writing-streak' ) ); ?></span>
+			<div class="streakfire-panel__status">
+				<span class="streakfire-panel__status-dot"></span>
+				<span><?php echo esc_html( $is_active_today ? __( 'Published today', 'streakfire' ) : __( 'Needs a post today', 'streakfire' ) ); ?></span>
 			</div>
 		</div>
 		<div>
-			<div class="writing-streak-panel__progress-copy">
-				<span><?php esc_html_e( 'Milestone progress', 'writing-streak' ); ?></span>
+			<div class="streakfire-panel__progress-copy">
+				<span><?php esc_html_e( 'Milestone progress', 'streakfire' ); ?></span>
 				<span>
 					<?php
 					/* translators: %s: Progress towards the next milestone, a number from 0 to 100. */
-					echo esc_html( sprintf( __( '%s%%', 'writing-streak' ), $progress_label ) );
+					echo esc_html( sprintf( __( '%s%%', 'streakfire' ), $progress_label ) );
 					?>
 				</span>
 			</div>
-			<div class="writing-streak-panel__progress-track">
-				<div class="writing-streak-panel__progress-bar" style="width:<?php echo esc_attr( (string) $progress ); ?>%;"></div>
+			<div class="streakfire-panel__progress-track">
+				<div class="streakfire-panel__progress-bar" style="width:<?php echo esc_attr( (string) $progress ); ?>%;"></div>
 			</div>
 		</div>
 	</div>

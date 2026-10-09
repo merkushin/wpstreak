@@ -11,7 +11,7 @@ use Merkushin\Wpal\ServiceFactory;
 defined( 'ABSPATH' ) || exit;
 
 class Streak {
-	public const TRANSIENT_KEY = 'writing_streak_summary';
+	public const TRANSIENT_KEY = 'streakfire_summary';
 
 	private const CACHE_TTL = 86400;
 

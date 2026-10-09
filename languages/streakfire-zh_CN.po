@@ -1,62 +1,46 @@
-# Copyright (C) 2026 Dmitry Merkushin
-# This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Writing Streak 1.0.0\n"
+"Project-Id-Version: Streakfire 1.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/merkushin/wpstreak/issues\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-08T18:50:14+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.12.0\n"
-"X-Domain: writing-streak\n"
-
-#. Plugin Name of the plugin
-#: writing-streak.php
-msgid "Writing Streak"
-msgstr ""
-
-#. Plugin URI of the plugin
-#: writing-streak.php
-msgid "https://github.com/merkushin/wpstreak"
-msgstr ""
+"POT-Creation-Date: 2026-10-08T18:32:07+00:00\n"
+"PO-Revision-Date: 2026-10-08 00:00+0000\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Domain: streakfire\n"
 
 #. Description of the plugin
-#: writing-streak.php
+#: streakfire.php
 msgid "Shows your current writing streak above the Posts list."
-msgstr ""
-
-#. Author of the plugin
-#: writing-streak.php
-msgid "Dmitry Merkushin"
-msgstr ""
-
-#: src/views/streak_panel.php:21
-msgid "Writing momentum"
-msgstr ""
-
-#: src/views/streak_panel.php:22
-msgid "Protect the streak. Build the habit."
-msgstr ""
+msgstr "在文章列表上方显示您当前的连续写作天数。"
 
 #: src/views/streak_panel.php:26
 msgid "Start your next streak"
-msgstr ""
+msgstr "开始新的连续写作"
 
 #: src/views/streak_panel.php:28
 msgid "You are on fire today"
-msgstr ""
+msgstr "今天状态火热"
 
 #: src/views/streak_panel.php:30
 msgid "You are still alive, publish today to keep it going"
-msgstr ""
+msgstr "连续记录仍在继续，今天发布即可延续"
+
+#: src/views/streak_panel.php:21
+msgid "Writing momentum"
+msgstr "写作势头"
+
+#: src/views/streak_panel.php:22
+msgid "Protect the streak. Build the habit."
+msgstr "守住连续记录，养成写作习惯。"
 
 #: src/views/streak_panel.php:36
 msgid "Current run"
-msgstr ""
+msgstr "当前连续"
 
 #. translators: %s: Number of days.
 #: src/views/streak_panel.php:40
@@ -64,43 +48,56 @@ msgstr ""
 #, php-format
 msgid "%s day"
 msgid_plural "%s days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s 天"
 
 #: src/views/streak_panel.php:45
 msgid "Last published"
-msgstr ""
+msgstr "最近发布"
 
 #: src/views/streak_panel.php:46
 msgid "No published posts yet"
-msgstr ""
+msgstr "还没有已发布的文章"
 
 #: src/views/streak_panel.php:49
 msgid "Next milestone"
-msgstr ""
+msgstr "下一个里程碑"
 
 #. translators: Unit shown after the large streak number, e.g. "12 days".
 #: src/views/streak_panel.php:66
 msgctxt "streak counter unit"
 msgid "day"
 msgid_plural "days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "天"
 
 #: src/views/streak_panel.php:72
 msgid "Published today"
-msgstr ""
+msgstr "今天已发布"
 
 #: src/views/streak_panel.php:72
 msgid "Needs a post today"
-msgstr ""
+msgstr "今天还需发布"
 
 #: src/views/streak_panel.php:77
 msgid "Milestone progress"
-msgstr ""
+msgstr "里程碑进度"
 
 #. translators: %s: Progress towards the next milestone, a number from 0 to 100.
 #: src/views/streak_panel.php:81
 #, php-format
 msgid "%s%%"
-msgstr ""
+msgstr "%s%%"
+
+#. Plugin URI of the plugin
+#: streakfire.php
+msgid "https://github.com/merkushin/wpstreak"
+msgstr "https://github.com/merkushin/wpstreak"
+
+#. Author of the plugin
+#: streakfire.php
+msgid "Dmitry Merkushin"
+msgstr "Dmitry Merkushin"
+
+#. Plugin Name of the plugin
+#: streakfire.php
+msgid "Streakfire"
+msgstr "Streakfire"
