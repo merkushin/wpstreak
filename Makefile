@@ -9,7 +9,7 @@ POT_ARGS := --slug=$(PLUGIN) --domain=$(PLUGIN) --include=$(PLUGIN).php,src --ex
 # Files and directories that ship in the plugin zip.
 DIST_FILES := $(PLUGIN).php uninstall.php readme.txt src languages LICENSE
 
-.PHONY: all install build-js test lint lint-fix version-check i18n i18n-check i18n-compile dist clean
+.PHONY: all install build-js test smoke lint lint-fix version-check i18n i18n-check i18n-compile dist clean
 
 all: dist
 
@@ -22,6 +22,10 @@ build-js:
 
 test:
 	vendor/bin/phpunit
+
+# Loads the release build from `make dist` with stubbed WordPress functions and runs every code path.
+smoke:
+	php tests/smoke/dist.php $(BUILD_DIR)
 
 # WordPress Coding Standards and PHP 7.4+ compatibility, see phpcs.xml.dist.
 lint:
@@ -63,8 +67,9 @@ i18n-compile:
 	$(WP) i18n make-php languages
 
 # Builds a release zip in a separate directory, so the working copy is never modified:
-# copies the plugin files, compiles translations, installs runtime dependencies,
-# prefixes them with wp-scoper into vendor-prefixed/ and drops vendor/ and the Composer files.
+# copies the plugin files, compiles translations, installs runtime dependencies, keeps only
+# the wpal services the plugin uses, prefixes them with wp-scoper into vendor-prefixed/ and
+# drops vendor/ and the Composer files.
 dist: clean install build-js
 	mkdir -p $(BUILD_DIR)/assets
 	cp -R $(DIST_FILES) composer.json composer.lock $(BUILD_DIR)/
@@ -72,6 +77,7 @@ dist: clean install build-js
 	$(WP) i18n make-mo $(BUILD_DIR)/languages
 	$(WP) i18n make-php $(BUILD_DIR)/languages
 	composer install --working-dir=$(BUILD_DIR) --no-dev --no-plugins --no-scripts --no-autoloader --no-interaction --quiet
+	php bin/prune-wpal.php $(BUILD_DIR)
 	vendor/bin/wp-scoper $(BUILD_DIR)
 	rm -rf $(BUILD_DIR)/vendor $(BUILD_DIR)/composer.json $(BUILD_DIR)/composer.lock
 	cd build && zip -rq ../$(ZIP) $(PLUGIN)

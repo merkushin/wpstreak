@@ -6,6 +6,7 @@
 	<file>uninstall.php</file>
 	<file>src</file>
 	<file>tests</file>
+	<file>bin</file>
 
 	<arg name="extensions" value="php"/>
 	<arg name="colors"/>
@@ -45,14 +46,26 @@
 		<exclude-pattern>*</exclude-pattern>
 	</rule>
 
-	<!-- Tests: PHPUnit's test namespace, stubs of WordPress functions, and test helpers. -->
+	<!-- Tests and build scripts (bin/) don't run inside WordPress: PHPUnit's test namespace,
+	     stubs of WordPress functions, CLI globals and plain file functions are fine there. -->
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<exclude-pattern>tests/*</exclude-pattern>
+		<exclude-pattern>bin/*</exclude-pattern>
 	</rule>
 	<rule ref="Generic.CodeAnalysis.UnusedFunctionParameter">
 		<exclude-pattern>tests/stubs/*</exclude-pattern>
+		<exclude-pattern>tests/smoke/*</exclude-pattern>
+	</rule>
+	<!-- The smoke test replaces $wpdb with a fake, and CLI scripts print plain text, not HTML. -->
+	<rule ref="WordPress.WP.GlobalVariablesOverride">
+		<exclude-pattern>tests/smoke/*</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.Security.EscapeOutput">
+		<exclude-pattern>tests/smoke/*</exclude-pattern>
+		<exclude-pattern>bin/*</exclude-pattern>
 	</rule>
 	<rule ref="WordPress.WP.AlternativeFunctions">
 		<exclude-pattern>tests/*</exclude-pattern>
+		<exclude-pattern>bin/*</exclude-pattern>
 	</rule>
 </ruleset>
