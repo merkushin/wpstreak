@@ -9,6 +9,7 @@ use Merkushin\Wpal\Service\Localization;
 use Merkushin\Wpal\Service\Options;
 use Merkushin\Wpal\Service\Plugins;
 use Merkushin\Wpal\Service\Screen;
+use Merkushin\Wpal\Service\UserSettings;
 use Merkushin\Wpal\ServiceFactory;
 
 defined( 'ABSPATH' ) || exit;
@@ -22,6 +23,12 @@ class Wpstreak {
 	 * The Posts list screen, where the panel is shown.
 	 */
 	private const SCREEN_ID = 'edit-post';
+
+	/**
+	 * Per-user setting for the panel's Screen Options checkbox: 'on' or 'off'.
+	 * Stored by WordPress' user settings; the admin script updates it with setUserSetting().
+	 */
+	public const PANEL_SETTING = 'streakfire_panel';
 
 	/**
 	 * Main plugin file path.
@@ -66,20 +73,26 @@ class Wpstreak {
 	private $options;
 
 	/**
+	 * @var UserSettings
+	 */
+	private $user_settings;
+
+	/**
 	 * @var Streak
 	 */
 	private $streak;
 
 	public function __construct( string $plugin_file, ?Streak $streak = null ) {
-		$this->plugin_file  = $plugin_file;
-		$this->hooks        = ServiceFactory::create_hooks();
-		$this->assets       = ServiceFactory::create_assets();
-		$this->plugins      = ServiceFactory::create_plugins();
-		$this->screen       = ServiceFactory::create_screen();
-		$this->localization = ServiceFactory::create_localization();
-		$this->dates        = ServiceFactory::create_dates();
-		$this->options      = ServiceFactory::create_options();
-		$this->streak       = $streak ?? new Streak();
+		$this->plugin_file   = $plugin_file;
+		$this->hooks         = ServiceFactory::create_hooks();
+		$this->assets        = ServiceFactory::create_assets();
+		$this->plugins       = ServiceFactory::create_plugins();
+		$this->screen        = ServiceFactory::create_screen();
+		$this->localization  = ServiceFactory::create_localization();
+		$this->dates         = ServiceFactory::create_dates();
+		$this->options       = ServiceFactory::create_options();
+		$this->user_settings = ServiceFactory::create_user_settings();
+		$this->streak        = $streak ?? new Streak();
 	}
 
 	public function init(): void {
@@ -92,6 +105,7 @@ class Wpstreak {
 
 		$this->hooks->add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_assets' ] );
 		$this->hooks->add_action( 'all_admin_notices', [ $this, 'render_streak_panel' ] );
+		$this->hooks->add_filter( 'screen_settings', [ $this, 'add_screen_option' ], 10, 2 );
 
 		$this->streak->init();
 	}
@@ -104,7 +118,8 @@ class Wpstreak {
 		$url = $this->plugins->plugin_dir_url( $this->plugin_file );
 
 		$this->assets->wp_enqueue_style( 'streakfire-admin', $url . 'assets/dist/styles/admin.css', [], self::VERSION );
-		$this->assets->wp_enqueue_script( 'streakfire-admin', $url . 'assets/dist/javascript/admin.js', [], self::VERSION, true );
+		// The script saves the Screen Options checkbox with setUserSetting() from WordPress' utils script.
+		$this->assets->wp_enqueue_script( 'streakfire-admin', $url . 'assets/dist/javascript/admin.js', [ 'utils' ], self::VERSION, true );
 	}
 
 	public function render_streak_panel(): void {
@@ -125,8 +140,34 @@ class Wpstreak {
 		$next_milestone_label = $this->format_number( $next_milestone );
 		$progress_label       = $this->format_number( $progress );
 		$last_post_label      = $this->format_date( $summary['last_post_date'] );
+		$is_panel_visible     = $this->is_panel_visible();
 
 		include __DIR__ . '/views/streak_panel.php';
+	}
+
+	/**
+	 * Adds a checkbox to the Posts screen's Screen Options so each user can hide the panel.
+	 *
+	 * @param string $settings Screen settings HTML.
+	 * @param mixed  $screen   WP_Screen object.
+	 */
+	public function add_screen_option( $settings, $screen ): string {
+		$settings = (string) $settings;
+
+		if ( ! is_object( $screen ) || ! isset( $screen->id ) || self::SCREEN_ID !== $screen->id ) {
+			return $settings;
+		}
+
+		$is_panel_visible = $this->is_panel_visible();
+
+		ob_start();
+		include __DIR__ . '/views/screen_option.php';
+
+		return $settings . (string) ob_get_clean();
+	}
+
+	private function is_panel_visible(): bool {
+		return 'off' !== $this->user_settings->get_user_setting( self::PANEL_SETTING, 'on' );
 	}
 
 	private function is_posts_screen(): bool {

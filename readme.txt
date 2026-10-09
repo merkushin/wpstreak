@@ -21,7 +21,7 @@ Streakfire turns publishing into a habit. Open **Posts** in your dashboard and a
 
 A streak stays alive until the end of the day after your last post, so you always have a full day to keep it going. Days follow your site's timezone, and several posts on the same day count as one day.
 
-There is nothing to configure. The panel only appears on the Posts list screen, and the plugin loads nothing on the front end of your site.
+There is nothing to configure. The panel only appears on the Posts list screen, each user can hide it under **Screen Options**, and the plugin loads nothing on the front end of your site.
 
 = Translations =
 
@@ -29,7 +29,7 @@ Streakfire ships with translations for Chinese (Simplified), Dutch, French, Germ
 
 = Privacy =
 
-Streakfire does not collect, store or send any personal data. It reads the dates of your published posts and caches the result in a transient, which is removed when you delete the plugin.
+Streakfire does not collect, store or send any personal data. It reads the dates of your published posts and caches the result in a transient, which is removed when you delete the plugin. If you hide the panel, that choice is saved in WordPress' own per-user screen settings.
 
 = Source code =
 
@@ -62,6 +62,10 @@ No. The streak stays alive until the end of today. Publish a post today to exten
 = Who can see the panel? =
 
 Anyone who can open the Posts list in the dashboard.
+
+= Can I hide the panel? =
+
+Yes. On the Posts screen, open **Screen Options** at the top right and uncheck **Writing streak panel**. The choice is saved for your user only; check the box again to bring the panel back.
 
 == Screenshots ==
 

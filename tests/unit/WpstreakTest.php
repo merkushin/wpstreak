@@ -9,6 +9,7 @@ use Merkushin\Wpal\Service\Localization;
 use Merkushin\Wpal\Service\Options;
 use Merkushin\Wpal\Service\Plugins;
 use Merkushin\Wpal\Service\Screen;
+use Merkushin\Wpal\Service\UserSettings;
 use Merkushin\Wpal\ServiceFactory;
 use Merkushin\Wpstreak\Streak;
 use Merkushin\Wpstreak\Wpstreak;
@@ -41,6 +42,11 @@ class WpstreakTest extends TestCase {
 	private $dates;
 
 	/**
+	 * @var UserSettings&MockObject
+	 */
+	private $user_settings;
+
+	/**
 	 * @var Streak&MockObject
 	 */
 	private $streak;
@@ -51,6 +57,9 @@ class WpstreakTest extends TestCase {
 		$this->localization = $this->createMock( Localization::class );
 		$this->dates        = $this->createMock( Dates::class );
 		$this->streak       = $this->createMock( Streak::class );
+
+		$this->user_settings = $this->createMock( UserSettings::class );
+		$this->user_settings->method( 'get_user_setting' )->with( Wpstreak::PANEL_SETTING, 'on' )->willReturn( 'on' );
 
 		$plugins = $this->createMock( Plugins::class );
 		$plugins->method( 'plugin_dir_url' )->with( self::PLUGIN_FILE )->willReturn( self::PLUGIN_URL );
@@ -65,6 +74,7 @@ class WpstreakTest extends TestCase {
 		ServiceFactory::set_custom_localization( $this->localization );
 		ServiceFactory::set_custom_dates( $this->dates );
 		ServiceFactory::set_custom_options( $options );
+		ServiceFactory::set_custom_user_settings( $this->user_settings );
 	}
 
 	protected function tearDown(): void {
@@ -74,6 +84,7 @@ class WpstreakTest extends TestCase {
 		ServiceFactory::set_custom_localization( null );
 		ServiceFactory::set_custom_dates( null );
 		ServiceFactory::set_custom_options( null );
+		ServiceFactory::set_custom_user_settings( null );
 		ServiceFactory::set_custom_hooks( null );
 	}
 
@@ -94,12 +105,12 @@ class WpstreakTest extends TestCase {
 		$plugin = new Wpstreak( self::PLUGIN_FILE, $this->streak );
 
 		$registered = [];
-		$hooks->method( 'add_action' )->willReturnCallback(
-			function ( string $hook, $callback ) use ( &$registered ): bool {
-				$registered[ $hook ] = $callback;
-				return true;
-			}
-		);
+		$record     = function ( string $hook, $callback ) use ( &$registered ): bool {
+			$registered[ $hook ] = $callback;
+			return true;
+		};
+		$hooks->method( 'add_action' )->willReturnCallback( $record );
+		$hooks->method( 'add_filter' )->willReturnCallback( $record );
 		$this->streak->expects( $this->once() )->method( 'init' );
 
 		$plugin->init();
@@ -108,6 +119,7 @@ class WpstreakTest extends TestCase {
 			[
 				'admin_enqueue_scripts' => [ $plugin, 'enqueue_admin_assets' ],
 				'all_admin_notices'     => [ $plugin, 'render_streak_panel' ],
+				'screen_settings'       => [ $plugin, 'add_screen_option' ],
 			],
 			$registered
 		);
@@ -123,7 +135,7 @@ class WpstreakTest extends TestCase {
 		$this->assets
 			->expects( $this->once() )
 			->method( 'wp_enqueue_script' )
-			->with( 'streakfire-admin', self::PLUGIN_URL . 'assets/dist/javascript/admin.js', [], Wpstreak::VERSION, true );
+			->with( 'streakfire-admin', self::PLUGIN_URL . 'assets/dist/javascript/admin.js', [ 'utils' ], Wpstreak::VERSION, true );
 
 		( new Wpstreak( self::PLUGIN_FILE, $this->streak ) )->enqueue_admin_assets();
 	}
@@ -216,6 +228,76 @@ class WpstreakTest extends TestCase {
 		$this->assertStringContainsString( 'Current run 0 days', $text );
 		$this->assertStringContainsString( 'Last published No published posts yet', $text );
 		$this->assertStringContainsString( 'Milestone progress 0%', $text );
+	}
+
+	public function testRenderStreakPanel_PanelVisible_RendersWithoutHiddenAttribute(): void {
+		$html = $this->render_panel();
+
+		$this->assertStringContainsString( 'id="streakfire-panel"', $html );
+		$this->assertStringNotContainsString( ' hidden', $html );
+	}
+
+	public function testRenderStreakPanel_PanelHiddenInScreenOptions_RendersHidden(): void {
+		$this->use_panel_setting( 'off' );
+
+		$this->assertMatchesRegularExpression( '/<div id="streakfire-panel"[^>]* hidden>/', $this->render_panel() );
+	}
+
+	public function testAddScreenOption_PostsScreen_AppendsCheckedToggle(): void {
+		$settings = ( new Wpstreak( self::PLUGIN_FILE, $this->streak ) )->add_screen_option( '<p>core</p>', (object) [ 'id' => 'edit-post' ] );
+
+		$this->assertStringStartsWith( '<p>core</p>', $settings );
+		$this->assertStringContainsString( 'id="streakfire-panel-toggle"', $settings );
+		$this->assertStringContainsString( "checked='checked'", $settings );
+		$this->assertStringContainsString( 'Writing streak panel', $settings );
+	}
+
+	public function testAddScreenOption_PanelHidden_AppendsUncheckedToggle(): void {
+		$this->use_panel_setting( 'off' );
+
+		$settings = ( new Wpstreak( self::PLUGIN_FILE, $this->streak ) )->add_screen_option( '', (object) [ 'id' => 'edit-post' ] );
+
+		$this->assertStringContainsString( 'id="streakfire-panel-toggle"', $settings );
+		$this->assertStringNotContainsString( 'checked', $settings );
+	}
+
+	/**
+	 * @dataProvider provide_other_screens
+	 *
+	 * @param object|null $screen
+	 */
+	public function testAddScreenOption_OtherScreen_KeepsSettingsUnchanged( $screen ): void {
+		$settings = ( new Wpstreak( self::PLUGIN_FILE, $this->streak ) )->add_screen_option( '<p>core</p>', $screen );
+
+		$this->assertSame( '<p>core</p>', $settings );
+	}
+
+	private function use_panel_setting( string $value ): void {
+		$this->user_settings = $this->createMock( UserSettings::class );
+		$this->user_settings->method( 'get_user_setting' )->with( Wpstreak::PANEL_SETTING, 'on' )->willReturn( $value );
+		ServiceFactory::set_custom_user_settings( $this->user_settings );
+	}
+
+	private function render_panel(): string {
+		$this->screen->method( 'get_current_screen' )->willReturn( (object) [ 'id' => 'edit-post' ] );
+		$this->streak->method( 'get_summary' )->willReturn(
+			[
+				'streak'          => 2,
+				'last_post_date'  => null,
+				'is_active_today' => true,
+				'next_milestone'  => 3,
+			]
+		);
+		$this->localization->method( 'number_format_i18n' )->willReturnCallback(
+			function ( $number ): string {
+				return (string) $number;
+			}
+		);
+
+		ob_start();
+		( new Wpstreak( self::PLUGIN_FILE, $this->streak ) )->render_streak_panel();
+
+		return (string) ob_get_clean();
 	}
 
 	public function provide_other_screens(): array {

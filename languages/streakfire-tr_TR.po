@@ -18,73 +18,73 @@ msgstr ""
 msgid "Shows your current writing streak above the Posts list."
 msgstr "Yazılar listesinin üzerinde mevcut yazma serinizi gösterir."
 
-#: src/views/streak_panel.php:26
+#: src/views/streak_panel.php:27
 msgid "Start your next streak"
 msgstr "Bir sonraki serinizi başlatın"
 
-#: src/views/streak_panel.php:28
+#: src/views/streak_panel.php:29
 msgid "You are on fire today"
 msgstr "Bugün harikasınız"
 
-#: src/views/streak_panel.php:30
+#: src/views/streak_panel.php:31
 msgid "You are still alive, publish today to keep it going"
 msgstr "Seriniz hâlâ devam ediyor, sürdürmek için bugün yayımlayın"
 
-#: src/views/streak_panel.php:21
+#: src/views/streak_panel.php:22
 msgid "Writing momentum"
 msgstr "Yazma ivmesi"
 
-#: src/views/streak_panel.php:22
+#: src/views/streak_panel.php:23
 msgid "Protect the streak. Build the habit."
 msgstr "Seriyi koruyun. Alışkanlık edinin."
 
-#: src/views/streak_panel.php:36
+#: src/views/streak_panel.php:37
 msgid "Current run"
 msgstr "Mevcut seri"
 
 #. translators: %s: Number of days.
-#: src/views/streak_panel.php:40
-#: src/views/streak_panel.php:53
+#: src/views/streak_panel.php:41
+#: src/views/streak_panel.php:54
 #, php-format
 msgid "%s day"
 msgid_plural "%s days"
 msgstr[0] "%s gün"
 msgstr[1] "%s gün"
 
-#: src/views/streak_panel.php:45
+#: src/views/streak_panel.php:46
 msgid "Last published"
 msgstr "Son yayımlanan"
 
-#: src/views/streak_panel.php:46
+#: src/views/streak_panel.php:47
 msgid "No published posts yet"
 msgstr "Henüz yayımlanmış yazı yok"
 
-#: src/views/streak_panel.php:49
+#: src/views/streak_panel.php:50
 msgid "Next milestone"
 msgstr "Sonraki hedef"
 
 #. translators: Unit shown after the large streak number, e.g. "12 days".
-#: src/views/streak_panel.php:66
+#: src/views/streak_panel.php:67
 msgctxt "streak counter unit"
 msgid "day"
 msgid_plural "days"
 msgstr[0] "gün"
 msgstr[1] "gün"
 
-#: src/views/streak_panel.php:72
+#: src/views/streak_panel.php:73
 msgid "Published today"
 msgstr "Bugün yayımlandı"
 
-#: src/views/streak_panel.php:72
+#: src/views/streak_panel.php:73
 msgid "Needs a post today"
 msgstr "Bugün bir yazı gerekiyor"
 
-#: src/views/streak_panel.php:77
+#: src/views/streak_panel.php:78
 msgid "Milestone progress"
 msgstr "Hedef ilerlemesi"
 
 #. translators: %s: Progress towards the next milestone, a number from 0 to 100.
-#: src/views/streak_panel.php:81
+#: src/views/streak_panel.php:82
 #, php-format
 msgid "%s%%"
 msgstr "%%%s"
@@ -101,5 +101,10 @@ msgstr "Dmitry Merkushin"
 
 #. Plugin Name of the plugin
 #: streakfire.php
+#: src/views/screen_option.php:11
 msgid "Streakfire"
 msgstr "Streakfire"
+
+#: src/views/screen_option.php:14
+msgid "Writing streak panel"
+msgstr "Yazma serisi paneli"

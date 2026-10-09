@@ -26,3 +26,11 @@ function esc_attr( string $text ): string {
 function esc_html_e( string $text, string $domain = 'default' ): void {
 	echo esc_html( $text );
 }
+
+function checked( $checked, $current = true, bool $display = true ): string {
+	$result = (string) $checked === (string) $current ? ' checked=\'checked\'' : '';
+	if ( $display ) {
+		echo $result; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Fixed attribute string.
+	}
+	return $result;
+}
