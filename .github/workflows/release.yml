@@ -39,6 +39,9 @@ jobs:
 
       - run: make dist
 
+      - name: Smoke test the build
+        run: make smoke
+
       - name: Deploy to WordPress.org
         uses: 10up/action-wordpress-plugin-deploy@stable
         env:
