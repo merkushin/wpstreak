@@ -20,9 +20,11 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: shivammathur/setup-php@v2
+        env:
+          fail-fast: true
         with:
           php-version: '8.3'
-          tools: composer:v2, wp-cli
+          tools: composer:v2
           coverage: none
 
       - uses: actions/setup-node@v4
