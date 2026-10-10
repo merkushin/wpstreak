@@ -9,7 +9,9 @@ defined( 'ABSPATH' ) || exit;
  *
  * Pure logic with no WordPress dependencies: dates in, summary out. With a
  * daily goal the streak counts days in a row; with a weekly goal it counts
- * weeks in a row in which the goal's number of days had a post.
+ * weeks in a row in which the goal's number of days had a post. Periods a
+ * streak freeze covered (Inkmeter Pro) keep the streak going without adding
+ * to it, as the Inkmeter Pro service counts them.
  */
 class StreakCalculator {
 	private const DAY_MILESTONES = [ 3, 7, 14, 30, 50, 100 ];
@@ -25,6 +27,7 @@ class StreakCalculator {
 	 * @param string    $today      Today in the site timezone (Y-m-d).
 	 * @param Goal|null $goal       Daily when null.
 	 * @param int       $week_start First day of the week, 0 (Sunday) to 6, as WordPress' start_of_week option.
+	 * @param string[]  $frozen     Periods streak freezes covered: days (Y-m-d), or the first day of weeks.
 	 *
 	 * @return array{
 	 *     streak: int,
@@ -35,13 +38,16 @@ class StreakCalculator {
 	 *     goal_days: int,
 	 *     period_days: int,
 	 *     days_left: int,
+	 *     saved_by_freeze: bool,
 	 *     next_milestone: int
-	 * } unit is 'day' or 'week'. is_goal_met, period_days and days_left describe the current period
+	 * } unit is 'day' or 'week'. saved_by_freeze tells whether a freeze covered the period before the
+	 *   current one (yesterday, or last week) and the streak lives on. is_goal_met, period_days and days_left describe the current period
 	 *   (today, or this week): whether its goal is met, how many days in it had a post so far, and
 	 *   how many days of it are left including today.
 	 */
-	public function calculate( array $dates, string $today, ?Goal $goal = null, int $week_start = 1 ): array {
-		$goal = $goal ?? Goal::daily();
+	public function calculate( array $dates, string $today, ?Goal $goal = null, int $week_start = 1, array $frozen = [] ): array {
+		$goal   = $goal ?? Goal::daily();
+		$frozen = array_fill_keys( array_map( 'strval', $frozen ), true );
 
 		$days = [];
 		foreach ( $dates as $date ) {
@@ -54,8 +60,8 @@ class StreakCalculator {
 		$is_active_today = isset( $days[ $today ] );
 
 		$summary = $goal->is_weekly()
-			? $this->weekly( $days, $today, $goal->days(), $week_start )
-			: $this->daily( $days, $today, $is_active_today );
+			? $this->weekly( $days, $frozen, $today, $goal->days(), $week_start )
+			: $this->daily( $days, $frozen, $today, $is_active_today );
 
 		return [
 			'streak'          => $summary['streak'],
@@ -66,60 +72,97 @@ class StreakCalculator {
 			'goal_days'       => $goal->days(),
 			'period_days'     => $summary['period_days'],
 			'days_left'       => $summary['days_left'],
+			'saved_by_freeze' => $summary['saved_by_freeze'],
 			'next_milestone'  => $this->next_milestone( $summary['streak'], $goal->is_weekly() ),
 		];
 	}
 
 	/**
 	 * @param array<string, true> $days
+	 * @param array<string, true> $frozen
 	 *
-	 * @return array{streak: int, unit: string, is_goal_met: bool, period_days: int, days_left: int}
+	 * @return array{streak: int, unit: string, is_goal_met: bool, period_days: int, days_left: int, saved_by_freeze: bool}
 	 */
-	private function daily( array $days, string $today, bool $is_active_today ): array {
-		// The streak survives until the end of the day after the last post.
-		$day    = $is_active_today ? $today : $this->add_days( $today, -1 );
-		$streak = 0;
-		while ( isset( $days[ $day ] ) ) {
+	private function daily( array $days, array $frozen, string $today, bool $is_active_today ): array {
+		$yesterday = $this->add_days( $today, -1 );
+		$streak    = $this->run(
+			$yesterday,
+			$frozen,
+			function ( string $day ) use ( $days ): bool {
+				return isset( $days[ $day ] );
+			},
+			-1
+		);
+		if ( $is_active_today ) {
 			++$streak;
-			$day = $this->add_days( $day, -1 );
 		}
 
+		// The streak survives until the end of the day after the last post.
 		return [
-			'streak'      => $streak,
-			'unit'        => 'day',
-			'is_goal_met' => $is_active_today,
-			'period_days' => $is_active_today ? 1 : 0,
-			'days_left'   => 1,
+			'streak'          => $streak,
+			'unit'            => 'day',
+			'is_goal_met'     => $is_active_today,
+			'period_days'     => $is_active_today ? 1 : 0,
+			'days_left'       => 1,
+			'saved_by_freeze' => $streak > 0 && isset( $frozen[ $yesterday ] ),
 		];
 	}
 
 	/**
 	 * @param array<string, true> $days
+	 * @param array<string, true> $frozen
 	 *
-	 * @return array{streak: int, unit: string, is_goal_met: bool, period_days: int, days_left: int}
+	 * @return array{streak: int, unit: string, is_goal_met: bool, period_days: int, days_left: int, saved_by_freeze: bool}
 	 */
-	private function weekly( array $days, string $today, int $goal_days, int $week_start ): array {
+	private function weekly( array $days, array $frozen, string $today, int $goal_days, int $week_start ): array {
 		$offset          = ( (int) $this->date( $today )->format( 'w' ) - $week_start + 7 ) % 7;
 		$this_week_start = $this->add_days( $today, -$offset );
+		$last_week_start = $this->add_days( $this_week_start, -7 );
 
 		$this_week   = $this->days_in_week( $days, $this_week_start );
 		$is_goal_met = $this_week >= $goal_days;
 
 		// Like a day, this week keeps the streak alive until it's over.
-		$streak     = $is_goal_met ? 1 : 0;
-		$week_start = $this->add_days( $this_week_start, -7 );
-		while ( $this->days_in_week( $days, $week_start ) >= $goal_days ) {
+		$streak = $this->run(
+			$last_week_start,
+			$frozen,
+			function ( string $week ) use ( $days, $goal_days ): bool {
+				return $this->days_in_week( $days, $week ) >= $goal_days;
+			},
+			-7
+		);
+		if ( $is_goal_met ) {
 			++$streak;
-			$week_start = $this->add_days( $week_start, -7 );
 		}
 
 		return [
-			'streak'      => $streak,
-			'unit'        => 'week',
-			'is_goal_met' => $is_goal_met,
-			'period_days' => $this_week,
-			'days_left'   => 7 - $offset,
+			'streak'          => $streak,
+			'unit'            => 'week',
+			'is_goal_met'     => $is_goal_met,
+			'period_days'     => $this_week,
+			'days_left'       => 7 - $offset,
+			'saved_by_freeze' => $streak > 0 && isset( $frozen[ $last_week_start ] ),
 		];
+	}
+
+	/**
+	 * Counts the periods that met the goal going back from $period, passing over
+	 * frozen ones, until one did neither.
+	 *
+	 * @param array<string, true>    $frozen
+	 * @param callable(string): bool $is_met
+	 * @param int                    $step   Days from one period to the previous: -1 or -7.
+	 */
+	private function run( string $period, array $frozen, callable $is_met, int $step ): int {
+		$count = 0;
+		while ( true ) {
+			if ( $is_met( $period ) ) {
+				++$count;
+			} elseif ( ! isset( $frozen[ $period ] ) ) {
+				return $count;
+			}
+			$period = $this->add_days( $period, $step );
+		}
 	}
 
 	/**

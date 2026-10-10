@@ -7,6 +7,7 @@ use Merkushin\Wpal\Service\Dates;
 use Merkushin\Wpal\Service\Hooks;
 use Merkushin\Wpal\Service\PostTypes;
 use Merkushin\Wpal\ServiceFactory;
+use Merkushin\Inkmeter\GoalSettings;
 use Merkushin\Inkmeter\PublishedPostDates;
 
 defined( 'ABSPATH' ) || exit;
@@ -66,14 +67,20 @@ class DaysSync {
 	 */
 	private $post_dates;
 
-	public function __construct( Api $api, Connection $connection, ?PublishedPostDates $post_dates = null ) {
-		$this->hooks      = ServiceFactory::create_hooks();
-		$this->cron       = ServiceFactory::create_cron();
-		$this->post_types = ServiceFactory::create_post_types();
-		$this->dates      = ServiceFactory::create_dates();
-		$this->api        = $api;
-		$this->connection = $connection;
-		$this->post_dates = $post_dates ?? new PublishedPostDates();
+	/**
+	 * @var GoalSettings
+	 */
+	private $goal_settings;
+
+	public function __construct( Api $api, Connection $connection, ?PublishedPostDates $post_dates = null, ?GoalSettings $goal_settings = null ) {
+		$this->hooks         = ServiceFactory::create_hooks();
+		$this->cron          = ServiceFactory::create_cron();
+		$this->post_types    = ServiceFactory::create_post_types();
+		$this->dates         = ServiceFactory::create_dates();
+		$this->api           = $api;
+		$this->connection    = $connection;
+		$this->post_dates    = $post_dates ?? new PublishedPostDates();
+		$this->goal_settings = $goal_settings ?? new GoalSettings();
 	}
 
 	public function init(): void {
@@ -82,6 +89,9 @@ class DaysSync {
 		// The same hooks that refresh the panel's cache.
 		$this->hooks->add_action( 'save_post', [ $this, 'schedule' ] );
 		$this->hooks->add_action( 'delete_post', [ $this, 'schedule' ] );
+		// A new goal changes the streak and when reminders are due.
+		$this->hooks->add_action( 'add_option_' . GoalSettings::OPTION, [ $this, 'schedule_soon' ] );
+		$this->hooks->add_action( 'update_option_' . GoalSettings::OPTION, [ $this, 'schedule_soon' ] );
 	}
 
 	/**
@@ -91,6 +101,17 @@ class DaysSync {
 	 */
 	public function schedule( $post_id ): void {
 		if ( ! $this->connection->is_connected() || 'post' !== $this->post_types->get_post_type( (int) $post_id ) ) {
+			return;
+		}
+
+		$this->schedule_soon();
+	}
+
+	/**
+	 * Syncs a minute from now, in the background.
+	 */
+	public function schedule_soon(): void {
+		if ( ! $this->connection->is_connected() ) {
 			return;
 		}
 
@@ -110,8 +131,10 @@ class DaysSync {
 			'/v1/days',
 			$token,
 			[
-				'days'     => $this->post_dates->get_dates(),
-				'timezone' => (string) $this->dates->wp_timezone_string(),
+				'days'           => $this->post_dates->get_dates(),
+				'timezone'       => (string) $this->dates->wp_timezone_string(),
+				'goal'           => $this->goal_settings->goal()->to_array(),
+				'week_starts_on' => $this->goal_settings->week_start(),
 			]
 		);
 
@@ -126,6 +149,7 @@ class DaysSync {
 		}
 		if ( 200 === $response['status'] ) {
 			$this->connection->record_sync( time() );
+			$this->connection->record_streak( $response['data'] );
 		}
 	}
 

@@ -22,6 +22,9 @@
  * @var string      $progress_label       $progress formatted for the locale.
  * @var bool        $is_panel_visible     False when the user hid the panel in Screen Options.
  * @var string|null $reminders_url        Settings page for Pro reminders; null when they're set up or the user can't manage them.
+ * @var int|null    $freezes_left         Inkmeter Pro streak freezes left this month; null without them.
+ * @var string      $freezes_left_label   $freezes_left formatted for the locale.
+ * @var bool        $saved_by_freeze      Whether a streak freeze covered yesterday (or last week) and kept the streak.
  * @var \Merkushin\Inkmeter\Goal $goal
  * @var bool        $can_change_goal      Whether the user may change the site's goal.
  * @var string      $goal_action_url      Where the goal form posts.
@@ -71,6 +74,18 @@ defined( 'ABSPATH' ) || exit;
 				</details>
 			<?php endif; ?>
 		</div>
+		<?php if ( null !== $freezes_left ) : ?>
+			<p class="inkmeter-panel__freezes">
+				<?php
+				if ( $saved_by_freeze ) {
+					echo esc_html( $is_weekly ? __( 'A streak freeze saved last week.', 'inkmeter' ) : __( 'A streak freeze saved yesterday.', 'inkmeter' ) );
+					echo ' ';
+				}
+				/* translators: %s: Number of streak freezes. */
+				echo esc_html( sprintf( _n( '%s streak freeze left this month', '%s streak freezes left this month', $freezes_left, 'inkmeter' ), $freezes_left_label ) );
+				?>
+			</p>
+		<?php endif; ?>
 		<?php if ( null !== $reminders_url ) : ?>
 			<p class="inkmeter-panel__reminders"><a href="<?php echo esc_url( $reminders_url ); ?>"><?php esc_html_e( 'Get an email before your streak breaks', 'inkmeter' ); ?></a></p>
 		<?php endif; ?>

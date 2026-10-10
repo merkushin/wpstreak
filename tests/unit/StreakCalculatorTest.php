@@ -188,4 +188,39 @@ class StreakCalculatorTest extends TestCase {
 		$this->assertSame( 'day', $summary['unit'] );
 		$this->assertSame( [ true, 1, 1, 1 ], [ $summary['is_goal_met'], $summary['goal_days'], $summary['period_days'], $summary['days_left'] ] );
 	}
+
+	/**
+	 * The same cases as the server's TestFreezesKeepTheStreakWithoutCounting.
+	 *
+	 * @dataProvider provide_daily_freezes
+	 *
+	 * @param string[] $dates
+	 * @param string[] $frozen
+	 */
+	public function testCalculate_FrozenDays_KeepTheStreakWithoutCounting( array $dates, array $frozen, int $expected, bool $expected_saved ): void {
+		$summary = ( new StreakCalculator() )->calculate( $dates, '2026-10-10', Goal::daily(), self::MONDAY, $frozen );
+
+		$this->assertSame( $expected, $summary['streak'] );
+		$this->assertSame( $expected_saved, $summary['saved_by_freeze'] );
+	}
+
+	public function provide_daily_freezes(): array {
+		return [
+			'a frozen day bridges a gap'              => [ [ '2026-10-06', '2026-10-07', '2026-10-09', '2026-10-10' ], [ '2026-10-08' ], 4, false ],
+			'without the freeze the gap breaks it'    => [ [ '2026-10-06', '2026-10-07', '2026-10-09', '2026-10-10' ], [], 2, false ],
+			'a frozen yesterday keeps it alive today' => [ [ '2026-10-07', '2026-10-08' ], [ '2026-10-09' ], 2, true ],
+			'freezes alone are not a streak'          => [ [], [ '2026-10-08', '2026-10-09' ], 0, false ],
+			'two frozen days in a row'                => [ [ '2026-10-06', '2026-10-09' ], [ '2026-10-07', '2026-10-08' ], 2, false ],
+		];
+	}
+
+	public function testCalculate_FrozenWeek_KeepsTheWeeklyStreak(): void {
+		$dates = [ '2026-02-16', '2026-02-18', '2026-02-20', '2026-03-02', '2026-03-03', '2026-03-04' ];
+
+		$frozen  = ( new StreakCalculator() )->calculate( $dates, self::THURSDAY, Goal::weekly( 3 ), self::MONDAY, [ '2026-02-23' ] );
+		$without = ( new StreakCalculator() )->calculate( $dates, self::THURSDAY, Goal::weekly( 3 ), self::MONDAY );
+
+		$this->assertSame( [ 2, true, true ], [ $frozen['streak'], $frozen['is_goal_met'], $frozen['saved_by_freeze'] ] );
+		$this->assertSame( [ 1, false ], [ $without['streak'], $without['saved_by_freeze'] ] );
+	}
 }

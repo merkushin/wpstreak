@@ -17,6 +17,8 @@ class Connection {
 
 	public const FEATURE_REMINDERS = 'reminders';
 
+	public const FEATURE_FREEZES = 'freezes';
+
 	/**
 	 * @var Options
 	 */
@@ -91,6 +93,41 @@ class Connection {
 
 	public function record_sync( int $time ): void {
 		$this->set( [ 'synced_at' => $time ] );
+	}
+
+	/**
+	 * Keeps the freezes from a streak the API returned (/v1/days or /v1/streak).
+	 *
+	 * @param array<string, mixed> $streak
+	 */
+	public function record_streak( array $streak ): void {
+		$frozen = $streak['frozen'] ?? [];
+
+		$this->set(
+			[
+				'frozen'       => is_array( $frozen ) ? array_values( array_filter( $frozen, 'is_string' ) ) : [],
+				'frozen_unit'  => (string) ( $streak['unit'] ?? 'day' ),
+				'freezes_left' => (int) ( $streak['freezes_left'] ?? 0 ),
+			]
+		);
+	}
+
+	/**
+	 * Periods streak freezes covered, for 'day' or 'week'.
+	 *
+	 * @return string[]
+	 */
+	public function frozen( string $unit ): array {
+		$data = $this->get();
+		if ( ( $data['frozen_unit'] ?? null ) !== $unit || ! is_array( $data['frozen'] ?? null ) ) {
+			return [];
+		}
+
+		return $data['frozen'];
+	}
+
+	public function freezes_left(): int {
+		return (int) ( $this->get()['freezes_left'] ?? 0 );
 	}
 
 	public function forget(): void {

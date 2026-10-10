@@ -35,6 +35,16 @@ class StreakTest extends TestCase {
 	 */
 	private $goal_settings;
 
+	/**
+	 * @var Hooks&MockObject
+	 */
+	private $hooks;
+
+	/**
+	 * @var string[] What the frozen-periods filter returns.
+	 */
+	private $frozen = [];
+
 	protected function setUp(): void {
 		$this->transient  = $this->createMock( Transient::class );
 		$this->post_types = $this->createMock( PostTypes::class );
@@ -42,6 +52,15 @@ class StreakTest extends TestCase {
 
 		$this->goal_settings = $this->createMock( GoalSettings::class );
 		$this->goal_settings->method( 'week_start' )->willReturn( 1 );
+
+		// No freezes unless a test adds them, as without Inkmeter Pro.
+		$this->hooks = $this->createMock( Hooks::class );
+		$this->hooks->method( 'apply_filters' )->willReturnCallback(
+			function ( string $hook, $value ) {
+				return Streak::FROZEN_FILTER === $hook ? $this->frozen : $value;
+			}
+		);
+		ServiceFactory::set_custom_hooks( $this->hooks );
 
 		$dates = $this->createMock( Dates::class );
 		$dates->method( 'current_time' )->with( 'Y-m-d' )->willReturn( '2026-03-02' );
@@ -92,7 +111,7 @@ class StreakTest extends TestCase {
 		$this->goal_settings->method( 'goal' )->willReturn( Goal::daily() );
 		$this->transient->method( 'get_transient' )->willReturn(
 			[
-				'key'     => '2026-03-02|daily|1',
+				'key'     => '2026-03-02|daily|1|d41d8cd98f00b204e9800998ecf8427e',
 				'summary' => $cached,
 			]
 		);
@@ -112,7 +131,7 @@ class StreakTest extends TestCase {
 		$this->goal_settings->method( 'goal' )->willReturn( Goal::daily() );
 		$this->transient->method( 'get_transient' )->willReturn(
 			[
-				'key'     => '2026-03-01|daily|1',
+				'key'     => '2026-03-01|daily|1|d41d8cd98f00b204e9800998ecf8427e',
 				'summary' => $stale,
 			]
 		);
@@ -135,7 +154,7 @@ class StreakTest extends TestCase {
 			->with(
 				Streak::TRANSIENT_KEY,
 				[
-					'key'     => '2026-03-02|daily|1',
+					'key'     => '2026-03-02|daily|1|d41d8cd98f00b204e9800998ecf8427e',
 					'summary' => [
 						'streak'          => 2,
 						'unit'            => 'day',
@@ -145,6 +164,7 @@ class StreakTest extends TestCase {
 						'goal_days'       => 1,
 						'period_days'     => 1,
 						'days_left'       => 1,
+						'saved_by_freeze' => false,
 						'next_milestone'  => 3,
 					],
 				],
@@ -159,7 +179,7 @@ class StreakTest extends TestCase {
 		$this->goal_settings->method( 'goal' )->willReturn( Goal::weekly( 2 ) );
 		$this->transient->method( 'get_transient' )->willReturn(
 			[
-				'key'     => '2026-03-02|daily|1',
+				'key'     => '2026-03-02|daily|1|d41d8cd98f00b204e9800998ecf8427e',
 				'summary' => [ 'streak' => 99 ],
 			]
 		);
@@ -169,6 +189,34 @@ class StreakTest extends TestCase {
 		$summary = ( new Streak( $this->post_dates, null, $this->goal_settings ) )->get_summary();
 
 		$this->assertSame( [ 1, 'week', false ], [ $summary['streak'], $summary['unit'], $summary['is_goal_met'] ] );
+	}
+
+	public function testGetSummary_FrozenPeriodsFiltered_CountsThem(): void {
+		$this->goal_settings->method( 'goal' )->willReturn( Goal::daily() );
+		$this->transient->method( 'get_transient' )->willReturn( false );
+		// Monday 2026-03-02: a freeze covered yesterday, Sunday.
+		$this->post_dates->method( 'get_dates' )->willReturn( [ '2026-02-27', '2026-02-28' ] );
+		$this->frozen = [ '2026-03-01' ];
+
+		$summary = ( new Streak( $this->post_dates, null, $this->goal_settings ) )->get_summary();
+
+		$this->assertSame( [ 2, true ], [ $summary['streak'], $summary['saved_by_freeze'] ] );
+	}
+
+	public function testGetSummary_FreezesChangedSinceCached_Recalculates(): void {
+		$this->goal_settings->method( 'goal' )->willReturn( Goal::daily() );
+		$this->transient->method( 'get_transient' )->willReturn(
+			[
+				'key'     => '2026-03-02|daily|1|d41d8cd98f00b204e9800998ecf8427e',
+				'summary' => [ 'streak' => 0 ],
+			]
+		);
+		$this->post_dates->method( 'get_dates' )->willReturn( [ '2026-02-28' ] );
+		$this->frozen = [ '2026-03-01' ];
+
+		$summary = ( new Streak( $this->post_dates, null, $this->goal_settings ) )->get_summary();
+
+		$this->assertSame( 1, $summary['streak'] );
 	}
 
 	public function testSaveGoal_Always_SavesItAndClearsTheCache(): void {

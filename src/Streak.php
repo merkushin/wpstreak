@@ -13,6 +13,12 @@ defined( 'ABSPATH' ) || exit;
 class Streak {
 	public const TRANSIENT_KEY = 'inkmeter_summary';
 
+	/**
+	 * Filters the periods streak freezes covered (days, or week starts) for a
+	 * unit, 'day' or 'week'. Inkmeter Pro fills it from the Inkmeter Pro service.
+	 */
+	public const FROZEN_FILTER = 'inkmeter_frozen_periods';
+
 	private const CACHE_TTL = 86400;
 
 	/**
@@ -72,16 +78,18 @@ class Streak {
 		$today      = (string) $this->dates->current_time( 'Y-m-d' );
 		$goal       = $this->goal_settings->goal();
 		$week_start = $this->goal_settings->week_start();
+		$frozen     = $this->hooks->apply_filters( self::FROZEN_FILTER, [], $goal->is_weekly() ? 'week' : 'day' );
+		$frozen     = is_array( $frozen ) ? array_values( array_filter( $frozen, 'is_string' ) ) : [];
 
-		// The cache is tied to the day, goal and week start it was computed for,
-		// so the streak is never stale after midnight or a change of goal.
-		$key    = $today . '|' . $goal->key() . '|' . $week_start;
+		// The cache is tied to the day, goal, week start and freezes it was computed
+		// for, so the streak is never stale after midnight or a change of goal.
+		$key    = $today . '|' . $goal->key() . '|' . $week_start . '|' . md5( implode( ',', $frozen ) );
 		$cached = $this->transient->get_transient( self::TRANSIENT_KEY );
 		if ( is_array( $cached ) && ( $cached['key'] ?? null ) === $key && is_array( $cached['summary'] ?? null ) ) {
 			return $cached['summary'];
 		}
 
-		$summary = $this->calculator->calculate( $this->post_dates->get_dates(), $today, $goal, $week_start );
+		$summary = $this->calculator->calculate( $this->post_dates->get_dates(), $today, $goal, $week_start, $frozen );
 
 		$this->transient->set_transient(
 			self::TRANSIENT_KEY,

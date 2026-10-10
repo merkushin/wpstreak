@@ -78,6 +78,15 @@
   font-size: 14px;
   line-height: 1.7;
 }
+.inkmeter-panel.notice .inkmeter-panel__freezes {
+  margin: 8px 0 0;
+  color: var(--inkmeter-muted);
+  font-size: 13px;
+}
+.inkmeter-panel__freezes::before {
+  content: "\2744\FE0F";
+  margin-right: 6px;
+}
 .inkmeter-panel.notice .inkmeter-panel__reminders {
   margin: 0;
   font-size: 13px;

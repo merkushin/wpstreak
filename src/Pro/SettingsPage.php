@@ -303,6 +303,7 @@ class SettingsPage {
 		$is_reachable = true;
 		$settings     = [];
 		$streak       = null;
+		$streak_unit  = 'day';
 
 		if ( $this->connection->is_connected() ) {
 			$entitlements = $this->call_quietly( 'GET', '/v1/entitlements' );
@@ -312,8 +313,13 @@ class SettingsPage {
 				$is_reachable = false;
 			} elseif ( 200 === $entitlements['status'] ) {
 				$this->connection->update_entitlements( $entitlements['data'] );
-				$settings = $this->call_quietly( 'GET', '/v1/settings' )['data'] ?? [];
-				$streak   = $this->call_quietly( 'GET', '/v1/streak' )['data']['current'] ?? null;
+				$settings    = $this->call_quietly( 'GET', '/v1/settings' )['data'] ?? [];
+				$streak_data = $this->call_quietly( 'GET', '/v1/streak' )['data'] ?? null;
+				if ( is_array( $streak_data ) ) {
+					$this->connection->record_streak( $streak_data );
+					$streak      = $streak_data['current'] ?? null;
+					$streak_unit = (string) ( $streak_data['unit'] ?? 'day' );
+				}
 			}
 		}
 
@@ -322,6 +328,7 @@ class SettingsPage {
 		$is_connected     = $this->connection->is_connected();
 		$email            = $this->connection->email();
 		$is_pro           = $this->connection->has_feature( Connection::FEATURE_REMINDERS );
+		$freezes_left     = $this->connection->has_feature( Connection::FEATURE_FREEZES ) ? $this->connection->freezes_left() : null;
 		$reminder_enabled = (bool) ( $settings['reminder_enabled'] ?? true );
 		$reminder_hour    = (int) ( $settings['reminder_hour'] ?? 19 );
 		$timezone         = (string) $this->dates->wp_timezone_string();

@@ -464,6 +464,31 @@ class SettingsPageTest extends TestCase {
 		$this->assertTrue( $this->connection->has_feature( Connection::FEATURE_REMINDERS ), 'entitlements are refreshed' );
 	}
 
+	public function testRender_ProWithWeeklyGoal_ShowsWeeksAndFreezes(): void {
+		$this->connection->connect( 'sfs_token', 'writer@example.com', [] );
+		$this->api_returns(
+			[
+				'/v1/entitlements' => [
+					'plan'     => 'pro',
+					'features' => [ 'reminders', 'freezes' ],
+				],
+				'/v1/settings'     => [],
+				'/v1/streak'       => [
+					'current'      => 6,
+					'unit'         => 'week',
+					'frozen'       => [ '2026-09-28' ],
+					'freezes_left' => 1,
+				],
+			]
+		);
+
+		$text = trim( (string) preg_replace( '/\s+/', ' ', strip_tags( $this->render() ) ) );
+
+		$this->assertStringContainsString( 'Streak in your account 6 weeks', $text );
+		$this->assertStringContainsString( 'Streak freezes 1 left this month', $text );
+		$this->assertSame( [ '2026-09-28' ], $this->connection->frozen( 'week' ), 'the panel gets the same freezes' );
+	}
+
 	public function testRender_ConnectedFree_OffersUpgrade(): void {
 		$this->connection->connect( 'sfs_token', 'writer@example.com', [] );
 		$this->api_returns(

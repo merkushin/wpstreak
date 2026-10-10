@@ -29,7 +29,7 @@ There is nothing else to configure. The panel only appears on the Posts list scr
 
 = Inkmeter Pro (optional) =
 
-Connect your site to Inkmeter Pro under **Settings → Inkmeter** to get an email at the hour you choose when you haven't published yet that day, before your streak breaks. Your streak history is kept in your account, so it survives reinstalls and site moves, and several sites can share one streak.
+Connect your site to Inkmeter Pro under **Settings → Inkmeter** to get an email at the hour you choose when your goal needs a post today, before your streak breaks, and 2 streak freezes a month: miss a day (or a week, with a weekly goal) without losing your streak. Your streak history is kept in your account, so it survives reinstalls and site moves, and several sites can share one streak.
 
 Inkmeter Pro is a paid subscription. Everything above works without it, and nothing is sent anywhere unless you connect.
 
@@ -48,7 +48,7 @@ If you connect to Inkmeter Pro, the data described under External services is se
 Inkmeter Pro, which is optional, uses a web service at streakfire.org, run by Dmitrii Merkushin. Nothing is sent to it unless an administrator connects the site under **Settings → Inkmeter**.
 
 * **When connecting:** your browser opens streakfire.org, where you enter your email address; the plugin then sends this site's address and timezone to api.streakfire.org.
-* **After connecting:** a minute after posts change, and once a day, the plugin sends api.streakfire.org the dates on which this site published at least one post, and its timezone. It never sends your posts' titles, content or any other details about them.
+* **After connecting:** a minute after posts or the writing goal change, and once a day, the plugin sends api.streakfire.org the dates on which this site published at least one post, its timezone, its writing goal and the first day of its week. It never sends your posts' titles, content or any other details about them.
 * **When you open Settings → Inkmeter, change reminders, upgrade or manage your subscription:** the plugin asks api.streakfire.org for your plan, reminder settings, streak, and checkout or billing links. Payments happen on Lemon Squeezy, the service's reseller.
 * **When you disconnect or delete the plugin:** the plugin tells api.streakfire.org to revoke this site's access.
 
@@ -92,7 +92,7 @@ Anyone who can open the Posts list in the dashboard.
 
 = What does Inkmeter Pro send? =
 
-Only this site's address, its timezone and the dates you published on, so it can tell whether you've published today. Never your posts or anything about them. See **External services** above.
+Only this site's address, its timezone, your writing goal, the first day of your week and the dates you published on, so it can tell whether your goal needs a post today. Never your posts or anything about them. See **External services** above.
 
 = Can I hide the panel? =
 

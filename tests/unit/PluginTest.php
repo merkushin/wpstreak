@@ -376,6 +376,32 @@ class PluginTest extends TestCase {
 		$this->assertStringNotContainsString( 'inkmeter-panel__reminders', $this->render_panel() );
 	}
 
+	public function testRenderStreakPanel_FreezeSavedYesterday_SaysSoWithFreezesLeft(): void {
+		$this->pro->method( 'freezes_left' )->willReturn( 1 );
+		$text = $this->render_panel_text(
+			[
+				'streak'          => 5,
+				'unit'            => 'day',
+				'last_post_date'  => '2026-03-03',
+				'is_active_today' => false,
+				'is_goal_met'     => false,
+				'goal_days'       => 1,
+				'period_days'     => 0,
+				'days_left'       => 1,
+				'saved_by_freeze' => true,
+				'next_milestone'  => 7,
+			]
+		);
+
+		$this->assertStringContainsString( 'A streak freeze saved yesterday. 1 streak freeze left this month', $text );
+	}
+
+	public function testRenderStreakPanel_WithoutFreezes_ShowsNoFreezeLine(): void {
+		$this->pro->method( 'freezes_left' )->willReturn( null );
+
+		$this->assertStringNotContainsString( 'inkmeter-panel__freezes', $this->render_panel() );
+	}
+
 	public function testAddScreenOption_PostsScreen_AppendsCheckedToggle(): void {
 		$settings = ( new Plugin( self::PLUGIN_FILE, $this->streak, $this->goal_form, $this->pro ) )->add_screen_option( '<p>core</p>', (object) [ 'id' => 'edit-post' ] );
 

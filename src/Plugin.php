@@ -158,6 +158,9 @@ class Plugin {
 		$days_needed_label    = $this->format_number( $days_needed );
 		$is_panel_visible     = $this->is_panel_visible();
 		$reminders_url        = $this->pro->reminders_url();
+		$freezes_left         = $this->pro->freezes_left();
+		$freezes_left_label   = null === $freezes_left ? '' : $this->format_number( $freezes_left );
+		$saved_by_freeze      = (bool) ( $summary['saved_by_freeze'] ?? false );
 		$goal                 = $this->streak->goal();
 		$goal_options         = Goal::all();
 		$can_change_goal      = $this->goal_form->can_change();

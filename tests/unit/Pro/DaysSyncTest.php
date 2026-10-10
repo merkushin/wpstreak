@@ -10,6 +10,8 @@ use Merkushin\Wpal\ServiceFactory;
 use Merkushin\Inkmeter\Pro\Api;
 use Merkushin\Inkmeter\Pro\Connection;
 use Merkushin\Inkmeter\Pro\DaysSync;
+use Merkushin\Inkmeter\Goal;
+use Merkushin\Inkmeter\GoalSettings;
 use Merkushin\Inkmeter\PublishedPostDates;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -42,12 +44,21 @@ class DaysSyncTest extends TestCase {
 	 */
 	private $connection;
 
+	/**
+	 * @var GoalSettings&MockObject
+	 */
+	private $goal_settings;
+
 	protected function setUp(): void {
 		$this->cron       = $this->createMock( Cron::class );
 		$this->post_types = $this->createMock( PostTypes::class );
 		$this->api        = $this->createMock( Api::class );
 		$this->post_dates = $this->createMock( PublishedPostDates::class );
-		$dates            = $this->createMock( Dates::class );
+
+		$this->goal_settings = $this->createMock( GoalSettings::class );
+		$this->goal_settings->method( 'goal' )->willReturn( Goal::weekly( 3 ) );
+		$this->goal_settings->method( 'week_start' )->willReturn( 0 );
+		$dates = $this->createMock( Dates::class );
 		$dates->method( 'wp_timezone_string' )->willReturn( 'America/Mexico_City' );
 
 		ServiceFactory::set_custom_hooks( $this->createMock( Hooks::class ) );
@@ -112,20 +123,33 @@ class DaysSyncTest extends TestCase {
 				'/v1/days',
 				'sfs_token',
 				[
-					'days'     => [ '2026-10-09', '2026-10-08' ],
-					'timezone' => 'America/Mexico_City',
+					'days'           => [ '2026-10-09', '2026-10-08' ],
+					'timezone'       => 'America/Mexico_City',
+					'goal'           => [
+						'type' => 'weekly',
+						'days' => 3,
+					],
+					'week_starts_on' => 0,
 				]
 			)
 			->willReturn(
 				[
 					'status' => 200,
-					'data'   => [],
+					'data'   => [
+						'current'      => 4,
+						'unit'         => 'week',
+						'frozen'       => [ '2026-09-27' ],
+						'freezes_left' => 1,
+					],
 				]
 			);
 
 		$this->create_sync()->sync();
 
 		$this->assertEqualsWithDelta( time(), $this->connection->last_synced_at(), 2 );
+		$this->assertSame( [ '2026-09-27' ], $this->connection->frozen( 'week' ) );
+		$this->assertSame( [], $this->connection->frozen( 'day' ), 'freezes are for the unit the server counted in' );
+		$this->assertSame( 1, $this->connection->freezes_left() );
 	}
 
 	public function testSync_NothingPublished_SendsAnEmptyList(): void {
@@ -207,7 +231,32 @@ class DaysSyncTest extends TestCase {
 		$this->create_sync()->start();
 	}
 
+	public function testInit_GoalChanges_ScheduleASync(): void {
+		$hooks = $this->createMock( Hooks::class );
+		ServiceFactory::set_custom_hooks( $hooks );
+		$sync = $this->create_sync();
+
+		$registered = [];
+		$hooks->method( 'add_action' )->willReturnCallback(
+			function ( string $hook, $callback ) use ( &$registered ): bool {
+				$registered[ $hook ] = $callback;
+				return true;
+			}
+		);
+
+		$sync->init();
+
+		$this->assertSame( [ $sync, 'schedule_soon' ], $registered['add_option_inkmeter_goal'] );
+		$this->assertSame( [ $sync, 'schedule_soon' ], $registered['update_option_inkmeter_goal'] );
+	}
+
+	public function testScheduleSoon_NotConnected_DoesNothing(): void {
+		$this->cron->expects( $this->never() )->method( 'wp_schedule_single_event' );
+
+		$this->create_sync()->schedule_soon();
+	}
+
 	private function create_sync(): DaysSync {
-		return new DaysSync( $this->api, $this->connection, $this->post_dates );
+		return new DaysSync( $this->api, $this->connection, $this->post_dates, $this->goal_settings );
 	}
 }

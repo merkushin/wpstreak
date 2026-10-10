@@ -13,6 +13,8 @@
  * @var string      $timezone         The site's timezone, e.g. "America/Mexico_City" or "+03:00".
  * @var string|null $synced_ago       How long ago the days were last synced, e.g. "5 mins"; null if never.
  * @var int|null    $streak           The streak Inkmeter has, across the account's sites; null if unknown.
+ * @var string      $streak_unit      What the streak counts: 'day' or 'week'.
+ * @var int|null    $freezes_left     Streak freezes left this month; null without them.
  * @var string      $site_url         This site's address.
  * @var string      $privacy_url      Inkmeter's privacy policy.
  * @var string      $action_url       admin-post.php.
@@ -69,9 +71,26 @@ defined( 'ABSPATH' ) || exit;
 					<th scope="row"><?php esc_html_e( 'Streak in your account', 'inkmeter' ); ?></th>
 					<td>
 						<?php
-						/* translators: %s: Number of days. */
-						echo esc_html( sprintf( _n( '%s day', '%s days', $streak, 'inkmeter' ), (string) $streak ) );
+						if ( 'week' === $streak_unit ) {
+							/* translators: %s: Number of weeks. */
+							echo esc_html( sprintf( _n( '%s week', '%s weeks', $streak, 'inkmeter' ), (string) $streak ) );
+						} else {
+							/* translators: %s: Number of days. */
+							echo esc_html( sprintf( _n( '%s day', '%s days', $streak, 'inkmeter' ), (string) $streak ) );
+						}
 						?>
+					</td>
+				</tr>
+			<?php endif; ?>
+			<?php if ( null !== $freezes_left ) : ?>
+				<tr>
+					<th scope="row"><?php esc_html_e( 'Streak freezes', 'inkmeter' ); ?></th>
+					<td>
+						<?php
+						/* translators: %s: Number of streak freezes. */
+						echo esc_html( sprintf( _n( '%s left this month', '%s left this month', $freezes_left, 'inkmeter' ), (string) $freezes_left ) );
+						?>
+						<p class="description"><?php esc_html_e( 'If you miss a day (or a week, with a weekly goal), a freeze keeps your streak going. You get 2 each month.', 'inkmeter' ); ?></p>
 					</td>
 				</tr>
 			<?php endif; ?>

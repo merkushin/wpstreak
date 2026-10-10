@@ -54,6 +54,20 @@ function smoke_do( string $hook, ...$args ) {
 	return $result;
 }
 
+/**
+ * Passes $value through the filter's callbacks, as WordPress does.
+ *
+ * @param mixed $value
+ * @param mixed ...$args
+ * @return mixed
+ */
+function apply_filters( string $hook, $value, ...$args ) {
+	foreach ( $GLOBALS['smoke_actions'][ $hook ] ?? [] as $callback ) {
+		$value = $callback( $value, ...$args );
+	}
+	return $value;
+}
+
 function register_deactivation_hook( string $file, callable $callback ): void {
 	$GLOBALS['smoke_actions']['deactivate'][] = $callback;
 }
@@ -118,16 +132,26 @@ function wp_remote_request( $url, $args = [] ): array {
 	$GLOBALS['smoke_requests'][] = $args['method'] . ' ' . $url;
 	$path                        = (string) wp_parse_url( $url, PHP_URL_PATH );
 	$bodies                      = [
-		'/v1/days'         => [ 'current' => 3 ],
+		'/v1/days'         => [
+			'current'      => 3,
+			'unit'         => 'day',
+			'frozen'       => [ '2026-02-27' ],
+			'freezes_left' => 1,
+		],
 		'/v1/entitlements' => [
 			'plan'     => 'pro',
-			'features' => [ 'reminders' ],
+			'features' => [ 'reminders', 'freezes' ],
 		],
 		'/v1/settings'     => [
 			'reminder_enabled' => true,
 			'reminder_hour'    => 19,
 		],
-		'/v1/streak'       => [ 'current' => 3 ],
+		'/v1/streak'       => [
+			'current'      => 3,
+			'unit'         => 'day',
+			'frozen'       => [ '2026-02-27' ],
+			'freezes_left' => 1,
+		],
 	];
 	return [
 		'code' => 200,
@@ -389,7 +413,7 @@ if ( [ 'PUT https://api.streakfire.org/v1/days' ] !== $GLOBALS['smoke_requests']
 ob_start();
 smoke_do( 'smoke_render_settings' );
 $settings_page = trim( (string) preg_replace( '/\s+/', ' ', strip_tags( (string) ob_get_clean() ) ) );
-foreach ( [ 'writer@example.com', 'Pro', 'Streak in your account 3 days', 'Last synced 1 min ago', 'Manage subscription' ] as $expected ) {
+foreach ( [ 'writer@example.com', 'Pro', 'Streak in your account 3 days', 'Streak freezes 1 left this month', 'Last synced 1 min ago', 'Manage subscription' ] as $expected ) {
 	if ( false === strpos( $settings_page, $expected ) ) {
 		smoke_fail( "settings page is missing \"{$expected}\": {$settings_page}" );
 	}
