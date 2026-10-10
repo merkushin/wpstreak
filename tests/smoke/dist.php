@@ -3,8 +3,9 @@
  * Smoke test for a release build: php tests/smoke/dist.php <build-dir>
  *
  * Loads the built plugin (scoped, with wpal pruned) using stand-ins for the WordPress
- * functions it calls, then runs every path: init, asset loading, rendering the panel and
- * clearing the cache. A wpal class missing from the build fails here with a fatal error.
+ * functions it calls, then runs every path: init, asset loading, rendering the panel with a
+ * daily and a weekly goal, and clearing the cache. A wpal class missing from the build fails
+ * here with a fatal error.
  *
  * @package Merkushin\Inkmeter
  */
@@ -23,6 +24,10 @@ define( 'ABSPATH', __DIR__ . '/' );
 $GLOBALS['smoke_actions']    = [];
 $GLOBALS['smoke_enqueued']   = [];
 $GLOBALS['smoke_transients'] = [];
+$GLOBALS['smoke_options']    = [
+	'date_format'   => 'F j, Y',
+	'start_of_week' => '1',
+];
 
 function add_action( string $hook, callable $callback ): bool {
 	$GLOBALS['smoke_actions'][ $hook ] = $callback;
@@ -85,7 +90,36 @@ function get_post_type( $post = null ) {
 }
 
 function get_option( $option, $default_value = false ) {
-	return 'date_format' === $option ? 'F j, Y' : $default_value;
+	return $GLOBALS['smoke_options'][ $option ] ?? $default_value;
+}
+
+function current_user_can( $capability ): bool {
+	return true;
+}
+
+function admin_url( string $path = '' ): string {
+	return 'https://example.com/wp-admin/' . $path;
+}
+
+function esc_url( string $url ): string {
+	return htmlspecialchars( $url, ENT_QUOTES );
+}
+
+function esc_html__( string $text, string $domain = 'default' ): string {
+	return esc_html( $text );
+}
+
+function selected( $selected, $current = true, bool $display = true ): string {
+	$result = (string) $selected === (string) $current ? " selected='selected'" : '';
+	if ( $display ) {
+		echo $result;
+	}
+	return $result;
+}
+
+function wp_nonce_field( $action = -1 ): string {
+	echo '<input type="hidden" name="_wpnonce" value="nonce" />';
+	return '';
 }
 
 function wp_date( $format, $timestamp = null, $timezone = null ) {
@@ -147,7 +181,7 @@ if ( ! isset( $GLOBALS['smoke_actions']['init'] ) ) {
 }
 call_user_func( $GLOBALS['smoke_actions']['init'] );
 
-foreach ( [ 'admin_enqueue_scripts', 'all_admin_notices', 'screen_settings', 'save_post', 'delete_post' ] as $hook ) {
+foreach ( [ 'admin_enqueue_scripts', 'all_admin_notices', 'screen_settings', 'save_post', 'delete_post', 'admin_post_inkmeter_goal' ] as $hook ) {
 	if ( ! isset( $GLOBALS['smoke_actions'][ $hook ] ) ) {
 		smoke_fail( "no callback for {$hook}" );
 	}
@@ -161,9 +195,24 @@ if ( 2 !== count( $GLOBALS['smoke_enqueued'] ) ) {
 ob_start();
 call_user_func( $GLOBALS['smoke_actions']['all_admin_notices'] );
 $text = trim( (string) preg_replace( '/\s+/', ' ', strip_tags( (string) ob_get_clean() ) ) );
-foreach ( [ 'Current run 3 days', 'Last published March 2, 2026', 'Next milestone 7 days', 'Published today' ] as $expected ) {
+foreach ( [ 'Current run 3 days', 'Last published March 2, 2026', 'Next milestone 7 days', 'Published today', 'Publish every day', 'Change goal' ] as $expected ) {
 	if ( false === strpos( $text, $expected ) ) {
 		smoke_fail( "panel is missing \"{$expected}\": {$text}" );
+	}
+}
+
+// A weekly goal: March 2, 2026 is a Monday, so this week has one day with a post so far.
+$GLOBALS['smoke_options']['inkmeter_goal'] = [
+	'type' => 'weekly',
+	'days' => 2,
+];
+$GLOBALS['smoke_transients']               = [];
+ob_start();
+call_user_func( $GLOBALS['smoke_actions']['all_admin_notices'] );
+$weekly = trim( (string) preg_replace( '/\s+/', ' ', strip_tags( (string) ob_get_clean() ) ) );
+foreach ( [ 'Publish on 2 days a week', 'This week 1 of 2 days', '1 more day this week' ] as $expected ) {
+	if ( false === strpos( $weekly, $expected ) ) {
+		smoke_fail( "weekly panel is missing \"{$expected}\": {$weekly}" );
 	}
 }
 

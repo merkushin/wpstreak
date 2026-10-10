@@ -21,7 +21,11 @@ Inkmeter turns publishing into a habit. Open **Posts** in your dashboard and a p
 
 A streak stays alive until the end of the day after your last post, so you always have a full day to keep it going. Days follow your site's timezone, and several posts on the same day count as one day.
 
-There is nothing to configure. The panel only appears on the Posts list screen, each user can hide it under **Screen Options**, and the plugin loads nothing on the front end of your site.
+= Daily or weekly goals =
+
+Not everyone publishes every day. Under **Change goal** in the panel, an administrator can pick a goal for the site: publish every day, or on 1 to 6 days a week. With a weekly goal, the streak counts weeks in a row that met it, the panel shows how many days this week had a post, and the current week keeps the streak alive until it ends. Weeks start on the day set in **Settings → General → Week Starts On**.
+
+There is nothing else to configure. The panel only appears on the Posts list screen, each user can hide it under **Screen Options**, and the plugin loads nothing on the front end of your site.
 
 = Translations =
 
@@ -47,6 +51,10 @@ Development happens on [GitHub](https://github.com/merkushin/inkmeter), includin
 
 A calendar day in your site's timezone (**Settings → General → Timezone**) on which at least one post was published.
 
+= Can I publish less often than every day? =
+
+Yes. Choose a weekly goal, from 1 to 6 days a week, under **Change goal** in the panel. Several posts on the same day still count as one day, so a goal of 3 days a week asks you to publish on 3 different days.
+
 = Do scheduled, draft or private posts count? =
 
 No. Only published posts count. A scheduled post counts on the day it is published.
@@ -57,7 +65,7 @@ No, only regular posts.
 
 = I published yesterday but not today. Is my streak lost? =
 
-No. The streak stays alive until the end of today. Publish a post today to extend it.
+No. The streak stays alive until the end of today. Publish a post today to extend it. With a weekly goal, the streak stays alive until the end of the current week.
 
 = Who can see the panel? =
 
