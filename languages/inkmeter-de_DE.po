@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Streakfire 1.0.0\n"
-"Report-Msgid-Bugs-To: https://github.com/merkushin/wpstreak/issues\n"
+"Project-Id-Version: Inkmeter 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/merkushin/inkmeter/issues\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -9,38 +9,38 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-10-08T18:32:07+00:00\n"
 "PO-Revision-Date: 2026-10-08 00:00+0000\n"
-"Language: pt_BR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Domain: streakfire\n"
+"Language: de_DE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: inkmeter\n"
 
 #. Description of the plugin
-#: streakfire.php
+#: inkmeter.php
 msgid "Shows your current writing streak above the Posts list."
-msgstr "Mostra sua sequência de escrita atual acima da lista de posts."
+msgstr "Zeigt deine aktuelle Schreibserie über der Beitragsliste an."
 
 #: src/views/streak_panel.php:27
 msgid "Start your next streak"
-msgstr "Comece sua próxima sequência"
+msgstr "Starte deine nächste Serie"
 
 #: src/views/streak_panel.php:29
 msgid "You are on fire today"
-msgstr "Você está pegando fogo hoje"
+msgstr "Heute bist du in Topform"
 
 #: src/views/streak_panel.php:31
 msgid "You are still alive, publish today to keep it going"
-msgstr "Sua sequência continua viva, publique hoje para mantê-la"
+msgstr "Deine Serie lebt noch – veröffentliche heute, um sie fortzusetzen"
 
 #: src/views/streak_panel.php:22
 msgid "Writing momentum"
-msgstr "Ritmo de escrita"
+msgstr "Schreibschwung"
 
 #: src/views/streak_panel.php:23
 msgid "Protect the streak. Build the habit."
-msgstr "Proteja a sequência. Crie o hábito."
+msgstr "Schütze die Serie. Bau die Gewohnheit auf."
 
 #: src/views/streak_panel.php:37
 msgid "Current run"
-msgstr "Sequência atual"
+msgstr "Aktuelle Serie"
 
 #. translators: %s: Number of days.
 #: src/views/streak_panel.php:41
@@ -48,63 +48,63 @@ msgstr "Sequência atual"
 #, php-format
 msgid "%s day"
 msgid_plural "%s days"
-msgstr[0] "%s dia"
-msgstr[1] "%s dias"
+msgstr[0] "%s Tag"
+msgstr[1] "%s Tage"
 
 #: src/views/streak_panel.php:46
 msgid "Last published"
-msgstr "Última publicação"
+msgstr "Zuletzt veröffentlicht"
 
 #: src/views/streak_panel.php:47
 msgid "No published posts yet"
-msgstr "Nenhum post publicado ainda"
+msgstr "Noch keine veröffentlichten Beiträge"
 
 #: src/views/streak_panel.php:50
 msgid "Next milestone"
-msgstr "Próxima meta"
+msgstr "Nächster Meilenstein"
 
 #. translators: Unit shown after the large streak number, e.g. "12 days".
 #: src/views/streak_panel.php:67
 msgctxt "streak counter unit"
 msgid "day"
 msgid_plural "days"
-msgstr[0] "dia"
-msgstr[1] "dias"
+msgstr[0] "Tag"
+msgstr[1] "Tage"
 
 #: src/views/streak_panel.php:73
 msgid "Published today"
-msgstr "Publicado hoje"
+msgstr "Heute veröffentlicht"
 
 #: src/views/streak_panel.php:73
 msgid "Needs a post today"
-msgstr "Falta um post hoje"
+msgstr "Heute steht noch ein Beitrag aus"
 
 #: src/views/streak_panel.php:78
 msgid "Milestone progress"
-msgstr "Progresso da meta"
+msgstr "Fortschritt zum Meilenstein"
 
 #. translators: %s: Progress towards the next milestone, a number from 0 to 100.
 #: src/views/streak_panel.php:82
 #, php-format
 msgid "%s%%"
-msgstr "%s%%"
+msgstr "%s %%"
 
 #. Plugin URI of the plugin
-#: streakfire.php
-msgid "https://github.com/merkushin/wpstreak"
-msgstr "https://github.com/merkushin/wpstreak"
+#: inkmeter.php
+msgid "https://github.com/merkushin/inkmeter"
+msgstr "https://github.com/merkushin/inkmeter"
 
 #. Author of the plugin
-#: streakfire.php
+#: inkmeter.php
 msgid "Dmitry Merkushin"
 msgstr "Dmitry Merkushin"
 
 #. Plugin Name of the plugin
-#: streakfire.php
+#: inkmeter.php
 #: src/views/screen_option.php:11
-msgid "Streakfire"
-msgstr "Streakfire"
+msgid "Inkmeter"
+msgstr "Inkmeter"
 
 #: src/views/screen_option.php:14
 msgid "Writing streak panel"
-msgstr "Painel de sequência de escrita"
+msgstr "Schreibserien-Panel"

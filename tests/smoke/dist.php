@@ -6,13 +6,13 @@
  * functions it calls, then runs every path: init, asset loading, rendering the panel and
  * clearing the cache. A wpal class missing from the build fails here with a fatal error.
  *
- * @package Merkushin\Wpstreak
+ * @package Merkushin\Inkmeter
  */
 
 declare( strict_types=1 );
 
 $build_dir = rtrim( $argv[1] ?? '', '/' );
-$main_file = $build_dir . '/streakfire.php';
+$main_file = $build_dir . '/inkmeter.php';
 if ( ! is_file( $main_file ) ) {
 	fwrite( STDERR, "Usage: php tests/smoke/dist.php <build-dir>\n" );
 	exit( 1 );
@@ -46,16 +46,8 @@ function checked( $checked, $current = true, bool $display = true ): string {
 	return $result;
 }
 
-function load_plugin_textdomain( $domain, $deprecated = false, $path = false ): bool {
-	return true;
-}
-
-function plugin_basename( string $file ): string {
-	return 'streakfire/streakfire.php';
-}
-
 function plugin_dir_url( string $file ): string {
-	return 'https://example.com/wp-content/plugins/streakfire/';
+	return 'https://example.com/wp-content/plugins/inkmeter/';
 }
 
 function get_current_screen() {
@@ -176,7 +168,7 @@ foreach ( [ 'Current run 3 days', 'Last published March 2, 2026', 'Next mileston
 }
 
 $screen_settings = (string) call_user_func( $GLOBALS['smoke_actions']['screen_settings'], '', get_current_screen() );
-if ( false === strpos( $screen_settings, 'id="streakfire-panel-toggle"' ) ) {
+if ( false === strpos( $screen_settings, 'id="inkmeter-panel-toggle"' ) ) {
 	smoke_fail( 'the Screen Options toggle is missing' );
 }
 

@@ -1,5 +1,5 @@
 {
-	"name": "merkushin/wpstreak",
+	"name": "merkushin/inkmeter",
 	"description": "Maintain your writing streak",
 	"type": "wordpress-plugin",
 	"license": "GPL-2.0-or-later",
@@ -21,12 +21,12 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Merkushin\\Wpstreak\\": "src/"
+			"Merkushin\\Inkmeter\\": "src/"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"MerkushinTest\\Wpstreak\\": "tests/unit/"
+			"MerkushinTest\\Inkmeter\\": "tests/unit/"
 		}
 	},
 	"config": {
@@ -41,7 +41,7 @@
 	},
 	"extra": {
 		"wp-scoper": {
-			"namespace_prefix": "Merkushin\\Wpstreak\\Vendor",
+			"namespace_prefix": "Merkushin\\Inkmeter\\Vendor",
 			"packages": [
 				"merkushin/wpal"
 			],

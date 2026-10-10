@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Streakfire 1.0.0\n"
-"Report-Msgid-Bugs-To: https://github.com/merkushin/wpstreak/issues\n"
+"Project-Id-Version: Inkmeter 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/merkushin/inkmeter/issues\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -9,38 +9,38 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-10-08T18:32:07+00:00\n"
 "PO-Revision-Date: 2026-10-08 00:00+0000\n"
-"Language: ja\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Domain: streakfire\n"
+"Language: tr_TR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Domain: inkmeter\n"
 
 #. Description of the plugin
-#: streakfire.php
+#: inkmeter.php
 msgid "Shows your current writing streak above the Posts list."
-msgstr "投稿一覧の上に現在の執筆ストリークを表示します。"
+msgstr "Yazılar listesinin üzerinde mevcut yazma serinizi gösterir."
 
 #: src/views/streak_panel.php:27
 msgid "Start your next streak"
-msgstr "次のストリークを始めましょう"
+msgstr "Bir sonraki serinizi başlatın"
 
 #: src/views/streak_panel.php:29
 msgid "You are on fire today"
-msgstr "今日は絶好調です"
+msgstr "Bugün harikasınız"
 
 #: src/views/streak_panel.php:31
 msgid "You are still alive, publish today to keep it going"
-msgstr "ストリーク継続中です。今日投稿して記録をつなげましょう"
+msgstr "Seriniz hâlâ devam ediyor, sürdürmek için bugün yayımlayın"
 
 #: src/views/streak_panel.php:22
 msgid "Writing momentum"
-msgstr "執筆の勢い"
+msgstr "Yazma ivmesi"
 
 #: src/views/streak_panel.php:23
 msgid "Protect the streak. Build the habit."
-msgstr "ストリークを守り、習慣を作りましょう。"
+msgstr "Seriyi koruyun. Alışkanlık edinin."
 
 #: src/views/streak_panel.php:37
 msgid "Current run"
-msgstr "現在の連続記録"
+msgstr "Mevcut seri"
 
 #. translators: %s: Number of days.
 #: src/views/streak_panel.php:41
@@ -48,61 +48,63 @@ msgstr "現在の連続記録"
 #, php-format
 msgid "%s day"
 msgid_plural "%s days"
-msgstr[0] "%s日"
+msgstr[0] "%s gün"
+msgstr[1] "%s gün"
 
 #: src/views/streak_panel.php:46
 msgid "Last published"
-msgstr "最終公開日"
+msgstr "Son yayımlanan"
 
 #: src/views/streak_panel.php:47
 msgid "No published posts yet"
-msgstr "公開済みの投稿はまだありません"
+msgstr "Henüz yayımlanmış yazı yok"
 
 #: src/views/streak_panel.php:50
 msgid "Next milestone"
-msgstr "次の目標"
+msgstr "Sonraki hedef"
 
 #. translators: Unit shown after the large streak number, e.g. "12 days".
 #: src/views/streak_panel.php:67
 msgctxt "streak counter unit"
 msgid "day"
 msgid_plural "days"
-msgstr[0] "日"
+msgstr[0] "gün"
+msgstr[1] "gün"
 
 #: src/views/streak_panel.php:73
 msgid "Published today"
-msgstr "今日公開済み"
+msgstr "Bugün yayımlandı"
 
 #: src/views/streak_panel.php:73
 msgid "Needs a post today"
-msgstr "今日の投稿が必要です"
+msgstr "Bugün bir yazı gerekiyor"
 
 #: src/views/streak_panel.php:78
 msgid "Milestone progress"
-msgstr "目標までの進捗"
+msgstr "Hedef ilerlemesi"
 
 #. translators: %s: Progress towards the next milestone, a number from 0 to 100.
 #: src/views/streak_panel.php:82
 #, php-format
 msgid "%s%%"
-msgstr "%s%%"
+msgstr "%%%s"
 
 #. Plugin URI of the plugin
-#: streakfire.php
-msgid "https://github.com/merkushin/wpstreak"
-msgstr "https://github.com/merkushin/wpstreak"
+#: inkmeter.php
+msgid "https://github.com/merkushin/inkmeter"
+msgstr "https://github.com/merkushin/inkmeter"
 
 #. Author of the plugin
-#: streakfire.php
+#: inkmeter.php
 msgid "Dmitry Merkushin"
 msgstr "Dmitry Merkushin"
 
 #. Plugin Name of the plugin
-#: streakfire.php
+#: inkmeter.php
 #: src/views/screen_option.php:11
-msgid "Streakfire"
-msgstr "Streakfire"
+msgid "Inkmeter"
+msgstr "Inkmeter"
 
 #: src/views/screen_option.php:14
 msgid "Writing streak panel"
-msgstr "執筆ストリークのパネル"
+msgstr "Yazma serisi paneli"

@@ -1,10 +1,10 @@
-.streakfire-panel {
-  --streakfire-bg: linear-gradient(135deg, #102a43 0%, #1f4b99 52%, #ff7a59 100%);
-  --streakfire-text: #f8fbff;
-  --streakfire-muted: rgba(248, 251, 255, 0.78);
-  --streakfire-soft: rgba(255, 255, 255, 0.14);
-  --streakfire-strong: rgba(255, 255, 255, 0.24);
-  color: var(--streakfire-text);
+.inkmeter-panel {
+  --inkmeter-bg: linear-gradient(135deg, #102a43 0%, #1f4b99 52%, #ff7a59 100%);
+  --inkmeter-text: #f8fbff;
+  --inkmeter-muted: rgba(248, 251, 255, 0.78);
+  --inkmeter-soft: rgba(255, 255, 255, 0.14);
+  --inkmeter-strong: rgba(255, 255, 255, 0.24);
+  color: var(--inkmeter-text);
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1.6fr) minmax(260px, 0.9fr);
@@ -13,187 +13,187 @@
   padding: 24px 28px;
   border: 0;
   border-radius: 20px;
-  background: var(--streakfire-bg);
+  background: var(--inkmeter-bg);
   box-shadow: 0 20px 45px rgba(16, 42, 67, 0.18);
   overflow: hidden;
 }
 /* The panel sets display: grid, which would otherwise override the hidden attribute. */
-.streakfire-panel[hidden] {
+.inkmeter-panel[hidden] {
   display: none;
 }
-.streakfire-panel::before,
-.streakfire-panel::after {
+.inkmeter-panel::before,
+.inkmeter-panel::after {
   content: "";
   position: absolute;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.08);
   pointer-events: none;
 }
-.streakfire-panel::before {
+.inkmeter-panel::before {
   top: -48px;
   right: -24px;
   width: 180px;
   height: 180px;
 }
-.streakfire-panel::after {
+.inkmeter-panel::after {
   left: -56px;
   bottom: -80px;
   width: 220px;
   height: 220px;
 }
-.streakfire-panel * {
+.inkmeter-panel * {
   box-sizing: border-box;
   color: inherit;
 }
-.streakfire-panel__lead,
-.streakfire-panel__meta {
+.inkmeter-panel__lead,
+.inkmeter-panel__meta {
   position: relative;
   z-index: 1;
 }
-.streakfire-panel__eyebrow {
+.inkmeter-panel__eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 6px 12px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.12);
-  color: var(--streakfire-text);
+  color: var(--inkmeter-text);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
-.streakfire-panel.notice .streakfire-panel__title {
+.inkmeter-panel.notice .inkmeter-panel__title {
   margin: 16px 0 10px;
-  color: var(--streakfire-text);
+  color: var(--inkmeter-text);
   font-size: 31px;
   line-height: 1.05;
   font-weight: 800;
   letter-spacing: -0.04em;
 }
-.streakfire-panel.notice .streakfire-panel__description {
+.inkmeter-panel.notice .inkmeter-panel__description {
   margin: 0;
   max-width: 54ch;
-  color: var(--streakfire-muted);
+  color: var(--inkmeter-muted);
   font-size: 14px;
   line-height: 1.7;
 }
-.streakfire-panel__stats {
+.inkmeter-panel__stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
   margin-top: 20px;
 }
-.streakfire-panel__stat {
+.inkmeter-panel__stat {
   padding: 14px 16px;
-  border: 1px solid var(--streakfire-soft);
+  border: 1px solid var(--inkmeter-soft);
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(8px);
 }
-.streakfire-panel__stat-label {
+.inkmeter-panel__stat-label {
   display: block;
   margin-bottom: 7px;
-  color: var(--streakfire-muted);
+  color: var(--inkmeter-muted);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
-.streakfire-panel__stat-value {
+.inkmeter-panel__stat-value {
   display: block;
-  color: var(--streakfire-text);
+  color: var(--inkmeter-text);
   font-size: 20px;
   line-height: 1.1;
   font-weight: 800;
 }
-.streakfire-panel__meta {
+.inkmeter-panel__meta {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 20px;
-  border: 1px solid var(--streakfire-strong);
+  border: 1px solid var(--inkmeter-strong);
   border-radius: 18px;
   background: rgba(8, 26, 49, 0.24);
   backdrop-filter: blur(10px);
 }
-.streakfire-panel__score {
+.inkmeter-panel__score {
   display: flex;
   align-items: flex-end;
   gap: 12px;
   margin-bottom: 12px;
-  color: var(--streakfire-text);
+  color: var(--inkmeter-text);
 }
-.streakfire-panel__score-value {
+.inkmeter-panel__score-value {
   font-size: 68px;
   line-height: 0.9;
   font-weight: 900;
   letter-spacing: -0.06em;
 }
-.streakfire-panel__score-unit {
+.inkmeter-panel__score-unit {
   padding-bottom: 8px;
   font-size: 16px;
   font-weight: 700;
-  color: var(--streakfire-muted);
+  color: var(--inkmeter-muted);
 }
-.streakfire-panel__status {
+.inkmeter-panel__status {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   margin-bottom: 16px;
   font-size: 13px;
   font-weight: 700;
-  color: var(--streakfire-text);
+  color: var(--inkmeter-text);
 }
-.streakfire-panel__status-dot {
+.inkmeter-panel__status-dot {
   width: 10px;
   height: 10px;
   border-radius: 999px;
   background: #ffd166;
   box-shadow: 0 0 0 6px rgba(255, 209, 102, 0.18);
 }
-.streakfire-panel.is-hot .streakfire-panel__status-dot {
+.inkmeter-panel.is-hot .inkmeter-panel__status-dot {
   background: #7ef7c3;
   box-shadow: 0 0 0 6px rgba(126, 247, 195, 0.18);
 }
-.streakfire-panel__progress-copy {
+.inkmeter-panel__progress-copy {
   display: flex;
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 8px;
-  color: var(--streakfire-muted);
+  color: var(--inkmeter-muted);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
-.streakfire-panel__progress-track {
+.inkmeter-panel__progress-track {
   height: 10px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.14);
   overflow: hidden;
 }
-.streakfire-panel__progress-bar {
+.inkmeter-panel__progress-bar {
   height: 100%;
   border-radius: inherit;
   background: linear-gradient(90deg, #ffd166 0%, #ff7a59 100%);
 }
 @media (max-width: 960px) {
-  .streakfire-panel {
+  .inkmeter-panel {
     grid-template-columns: 1fr;
   }
 }
 @media (max-width: 640px) {
-  .streakfire-panel {
+  .inkmeter-panel {
     padding: 20px;
   }
-  .streakfire-panel__title {
+  .inkmeter-panel__title {
     font-size: 26px;
   }
-  .streakfire-panel__stats {
+  .inkmeter-panel__stats {
     grid-template-columns: 1fr;
   }
-  .streakfire-panel__score-value {
+  .inkmeter-panel__score-value {
     font-size: 56px;
   }
 }
