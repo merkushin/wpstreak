@@ -14,7 +14,7 @@
  * ServiceFactory can stay whole: PHP only loads a service class when its create_*()
  * method runs, so the services that are left out are never loaded.
  *
- * @package Merkushin\Wpstreak
+ * @package Merkushin\Inkmeter
  */
 
 declare( strict_types=1 );

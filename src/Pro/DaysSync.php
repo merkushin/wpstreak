@@ -1,18 +1,18 @@
 <?php declare( strict_types=1 );
 
-namespace Merkushin\Wpstreak\Pro;
+namespace Merkushin\Inkmeter\Pro;
 
 use Merkushin\Wpal\Service\Cron;
 use Merkushin\Wpal\Service\Dates;
 use Merkushin\Wpal\Service\Hooks;
 use Merkushin\Wpal\Service\PostTypes;
 use Merkushin\Wpal\ServiceFactory;
-use Merkushin\Wpstreak\PublishedPostDates;
+use Merkushin\Inkmeter\PublishedPostDates;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Sends Streakfire the days this site published on, the same days the panel
+ * Sends Inkmeter the days this site published on, the same days the panel
  * counts. The whole set goes every time, so unpublished, deleted and re-dated
  * posts are reflected, and a sync that failed is repaired by the next one.
  */
@@ -20,12 +20,12 @@ class DaysSync {
 	/**
 	 * Runs shortly after posts change.
 	 */
-	public const HOOK = 'streakfire_sync_days';
+	public const HOOK = 'inkmeter_sync_days';
 
 	/**
 	 * Runs once a day as a safety net.
 	 */
-	public const DAILY_HOOK = 'streakfire_sync_days_daily';
+	public const DAILY_HOOK = 'inkmeter_sync_days_daily';
 
 	private const DELAY = 60;
 

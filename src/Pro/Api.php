@@ -1,6 +1,6 @@
 <?php declare( strict_types=1 );
 
-namespace Merkushin\Wpstreak\Pro;
+namespace Merkushin\Inkmeter\Pro;
 
 use Merkushin\Wpal\Service\Errors;
 use Merkushin\Wpal\Service\Http;
@@ -10,7 +10,7 @@ use Merkushin\Wpal\ServiceFactory;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Talks to the Streakfire API. Only used once the site is connected to Streakfire Pro.
+ * Talks to the Inkmeter API. Only used once the site is connected to Inkmeter Pro.
  */
 class Api {
 	private const TIMEOUT = 15;

@@ -1,6 +1,6 @@
 <?php declare( strict_types=1 );
 
-namespace Merkushin\Wpstreak;
+namespace Merkushin\Inkmeter;
 
 use Merkushin\Wpal\Service\Assets;
 use Merkushin\Wpal\Service\Dates;
@@ -11,14 +11,12 @@ use Merkushin\Wpal\Service\Plugins;
 use Merkushin\Wpal\Service\Screen;
 use Merkushin\Wpal\Service\UserSettings;
 use Merkushin\Wpal\ServiceFactory;
-use Merkushin\Wpstreak\Pro\Pro;
+use Merkushin\Inkmeter\Pro\Pro;
 
 defined( 'ABSPATH' ) || exit;
 
-class Wpstreak {
+class Plugin {
 	public const VERSION = '1.1.0';
-
-	public const TEXT_DOMAIN = 'streakfire';
 
 	/**
 	 * The Posts list screen, where the panel is shown.
@@ -29,7 +27,7 @@ class Wpstreak {
 	 * Per-user setting for the panel's Screen Options checkbox: 'on' or 'off'.
 	 * Stored by WordPress' user settings; the admin script updates it with setUserSetting().
 	 */
-	public const PANEL_SETTING = 'streakfire_panel';
+	public const PANEL_SETTING = 'inkmeter_panel';
 
 	/**
 	 * Main plugin file path.
@@ -103,13 +101,7 @@ class Wpstreak {
 	}
 
 	public function init(): void {
-		// Bundled translations in languages/. Language packs from translate.wordpress.org take precedence.
-		$this->localization->load_plugin_textdomain(
-			self::TEXT_DOMAIN,
-			false,
-			dirname( $this->plugins->plugin_basename( $this->plugin_file ) ) . '/languages'
-		);
-
+		// Translations come from translate.wordpress.org language packs, which WordPress loads on demand.
 		$this->hooks->add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_assets' ] );
 		$this->hooks->add_action( 'all_admin_notices', [ $this, 'render_streak_panel' ] );
 		$this->hooks->add_filter( 'screen_settings', [ $this, 'add_screen_option' ], 10, 2 );
@@ -125,9 +117,9 @@ class Wpstreak {
 
 		$url = $this->plugins->plugin_dir_url( $this->plugin_file );
 
-		$this->assets->wp_enqueue_style( 'streakfire-admin', $url . 'assets/dist/styles/admin.css', [], self::VERSION );
+		$this->assets->wp_enqueue_style( 'inkmeter-admin', $url . 'assets/dist/styles/admin.css', [], self::VERSION );
 		// The script saves the Screen Options checkbox with setUserSetting() from WordPress' utils script.
-		$this->assets->wp_enqueue_script( 'streakfire-admin', $url . 'assets/dist/javascript/admin.js', [ 'utils' ], self::VERSION, true );
+		$this->assets->wp_enqueue_script( 'inkmeter-admin', $url . 'assets/dist/javascript/admin.js', [ 'utils' ], self::VERSION, true );
 	}
 
 	public function render_streak_panel(): void {

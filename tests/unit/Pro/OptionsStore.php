@@ -1,6 +1,6 @@
 <?php declare( strict_types=1 );
 
-namespace MerkushinTest\Wpstreak\Pro;
+namespace MerkushinTest\Inkmeter\Pro;
 
 use Merkushin\Wpal\Service\Options;
 use PHPUnit\Framework\MockObject\MockObject;

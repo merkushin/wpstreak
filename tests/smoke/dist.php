@@ -4,16 +4,16 @@
  *
  * Loads the built plugin (scoped, with wpal pruned) using stand-ins for the WordPress
  * functions it calls, then runs every path: init, asset loading, rendering the panel,
- * clearing the cache, the Streakfire Pro settings page and syncing published days.
+ * clearing the cache, the Inkmeter Pro settings page and syncing published days.
  * A wpal class missing from the build fails here with a fatal error.
  *
- * @package Merkushin\Wpstreak
+ * @package Merkushin\Inkmeter
  */
 
 declare( strict_types=1 );
 
 $build_dir = rtrim( $argv[1] ?? '', '/' );
-$main_file = $build_dir . '/streakfire.php';
+$main_file = $build_dir . '/inkmeter.php';
 if ( ! is_file( $main_file ) ) {
 	fwrite( STDERR, "Usage: php tests/smoke/dist.php <build-dir>\n" );
 	exit( 1 );
@@ -109,7 +109,7 @@ function is_wp_error( $thing ): bool {
 }
 
 /**
- * Answers like the Streakfire API, recording each request.
+ * Answers like the Inkmeter API, recording each request.
  */
 function wp_remote_request( $url, $args = [] ): array {
 	$GLOBALS['smoke_requests'][] = $args['method'] . ' ' . $url;
@@ -206,16 +206,8 @@ function checked( $checked, $current = true, bool $display = true ): string {
 	return $result;
 }
 
-function load_plugin_textdomain( $domain, $deprecated = false, $path = false ): bool {
-	return true;
-}
-
-function plugin_basename( string $file ): string {
-	return 'streakfire/streakfire.php';
-}
-
 function plugin_dir_url( string $file ): string {
-	return 'https://example.com/wp-content/plugins/streakfire/';
+	return 'https://example.com/wp-content/plugins/inkmeter/';
 }
 
 function get_current_screen() {
@@ -315,7 +307,7 @@ if ( ! isset( $GLOBALS['smoke_actions']['init'], $GLOBALS['smoke_actions']['deac
 }
 smoke_do( 'init' );
 
-foreach ( [ 'admin_enqueue_scripts', 'all_admin_notices', 'screen_settings', 'save_post', 'delete_post', 'admin_menu', 'streakfire_sync_days', 'streakfire_sync_days_daily', 'admin_post_streakfire_connect' ] as $hook ) {
+foreach ( [ 'admin_enqueue_scripts', 'all_admin_notices', 'screen_settings', 'save_post', 'delete_post', 'admin_menu', 'inkmeter_sync_days', 'inkmeter_sync_days_daily', 'admin_post_inkmeter_connect' ] as $hook ) {
 	if ( ! isset( $GLOBALS['smoke_actions'][ $hook ] ) ) {
 		smoke_fail( "no callback for {$hook}" );
 	}
@@ -336,7 +328,7 @@ foreach ( [ 'Current run 3 days', 'Last published March 2, 2026', 'Next mileston
 }
 
 $screen_settings = (string) smoke_do( 'screen_settings', '', get_current_screen() );
-if ( false === strpos( $screen_settings, 'id="streakfire-panel-toggle"' ) ) {
+if ( false === strpos( $screen_settings, 'id="inkmeter-panel-toggle"' ) ) {
 	smoke_fail( 'the Screen Options toggle is missing' );
 }
 
@@ -348,29 +340,29 @@ if ( [] !== $GLOBALS['smoke_cron'] || [] !== $GLOBALS['smoke_requests'] ) {
 	smoke_fail( 'a site that is not connected scheduled a sync or called the API' );
 }
 
-// Streakfire Pro, not connected: the settings page offers to connect.
+// Inkmeter Pro, not connected: the settings page offers to connect.
 smoke_do( 'admin_menu' );
 ob_start();
 smoke_do( 'smoke_render_settings' );
 $settings_page = (string) ob_get_clean();
-if ( false === strpos( $settings_page, 'value="streakfire_connect"' ) || [] !== $GLOBALS['smoke_requests'] ) {
+if ( false === strpos( $settings_page, 'value="inkmeter_connect"' ) || [] !== $GLOBALS['smoke_requests'] ) {
 	smoke_fail( 'the settings page should offer to connect without calling the API' );
 }
 
 // Connected: a post change schedules a sync, which sends the published days.
 update_option(
-	'streakfire_connection',
+	'inkmeter_connection',
 	[
 		'token' => 'sfs_smoke',
 		'email' => 'writer@example.com',
 	]
 );
 smoke_do( 'save_post', 1 );
-if ( ! isset( $GLOBALS['smoke_cron']['streakfire_sync_days'] ) ) {
+if ( ! isset( $GLOBALS['smoke_cron']['inkmeter_sync_days'] ) ) {
 	smoke_fail( 'save_post did not schedule a sync' );
 }
-smoke_do( 'streakfire_sync_days' );
-if ( [ 'PUT https://api.streakfire.org/v1/days' ] !== $GLOBALS['smoke_requests'] || ! isset( $GLOBALS['smoke_options']['streakfire_connection']['synced_at'] ) ) {
+smoke_do( 'inkmeter_sync_days' );
+if ( [ 'PUT https://api.streakfire.org/v1/days' ] !== $GLOBALS['smoke_requests'] || ! isset( $GLOBALS['smoke_options']['inkmeter_connection']['synced_at'] ) ) {
 	smoke_fail( 'the sync did not send the days: ' . implode( ', ', $GLOBALS['smoke_requests'] ) );
 }
 

@@ -1,6 +1,6 @@
 <?php declare( strict_types=1 );
 
-namespace Merkushin\Wpstreak\Pro;
+namespace Merkushin\Inkmeter\Pro;
 
 use Merkushin\Wpal\Service\Options;
 use Merkushin\Wpal\ServiceFactory;
@@ -8,12 +8,12 @@ use Merkushin\Wpal\ServiceFactory;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * The site's link to a Streakfire account: its token, the account's email and
+ * The site's link to an Inkmeter account: its token, the account's email and
  * plan, and when the published days were last synced. Stored in one option
  * that isn't autoloaded, since only the settings page and the sync read it.
  */
 class Connection {
-	public const OPTION = 'streakfire_connection';
+	public const OPTION = 'inkmeter_connection';
 
 	public const FEATURE_REMINDERS = 'reminders';
 

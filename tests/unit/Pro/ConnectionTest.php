@@ -1,9 +1,9 @@
 <?php declare( strict_types=1 );
 
-namespace MerkushinTest\Wpstreak\Pro;
+namespace MerkushinTest\Inkmeter\Pro;
 
 use Merkushin\Wpal\ServiceFactory;
-use Merkushin\Wpstreak\Pro\Connection;
+use Merkushin\Inkmeter\Pro\Connection;
 use PHPUnit\Framework\TestCase;
 
 class ConnectionTest extends TestCase {

@@ -1,16 +1,16 @@
 <?php declare( strict_types=1 );
 
-namespace MerkushinTest\Wpstreak\Pro;
+namespace MerkushinTest\Inkmeter\Pro;
 
 use Merkushin\Wpal\Service\Cron;
 use Merkushin\Wpal\Service\Dates;
 use Merkushin\Wpal\Service\Hooks;
 use Merkushin\Wpal\Service\PostTypes;
 use Merkushin\Wpal\ServiceFactory;
-use Merkushin\Wpstreak\Pro\Api;
-use Merkushin\Wpstreak\Pro\Connection;
-use Merkushin\Wpstreak\Pro\DaysSync;
-use Merkushin\Wpstreak\PublishedPostDates;
+use Merkushin\Inkmeter\Pro\Api;
+use Merkushin\Inkmeter\Pro\Connection;
+use Merkushin\Inkmeter\Pro\DaysSync;
+use Merkushin\Inkmeter\PublishedPostDates;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

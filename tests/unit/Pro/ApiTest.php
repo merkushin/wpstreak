@@ -1,12 +1,12 @@
 <?php declare( strict_types=1 );
 
-namespace MerkushinTest\Wpstreak\Pro;
+namespace MerkushinTest\Inkmeter\Pro;
 
 use Merkushin\Wpal\Service\Errors;
 use Merkushin\Wpal\Service\Http;
 use Merkushin\Wpal\Service\Json;
 use Merkushin\Wpal\ServiceFactory;
-use Merkushin\Wpstreak\Pro\Api;
+use Merkushin\Inkmeter\Pro\Api;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -47,7 +47,7 @@ class ApiTest extends TestCase {
 				[
 					'method'     => 'PUT',
 					'timeout'    => 15,
-					'user-agent' => 'Streakfire/1.1.0',
+					'user-agent' => 'Inkmeter/1.1.0',
 					'body'       => '{"days":["2026-10-09"]}',
 					'headers'    => [
 						'Accept'        => 'application/json',
@@ -60,7 +60,7 @@ class ApiTest extends TestCase {
 		$this->http->method( 'wp_remote_retrieve_response_code' )->willReturn( 200 );
 		$this->http->method( 'wp_remote_retrieve_body' )->willReturn( '{"current":1}' );
 
-		$result = ( new Api( 'https://api.streakfire.test/', 'Streakfire/1.1.0' ) )->request( 'PUT', '/v1/days', 'sfs_token', [ 'days' => [ '2026-10-09' ] ] );
+		$result = ( new Api( 'https://api.streakfire.test/', 'Inkmeter/1.1.0' ) )->request( 'PUT', '/v1/days', 'sfs_token', [ 'days' => [ '2026-10-09' ] ] );
 
 		$this->assertSame(
 			[
@@ -87,7 +87,7 @@ class ApiTest extends TestCase {
 		$this->http->method( 'wp_remote_retrieve_response_code' )->willReturn( 204 );
 		$this->http->method( 'wp_remote_retrieve_body' )->willReturn( '' );
 
-		$result = ( new Api( 'https://api.streakfire.test', 'Streakfire/1.1.0' ) )->request( 'DELETE', '/v1/site' );
+		$result = ( new Api( 'https://api.streakfire.test', 'Inkmeter/1.1.0' ) )->request( 'DELETE', '/v1/site' );
 
 		$this->assertSame(
 			[
@@ -102,6 +102,6 @@ class ApiTest extends TestCase {
 		$this->http->method( 'wp_remote_request' )->willReturn( 'wp-error' );
 		$this->errors->method( 'is_wp_error' )->with( 'wp-error' )->willReturn( true );
 
-		$this->assertNull( ( new Api( 'https://api.streakfire.test', 'Streakfire/1.1.0' ) )->request( 'GET', '/v1/streak', 'sfs_token' ) );
+		$this->assertNull( ( new Api( 'https://api.streakfire.test', 'Inkmeter/1.1.0' ) )->request( 'GET', '/v1/streak', 'sfs_token' ) );
 	}
 }

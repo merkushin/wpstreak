@@ -1,0 +1,300 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Inkmeter 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/merkushin/inkmeter/issues\n"
+"POT-Creation-Date: 2026-10-10T09:57:24+00:00\n"
+"PO-Revision-Date: 2026-10-08 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Domain: inkmeter\n"
+
+#. Plugin Name of the plugin
+#: inkmeter.php src/Pro/SettingsPage.php:167 src/Pro/SettingsPage.php:168
+#: src/views/screen_option.php:11 src/views/settings_page.php:26
+msgid "Inkmeter"
+msgstr "Inkmeter"
+
+#. Plugin URI of the plugin
+#: inkmeter.php
+msgid "https://github.com/merkushin/inkmeter"
+msgstr "https://github.com/merkushin/inkmeter"
+
+#. Description of the plugin
+#: inkmeter.php
+msgid "Shows your current writing streak above the Posts list."
+msgstr "投稿一覧の上に現在の執筆ストリークを表示します。"
+
+#. Author of the plugin
+#: inkmeter.php
+msgid "Dmitry Merkushin"
+msgstr "Dmitry Merkushin"
+
+#: src/Pro/SettingsPage.php:359
+msgid "Your site is connected to Inkmeter."
+msgstr "サイトを Inkmeter に接続しました。"
+
+#: src/Pro/SettingsPage.php:360
+msgid ""
+"Your site is disconnected from Inkmeter. Your streak history is kept in your "
+"account."
+msgstr ""
+"サイトと Inkmeter の接続を解除しました。ストリークの履歴はアカウントに保存さ"
+"れています。"
+
+#: src/Pro/SettingsPage.php:361
+msgid "Reminder settings saved."
+msgstr "リマインダー設定を保存しました。"
+
+#: src/Pro/SettingsPage.php:362
+msgid "Connecting didn't work. The link may have expired; please try again."
+msgstr ""
+"接続できませんでした。リンクの有効期限が切れている可能性があります。もう一度"
+"お試しください。"
+
+#: src/Pro/SettingsPage.php:363
+msgid ""
+"This site is no longer connected to Inkmeter. Connect it again to keep using "
+"Pro."
+msgstr ""
+"このサイトは Inkmeter に接続されていません。Pro を引き続き利用するには、もう"
+"一度接続してください。"
+
+#: src/Pro/SettingsPage.php:364
+msgid "Inkmeter couldn't be reached. Please try again in a minute."
+msgstr ""
+"Inkmeter に接続できませんでした。少し時間をおいてもう一度お試しください。"
+
+#: src/Pro/SettingsPage.php:365
+msgid "Billing isn't available right now. Please try again later."
+msgstr ""
+"現在、お支払い機能を利用できません。しばらくしてからもう一度お試しください。"
+
+#: src/Pro/SettingsPage.php:366
+msgid "Something went wrong. Please try again."
+msgstr "問題が発生しました。もう一度お試しください。"
+
+#: src/Pro/SettingsPage.php:432
+msgid "Sorry, you are not allowed to manage Inkmeter."
+msgstr "Inkmeter を管理する権限がありません。"
+
+#: src/views/screen_option.php:14
+msgid "Writing streak panel"
+msgstr "執筆ストリークのパネル"
+
+#: src/views/settings_page.php:33
+msgid "Inkmeter Pro"
+msgstr "Inkmeter Pro"
+
+#: src/views/settings_page.php:34
+msgid "Never lose a streak by accident. With Inkmeter Pro:"
+msgstr ""
+"うっかりストリークを途切れさせることはもうありません。Inkmeter Pro なら:"
+
+#: src/views/settings_page.php:36
+msgid ""
+"You get an email at the hour you choose when you haven't published yet that "
+"day."
+msgstr "その日にまだ投稿を公開していない場合、指定した時刻にメールが届きます。"
+
+#: src/views/settings_page.php:37
+msgid ""
+"Your streak history is kept in your Inkmeter account, so it survives "
+"reinstalls and site moves."
+msgstr ""
+"ストリークの履歴は Inkmeter アカウントに保存されるため、再インストールやサイ"
+"トの移転後も引き継がれます。"
+
+#. translators: %s: Link to Inkmeter's privacy policy.
+#: src/views/settings_page.php:43
+#, php-format
+msgid ""
+"Connecting sends Inkmeter this site's address, its timezone and the dates "
+"you published on, never your posts. Nothing is sent until you connect. %s"
+msgstr ""
+"接続すると、このサイトのアドレス、タイムゾーン、投稿を公開した日付が "
+"Inkmeter に送信されます。投稿の内容が送信されることはありません。接続するまで"
+"は何も送信されません。%s"
+
+#: src/views/settings_page.php:44
+msgid "Privacy policy"
+msgstr "プライバシーポリシー"
+
+#: src/views/settings_page.php:51
+msgid "Connect to Inkmeter"
+msgstr "Inkmeter に接続"
+
+#: src/views/settings_page.php:55
+msgid ""
+"Inkmeter couldn't be reached, so some details are missing. Please reload the "
+"page in a minute."
+msgstr ""
+"Inkmeter に接続できなかったため、一部の情報が表示されていません。少し時間をお"
+"いてページを再読み込みしてください。"
+
+#: src/views/settings_page.php:60
+msgid "Account"
+msgstr "アカウント"
+
+#: src/views/settings_page.php:64
+msgid "Plan"
+msgstr "プラン"
+
+#: src/views/settings_page.php:65
+msgid "Pro"
+msgstr "Pro"
+
+#: src/views/settings_page.php:65
+msgid "Free"
+msgstr "無料"
+
+#: src/views/settings_page.php:69
+msgid "Streak in your account"
+msgstr "アカウントのストリーク"
+
+#. translators: %s: Number of days.
+#: src/views/settings_page.php:73 src/views/streak_panel.php:45
+#: src/views/streak_panel.php:58
+#, php-format
+msgid "%s day"
+msgid_plural "%s days"
+msgstr[0] "%s日"
+
+#: src/views/settings_page.php:79
+msgid "Last synced"
+msgstr "最終同期"
+
+#: src/views/settings_page.php:83
+msgid "Not yet"
+msgstr "まだ同期していません"
+
+#. translators: %s: Time since the last sync, e.g. "5 mins".
+#: src/views/settings_page.php:86
+#, php-format
+msgid "%s ago"
+msgstr "%s前"
+
+#: src/views/settings_page.php:94
+msgid "Reminders"
+msgstr "リマインダー"
+
+#: src/views/settings_page.php:100
+msgid "Email reminder"
+msgstr "メールリマインダー"
+
+#. translators: %s: Account email address.
+#: src/views/settings_page.php:106
+#, php-format
+msgid "Email %s when I haven't published yet"
+msgstr "まだ公開していない場合に %s へメールを送信する"
+
+#: src/views/settings_page.php:112
+msgid "Send it at"
+msgstr "送信時刻"
+
+#. translators: %s: The site's timezone, e.g. "America/Mexico_City".
+#: src/views/settings_page.php:120
+#, php-format
+msgid "In your site's timezone (%s)."
+msgstr "サイトのタイムゾーン (%s) の時刻です。"
+
+#: src/views/settings_page.php:126
+msgid "Save reminders"
+msgstr "リマインダーを保存"
+
+#: src/views/settings_page.php:132
+msgid "Manage subscription"
+msgstr "サブスクリプションを管理"
+
+#: src/views/settings_page.php:135 src/views/settings_page.php:140
+msgid "Upgrade to Pro"
+msgstr "Pro にアップグレード"
+
+#: src/views/settings_page.php:136
+msgid ""
+"Get an email at the hour you choose when you haven't published yet that day."
+msgstr ""
+"その日にまだ投稿を公開していない場合、指定した時刻にメールを受け取れます。"
+
+#: src/views/settings_page.php:144 src/views/settings_page.php:154
+msgid "Disconnect"
+msgstr "接続を解除"
+
+#. translators: %s: This site's address.
+#: src/views/settings_page.php:148
+#, php-format
+msgid ""
+"Stops sending %s's publishing days to Inkmeter. Your streak history stays in "
+"your account, and connecting again picks it up."
+msgstr ""
+"%s の公開日を Inkmeter に送信するのを停止します。ストリークの履歴はアカウント"
+"に残り、再度接続すると引き継がれます。"
+
+#: src/views/streak_panel.php:23
+msgid "Writing momentum"
+msgstr "執筆の勢い"
+
+#: src/views/streak_panel.php:24
+msgid "Protect the streak. Build the habit."
+msgstr "ストリークを守り、習慣を作りましょう。"
+
+#: src/views/streak_panel.php:28
+msgid "Start your next streak"
+msgstr "次のストリークを始めましょう"
+
+#: src/views/streak_panel.php:30
+msgid "You are on fire today"
+msgstr "今日は絶好調です"
+
+#: src/views/streak_panel.php:32
+msgid "You are still alive, publish today to keep it going"
+msgstr "ストリーク継続中です。今日投稿して記録をつなげましょう"
+
+#: src/views/streak_panel.php:37
+msgid "Get an email before your streak breaks"
+msgstr "ストリークが途切れる前にメールを受け取る"
+
+#: src/views/streak_panel.php:41
+msgid "Current run"
+msgstr "現在の連続記録"
+
+#: src/views/streak_panel.php:50
+msgid "Last published"
+msgstr "最終公開日"
+
+#: src/views/streak_panel.php:51
+msgid "No published posts yet"
+msgstr "公開済みの投稿はまだありません"
+
+#: src/views/streak_panel.php:54
+msgid "Next milestone"
+msgstr "次の目標"
+
+#. translators: Unit shown after the large streak number, e.g. "12 days".
+#: src/views/streak_panel.php:71
+msgctxt "streak counter unit"
+msgid "day"
+msgid_plural "days"
+msgstr[0] "日"
+
+#: src/views/streak_panel.php:77
+msgid "Published today"
+msgstr "今日公開済み"
+
+#: src/views/streak_panel.php:77
+msgid "Needs a post today"
+msgstr "今日の投稿が必要です"
+
+#: src/views/streak_panel.php:82
+msgid "Milestone progress"
+msgstr "目標までの進捗"
+
+#. translators: %s: Progress towards the next milestone, a number from 0 to 100.
+#: src/views/streak_panel.php:86
+#, php-format
+msgid "%s%%"
+msgstr "%s%%"

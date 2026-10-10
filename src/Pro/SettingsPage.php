@@ -1,6 +1,6 @@
 <?php declare( strict_types=1 );
 
-namespace Merkushin\Wpstreak\Pro;
+namespace Merkushin\Inkmeter\Pro;
 
 use Merkushin\Wpal\Service\Capabilities;
 use Merkushin\Wpal\Service\Dates;
@@ -20,15 +20,15 @@ use Merkushin\Wpal\ServiceFactory;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Settings → Streakfire: connects the site to Streakfire Pro and manages it.
+ * Settings → Inkmeter: connects the site to Inkmeter Pro and manages it.
  *
  * Connecting: the admin is sent to streakfire.org/connect with a random state,
  * confirms by email, and comes back here with a one-time code and the state.
  * The code is exchanged for the site's token server to server, so the token
- * never passes through the browser. Nothing is sent to Streakfire before that.
+ * never passes through the browser. Nothing is sent to Inkmeter before that.
  */
 class SettingsPage {
-	public const SLUG = 'streakfire';
+	public const SLUG = 'inkmeter';
 
 	public const ACTIONS = [ 'connect', 'disconnect', 'reminders', 'upgrade', 'manage' ];
 
@@ -129,7 +129,7 @@ class SettingsPage {
 	private $terminate;
 
 	/**
-	 * @param string        $site_url  The Streakfire website, which hosts the connect page.
+	 * @param string        $site_url  The Inkmeter website, which hosts the connect page.
 	 * @param callable|null $terminate Called after redirecting; exits by default.
 	 */
 	public function __construct( Api $api, Connection $connection, DaysSync $sync, string $site_url, ?callable $terminate = null ) {
@@ -158,14 +158,14 @@ class SettingsPage {
 	public function init(): void {
 		$this->hooks->add_action( 'admin_menu', [ $this, 'add_page' ] );
 		foreach ( self::ACTIONS as $action ) {
-			$this->hooks->add_action( 'admin_post_streakfire_' . $action, [ $this, $action ] );
+			$this->hooks->add_action( 'admin_post_inkmeter_' . $action, [ $this, $action ] );
 		}
 	}
 
 	public function add_page(): void {
 		$hook = $this->plugins->add_options_page(
-			__( 'Streakfire', 'streakfire' ),
-			__( 'Streakfire', 'streakfire' ),
+			__( 'Inkmeter', 'inkmeter' ),
+			__( 'Inkmeter', 'inkmeter' ),
 			self::CAPABILITY,
 			self::SLUG,
 			[ $this, 'render' ]
@@ -299,7 +299,7 @@ class SettingsPage {
 			return;
 		}
 
-		$notice       = $this->input( $_GET, 'streakfire_notice' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Only selects a message; sanitized by input().
+		$notice       = $this->input( $_GET, 'inkmeter_notice' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Only selects a message; sanitized by input().
 		$is_reachable = true;
 		$settings     = [];
 		$streak       = null;
@@ -356,14 +356,14 @@ class SettingsPage {
 	 */
 	private function notice( string $key ): array {
 		$notices = [
-			'connected'           => [ 'success', __( 'Your site is connected to Streakfire.', 'streakfire' ) ],
-			'disconnected'        => [ 'success', __( 'Your site is disconnected from Streakfire. Your streak history is kept in your account.', 'streakfire' ) ],
-			'saved'               => [ 'success', __( 'Reminder settings saved.', 'streakfire' ) ],
-			'connect_failed'      => [ 'error', __( 'Connecting didn\'t work. The link may have expired; please try again.', 'streakfire' ) ],
-			'revoked'             => [ 'warning', __( 'This site is no longer connected to Streakfire. Connect it again to keep using Pro.', 'streakfire' ) ],
-			'unreachable'         => [ 'error', __( 'Streakfire couldn\'t be reached. Please try again in a minute.', 'streakfire' ) ],
-			'billing_unavailable' => [ 'error', __( 'Billing isn\'t available right now. Please try again later.', 'streakfire' ) ],
-			'error'               => [ 'error', __( 'Something went wrong. Please try again.', 'streakfire' ) ],
+			'connected'           => [ 'success', __( 'Your site is connected to Inkmeter.', 'inkmeter' ) ],
+			'disconnected'        => [ 'success', __( 'Your site is disconnected from Inkmeter. Your streak history is kept in your account.', 'inkmeter' ) ],
+			'saved'               => [ 'success', __( 'Reminder settings saved.', 'inkmeter' ) ],
+			'connect_failed'      => [ 'error', __( 'Connecting didn\'t work. The link may have expired; please try again.', 'inkmeter' ) ],
+			'revoked'             => [ 'warning', __( 'This site is no longer connected to Inkmeter. Connect it again to keep using Pro.', 'inkmeter' ) ],
+			'unreachable'         => [ 'error', __( 'Inkmeter couldn\'t be reached. Please try again in a minute.', 'inkmeter' ) ],
+			'billing_unavailable' => [ 'error', __( 'Billing isn\'t available right now. Please try again later.', 'inkmeter' ) ],
+			'error'               => [ 'error', __( 'Something went wrong. Please try again.', 'inkmeter' ) ],
 		];
 
 		return $notices[ $key ] ?? [ null, '' ];
@@ -429,16 +429,16 @@ class SettingsPage {
 
 	private function authorize( string $action ): void {
 		if ( ! $this->capabilities->current_user_can( self::CAPABILITY ) ) {
-			$this->errors->wp_die( esc_html__( 'Sorry, you are not allowed to manage Streakfire.', 'streakfire' ), '', [ 'response' => 403 ] );
+			$this->errors->wp_die( esc_html__( 'Sorry, you are not allowed to manage Inkmeter.', 'inkmeter' ), '', [ 'response' => 403 ] );
 		}
-		$this->nonces->check_admin_referer( 'streakfire_' . $action );
+		$this->nonces->check_admin_referer( 'inkmeter_' . $action );
 	}
 
 	/**
 	 * Returns to the settings page with a notice.
 	 */
 	private function back( string $notice ): void {
-		$this->redirects->wp_safe_redirect( $this->page_url( [ 'streakfire_notice' => $notice ] ) );
+		$this->redirects->wp_safe_redirect( $this->page_url( [ 'inkmeter_notice' => $notice ] ) );
 		( $this->terminate )();
 	}
 
@@ -451,7 +451,7 @@ class SettingsPage {
 	}
 
 	private function state_key(): string {
-		return 'streakfire_connect_' . (int) $this->users->get_current_user_id();
+		return 'inkmeter_connect_' . (int) $this->users->get_current_user_id();
 	}
 
 	private function home_url(): string {

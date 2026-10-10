@@ -1,6 +1,6 @@
 <?php declare( strict_types=1 );
 
-namespace MerkushinTest\Wpstreak\Pro;
+namespace MerkushinTest\Inkmeter\Pro;
 
 use Merkushin\Wpal\Service\Capabilities;
 use Merkushin\Wpal\Service\Dates;
@@ -14,17 +14,17 @@ use Merkushin\Wpal\Service\Transient;
 use Merkushin\Wpal\Service\Urls;
 use Merkushin\Wpal\Service\Users;
 use Merkushin\Wpal\ServiceFactory;
-use Merkushin\Wpstreak\Pro\Api;
-use Merkushin\Wpstreak\Pro\Connection;
-use Merkushin\Wpstreak\Pro\DaysSync;
-use Merkushin\Wpstreak\Pro\SettingsPage;
+use Merkushin\Inkmeter\Pro\Api;
+use Merkushin\Inkmeter\Pro\Connection;
+use Merkushin\Inkmeter\Pro\DaysSync;
+use Merkushin\Inkmeter\Pro\SettingsPage;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class SettingsPageTest extends TestCase {
 	use OptionsStore;
 
-	private const PAGE_URL = 'https://blog.example/wp-admin/options-general.php?page=streakfire';
+	private const PAGE_URL = 'https://blog.example/wp-admin/options-general.php?page=inkmeter';
 
 	/**
 	 * @var Api&MockObject
@@ -169,11 +169,11 @@ class SettingsPageTest extends TestCase {
 	}
 
 	public function testConnect_Always_SendsAdminToConnectPageWithState(): void {
-		$this->nonces->expects( $this->once() )->method( 'check_admin_referer' )->with( 'streakfire_connect' );
+		$this->nonces->expects( $this->once() )->method( 'check_admin_referer' )->with( 'inkmeter_connect' );
 
 		$this->create_page()->connect();
 
-		$this->assertSame( 'state123', $this->transients['streakfire_connect_7'] );
+		$this->assertSame( 'state123', $this->transients['inkmeter_connect_7'] );
 		$this->assertSame(
 			[ 'away:https://streakfire.test/connect?site_url=' . rawurlencode( 'https://blog.example' ) . '&return_url=' . rawurlencode( self::PAGE_URL ) . '&state=state123' ],
 			$this->redirects
@@ -192,8 +192,8 @@ class SettingsPageTest extends TestCase {
 	}
 
 	public function testHandleReturn_ValidStateAndCode_ConnectsAndStartsSyncing(): void {
-		$this->transients['streakfire_connect_7'] = 'state123';
-		$_GET                                     = [
+		$this->transients['inkmeter_connect_7'] = 'state123';
+		$_GET                                   = [
 			'streakfire_code'  => 'code456',
 			'streakfire_state' => 'state123',
 		];
@@ -229,13 +229,13 @@ class SettingsPageTest extends TestCase {
 
 		$this->assertSame( 'sfs_token', $this->connection->token() );
 		$this->assertSame( 'writer@example.com', $this->connection->email() );
-		$this->assertArrayNotHasKey( 'streakfire_connect_7', $this->transients );
-		$this->assertSame( [ 'safe:' . self::PAGE_URL . '&streakfire_notice=connected' ], $this->redirects );
+		$this->assertArrayNotHasKey( 'inkmeter_connect_7', $this->transients );
+		$this->assertSame( [ 'safe:' . self::PAGE_URL . '&inkmeter_notice=connected' ], $this->redirects );
 	}
 
 	public function testHandleReturn_WrongState_RefusesWithoutCallingTheApi(): void {
-		$this->transients['streakfire_connect_7'] = 'state123';
-		$_GET                                     = [
+		$this->transients['inkmeter_connect_7'] = 'state123';
+		$_GET                                   = [
 			'streakfire_code'  => 'code456',
 			'streakfire_state' => 'forged',
 		];
@@ -244,8 +244,8 @@ class SettingsPageTest extends TestCase {
 		$this->create_page()->handle_return();
 
 		$this->assertFalse( $this->connection->is_connected() );
-		$this->assertArrayNotHasKey( 'streakfire_connect_7', $this->transients, 'a state works once' );
-		$this->assertSame( [ 'safe:' . self::PAGE_URL . '&streakfire_notice=connect_failed' ], $this->redirects );
+		$this->assertArrayNotHasKey( 'inkmeter_connect_7', $this->transients, 'a state works once' );
+		$this->assertSame( [ 'safe:' . self::PAGE_URL . '&inkmeter_notice=connect_failed' ], $this->redirects );
 	}
 
 	public function testHandleReturn_NoStateStarted_Refuses(): void {
@@ -257,12 +257,12 @@ class SettingsPageTest extends TestCase {
 
 		$this->create_page()->handle_return();
 
-		$this->assertSame( [ 'safe:' . self::PAGE_URL . '&streakfire_notice=connect_failed' ], $this->redirects );
+		$this->assertSame( [ 'safe:' . self::PAGE_URL . '&inkmeter_notice=connect_failed' ], $this->redirects );
 	}
 
 	public function testHandleReturn_ExchangeRejected_ReportsFailure(): void {
-		$this->transients['streakfire_connect_7'] = 'state123';
-		$_GET                                     = [
+		$this->transients['inkmeter_connect_7'] = 'state123';
+		$_GET                                   = [
 			'streakfire_code'  => 'expired',
 			'streakfire_state' => 'state123',
 		];
@@ -277,7 +277,7 @@ class SettingsPageTest extends TestCase {
 		$this->create_page()->handle_return();
 
 		$this->assertFalse( $this->connection->is_connected() );
-		$this->assertSame( [ 'safe:' . self::PAGE_URL . '&streakfire_notice=connect_failed' ], $this->redirects );
+		$this->assertSame( [ 'safe:' . self::PAGE_URL . '&inkmeter_notice=connect_failed' ], $this->redirects );
 	}
 
 	public function testHandleReturn_NoCode_DoesNothing(): void {
@@ -296,7 +296,7 @@ class SettingsPageTest extends TestCase {
 		$this->create_page()->disconnect();
 
 		$this->assertFalse( $this->connection->is_connected() );
-		$this->assertSame( [ 'safe:' . self::PAGE_URL . '&streakfire_notice=disconnected' ], $this->redirects );
+		$this->assertSame( [ 'safe:' . self::PAGE_URL . '&inkmeter_notice=disconnected' ], $this->redirects );
 	}
 
 	public function testReminders_Submitted_SavesThemOnTheServer(): void {
@@ -305,7 +305,7 @@ class SettingsPageTest extends TestCase {
 			'reminder_enabled' => '1',
 			'reminder_hour'    => '30',
 		];
-		$this->nonces->expects( $this->once() )->method( 'check_admin_referer' )->with( 'streakfire_reminders' );
+		$this->nonces->expects( $this->once() )->method( 'check_admin_referer' )->with( 'inkmeter_reminders' );
 		$this->api
 			->expects( $this->once() )
 			->method( 'request' )
@@ -327,7 +327,7 @@ class SettingsPageTest extends TestCase {
 
 		$this->create_page()->reminders();
 
-		$this->assertSame( [ 'safe:' . self::PAGE_URL . '&streakfire_notice=saved' ], $this->redirects );
+		$this->assertSame( [ 'safe:' . self::PAGE_URL . '&inkmeter_notice=saved' ], $this->redirects );
 	}
 
 	public function testReminders_Unchecked_TurnsThemOff(): void {
@@ -360,13 +360,13 @@ class SettingsPageTest extends TestCase {
 		$this->api->method( 'request' )->with( 'POST', '/v1/checkout', 'sfs_token' )->willReturn(
 			[
 				'status' => 200,
-				'data'   => [ 'url' => 'https://streakfire.lemonsqueezy.com/buy/abc?checkout[custom][account_id]=1' ],
+				'data'   => [ 'url' => 'https://inkmeter.lemonsqueezy.com/buy/abc?checkout[custom][account_id]=1' ],
 			]
 		);
 
 		$this->create_page()->upgrade();
 
-		$this->assertSame( [ 'away:https://streakfire.lemonsqueezy.com/buy/abc?checkout[custom][account_id]=1' ], $this->redirects );
+		$this->assertSame( [ 'away:https://inkmeter.lemonsqueezy.com/buy/abc?checkout[custom][account_id]=1' ], $this->redirects );
 	}
 
 	public function testUpgrade_BillingNotConfigured_ReportsIt(): void {
@@ -380,7 +380,7 @@ class SettingsPageTest extends TestCase {
 
 		$this->create_page()->upgrade();
 
-		$this->assertSame( [ 'safe:' . self::PAGE_URL . '&streakfire_notice=billing_unavailable' ], $this->redirects );
+		$this->assertSame( [ 'safe:' . self::PAGE_URL . '&inkmeter_notice=billing_unavailable' ], $this->redirects );
 	}
 
 	public function testUpgrade_UrlIsNotHttps_RefusesToRedirect(): void {
@@ -394,7 +394,7 @@ class SettingsPageTest extends TestCase {
 
 		$this->create_page()->upgrade();
 
-		$this->assertSame( [ 'safe:' . self::PAGE_URL . '&streakfire_notice=billing_unavailable' ], $this->redirects );
+		$this->assertSame( [ 'safe:' . self::PAGE_URL . '&inkmeter_notice=billing_unavailable' ], $this->redirects );
 	}
 
 	public function testManage_TokenRevoked_ForgetsConnection(): void {
@@ -410,7 +410,7 @@ class SettingsPageTest extends TestCase {
 		$this->create_page()->manage();
 
 		$this->assertFalse( $this->connection->is_connected() );
-		$this->assertSame( [ 'safe:' . self::PAGE_URL . '&streakfire_notice=revoked' ], $this->redirects );
+		$this->assertSame( [ 'safe:' . self::PAGE_URL . '&inkmeter_notice=revoked' ], $this->redirects );
 	}
 
 	public function testManage_Unreachable_SaysSo(): void {
@@ -420,7 +420,7 @@ class SettingsPageTest extends TestCase {
 		$this->create_page()->manage();
 
 		$this->assertTrue( $this->connection->is_connected() );
-		$this->assertSame( [ 'safe:' . self::PAGE_URL . '&streakfire_notice=unreachable' ], $this->redirects );
+		$this->assertSame( [ 'safe:' . self::PAGE_URL . '&inkmeter_notice=unreachable' ], $this->redirects );
 	}
 
 	public function testRender_NotConnected_OffersToConnectWithoutCallingTheApi(): void {
@@ -428,9 +428,9 @@ class SettingsPageTest extends TestCase {
 
 		$text = $this->render();
 
-		$this->assertStringContainsString( 'Connect to Streakfire', $text );
+		$this->assertStringContainsString( 'Connect to Inkmeter', $text );
 		$this->assertStringContainsString( 'Nothing is sent until you connect.', $text );
-		$this->assertStringContainsString( 'name="action" value="streakfire_connect"', $text );
+		$this->assertStringContainsString( 'name="action" value="inkmeter_connect"', $text );
 		$this->assertStringContainsString( 'href="https://streakfire.test/privacy"', $text );
 	}
 
@@ -459,8 +459,8 @@ class SettingsPageTest extends TestCase {
 		$this->assertStringContainsString( '5 mins ago', $html );
 		$this->assertStringContainsString( "value=\"7\" selected='selected'>07:00", $html );
 		$this->assertStringContainsString( "value=\"1\" checked='checked'", $html );
-		$this->assertStringContainsString( 'value="streakfire_manage"', $html );
-		$this->assertStringNotContainsString( 'value="streakfire_upgrade"', $html );
+		$this->assertStringContainsString( 'value="inkmeter_manage"', $html );
+		$this->assertStringNotContainsString( 'value="inkmeter_upgrade"', $html );
 		$this->assertTrue( $this->connection->has_feature( Connection::FEATURE_REMINDERS ), 'entitlements are refreshed' );
 	}
 
@@ -479,9 +479,9 @@ class SettingsPageTest extends TestCase {
 
 		$html = $this->render();
 
-		$this->assertStringContainsString( 'value="streakfire_upgrade"', $html );
-		$this->assertStringNotContainsString( 'value="streakfire_reminders"', $html );
-		$this->assertStringContainsString( 'value="streakfire_disconnect"', $html );
+		$this->assertStringContainsString( 'value="inkmeter_upgrade"', $html );
+		$this->assertStringNotContainsString( 'value="inkmeter_reminders"', $html );
+		$this->assertStringContainsString( 'value="inkmeter_disconnect"', $html );
 	}
 
 	public function testRender_RevokedElsewhere_ShowsConnectAgain(): void {
@@ -496,7 +496,7 @@ class SettingsPageTest extends TestCase {
 		$html = $this->render();
 
 		$this->assertStringContainsString( 'no longer connected', $html );
-		$this->assertStringContainsString( 'value="streakfire_connect"', $html );
+		$this->assertStringContainsString( 'value="inkmeter_connect"', $html );
 	}
 
 	public function testRender_Unreachable_KeepsTheConnection(): void {
@@ -506,7 +506,7 @@ class SettingsPageTest extends TestCase {
 		$html = $this->render();
 
 		$this->assertStringContainsString( 'couldn&#039;t be reached', $html );
-		$this->assertStringContainsString( 'value="streakfire_disconnect"', $html );
+		$this->assertStringContainsString( 'value="inkmeter_disconnect"', $html );
 	}
 
 	/**
