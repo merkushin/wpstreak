@@ -1,10 +1,10 @@
-PLUGIN    := streakfire
+PLUGIN    := inkstreak
 BUILD_DIR := build/$(PLUGIN)
 ZIP       := $(PLUGIN).zip
 WP        ?= wp
 
 POT_ARGS := --slug=$(PLUGIN) --domain=$(PLUGIN) --include=$(PLUGIN).php,src --exclude=build,vendor,node_modules,tests \
-	--headers='{"Report-Msgid-Bugs-To":"https://github.com/merkushin/wpstreak/issues"}'
+	--headers='{"Report-Msgid-Bugs-To":"https://github.com/merkushin/inkstreak/issues"}'
 
 # Files and directories that ship in the plugin zip.
 DIST_FILES := $(PLUGIN).php uninstall.php readme.txt src languages LICENSE
@@ -34,13 +34,13 @@ lint:
 lint-fix:
 	vendor/bin/phpcbf
 
-# The version must match in the plugin header, readme.txt (Stable tag), Wpstreak::VERSION
+# The version must match in the plugin header, readme.txt (Stable tag), Plugin::VERSION
 # and package.json. With TAG=v1.2.3 (or 1.2.3) it must also match the release tag.
 version-check:
 	@version=$$(sed -n 's/^ \* Version: *//p' $(PLUGIN).php); \
 	for other in \
 		"readme.txt:$$(sed -n 's/^Stable tag: *//p' readme.txt)" \
-		"src/Wpstreak.php:$$(sed -n "s/.*const VERSION = '\(.*\)';/\1/p" src/Wpstreak.php)" \
+		"src/Plugin.php:$$(sed -n "s/.*const VERSION = '\(.*\)';/\1/p" src/Plugin.php)" \
 		"package.json:$$(php -r 'echo json_decode(file_get_contents("package.json"))->version;')"; do \
 		if [ "$${other#*:}" != "$$version" ]; then echo "$${other%%:*} has version $${other#*:}, $(PLUGIN).php has $$version"; exit 1; fi; \
 	done; \

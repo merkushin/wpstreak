@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name:       Streakfire
- * Plugin URI:        https://github.com/merkushin/wpstreak
+ * Plugin Name:       Inkstreak
+ * Plugin URI:        https://github.com/merkushin/inkstreak
  * Description:       Shows your current writing streak above the Posts list.
  * Version:           1.0.0
  * Requires at least: 6.2
@@ -9,13 +9,13 @@
  * Author:            Dmitry Merkushin
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       streakfire
+ * Text Domain:       inkstreak
  * Domain Path:       /languages
  *
- * @package Merkushin\Wpstreak
+ * @package Merkushin\Inkstreak
  */
 
-namespace Merkushin\Wpstreak;
+namespace Merkushin\Inkstreak;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -27,4 +27,4 @@ if ( file_exists( __DIR__ . '/vendor-prefixed/autoload.php' ) ) {
 	require_once __DIR__ . '/vendor/autoload.php';
 }
 
-add_action( 'init', [ new Wpstreak( __FILE__ ), 'init' ] );
+add_action( 'init', [ new Plugin( __FILE__ ), 'init' ] );

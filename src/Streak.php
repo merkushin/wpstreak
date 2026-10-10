@@ -1,6 +1,6 @@
 <?php declare( strict_types=1 );
 
-namespace Merkushin\Wpstreak;
+namespace Merkushin\Inkstreak;
 
 use Merkushin\Wpal\Service\Dates;
 use Merkushin\Wpal\Service\Hooks;
@@ -11,7 +11,7 @@ use Merkushin\Wpal\ServiceFactory;
 defined( 'ABSPATH' ) || exit;
 
 class Streak {
-	public const TRANSIENT_KEY = 'streakfire_summary';
+	public const TRANSIENT_KEY = 'inkstreak_summary';
 
 	private const CACHE_TTL = 86400;
 

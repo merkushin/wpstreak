@@ -1,4 +1,4 @@
-=== Streakfire ===
+=== Inkstreak ===
 Contributors: merkushin
 Tags: writing, streak, habit, productivity, motivation
 Requires at least: 6.2
@@ -12,7 +12,7 @@ Track your writing streak: see how many days in a row you have published a post,
 
 == Description ==
 
-Streakfire turns publishing into a habit. Open **Posts** in your dashboard and a panel shows:
+Inkstreak turns publishing into a habit. Open **Posts** in your dashboard and a panel shows:
 
 * **Current run**: how many days in a row you have published at least one post.
 * **Last published**: the date of your latest post.
@@ -25,19 +25,19 @@ There is nothing to configure. The panel only appears on the Posts list screen, 
 
 = Translations =
 
-Streakfire ships with translations for Chinese (Simplified), Dutch, French, German, Italian, Japanese, Polish, Portuguese (Brazil), Portuguese (Portugal), Russian, Spanish, Turkish and Ukrainian. You can help translate it on [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/streakfire/).
+Inkstreak ships with translations for Chinese (Simplified), Dutch, French, German, Italian, Japanese, Polish, Portuguese (Brazil), Portuguese (Portugal), Russian, Spanish, Turkish and Ukrainian. You can help translate it on [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/inkstreak/).
 
 = Privacy =
 
-Streakfire does not collect, store or send any personal data. It reads the dates of your published posts and caches the result in a transient, which is removed when you delete the plugin. If you hide the panel, that choice is saved in WordPress' own per-user screen settings.
+Inkstreak does not collect, store or send any personal data. It reads the dates of your published posts and caches the result in a transient, which is removed when you delete the plugin. If you hide the panel, that choice is saved in WordPress' own per-user screen settings.
 
 = Source code =
 
-Development happens on [GitHub](https://github.com/merkushin/wpstreak), including the uncompiled CSS and JavaScript and the build instructions. Bug reports and pull requests are welcome.
+Development happens on [GitHub](https://github.com/merkushin/inkstreak), including the uncompiled CSS and JavaScript and the build instructions. Bug reports and pull requests are welcome.
 
 == Installation ==
 
-1. In your dashboard, go to **Plugins → Add New Plugin** and search for "Streakfire", or upload the plugin zip.
+1. In your dashboard, go to **Plugins → Add New Plugin** and search for "Inkstreak", or upload the plugin zip.
 2. Activate the plugin.
 3. Go to **Posts** to see your streak.
 

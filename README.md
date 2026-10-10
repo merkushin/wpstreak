@@ -1,4 +1,4 @@
-## Streakfire
+## Inkstreak
 
 Adds a panel and shows your current writing streak.
 
@@ -16,13 +16,13 @@ make smoke     # smoke test the release build from make dist
 make lint      # WordPress Coding Standards and PHP 7.4+ compatibility (make lint-fix to auto-fix)
 ```
 
-CI (`.github/workflows/ci.yml`) runs the linter, checks that `languages/streakfire.pot` is up to date and that versions match, runs the tests on PHP 7.4–8.4, builds the plugin (uploaded as the `streakfire` artifact) and runs [Plugin Check](https://wordpress.org/plugins/plugin-check/) on the build.
+CI (`.github/workflows/ci.yml`) runs the linter, checks that `languages/inkstreak.pot` is up to date and that versions match, runs the tests on PHP 7.4–8.4, builds the plugin (uploaded as the `inkstreak` artifact) and runs [Plugin Check](https://wordpress.org/plugins/plugin-check/) on the build.
 
 In a development checkout the plugin loads `vendor/autoload.php`, so it can be symlinked into a local WordPress install as-is.
 
 ### Translations
 
-All user-facing text lives in `src/views/` and uses the `streakfire` text domain. `languages/` holds the template (`streakfire.pot`) and a `.po` file per locale: de_DE, es_ES, fr_FR, it_IT, ja, nl_NL, pl_PL, pt_BR, pt_PT, ru_RU, tr_TR, uk and zh_CN.
+All user-facing text lives in `src/views/` and uses the `inkstreak` text domain. `languages/` holds the template (`inkstreak.pot`) and a `.po` file per locale: de_DE, es_ES, fr_FR, it_IT, ja, nl_NL, pl_PL, pt_BR, pt_PT, ru_RU, tr_TR, uk and zh_CN.
 
 After changing strings, regenerate the template and merge it into every `.po` file (needs [WP-CLI](https://wp-cli.org/)):
 
@@ -38,11 +38,11 @@ Then translate the new entries. `.mo` and `.l10n.php` files are compiled during 
 make dist
 ```
 
-This creates `streakfire.zip`. The build happens in `build/streakfire`, so the working copy is left untouched:
+This creates `inkstreak.zip`. The build happens in `build/inkstreak`, so the working copy is left untouched:
 
-1. Plugin files and built assets are copied to `build/streakfire`, and translations are compiled.
+1. Plugin files and built assets are copied to `build/inkstreak`, and translations are compiled.
 2. Runtime dependencies are installed there. `bin/prune-wpal.php` finds the wpal services used in `src/` (`use Merkushin\Wpal\Service\…` and `ServiceFactory::create_…()`) and tells wp-scoper to copy only those plus `ServiceFactory`; wpal's PHP 8.4+ Api layer is always left out. The build fails if `src/` references a service wpal doesn't have.
-3. Dependencies are prefixed with [wp-scoper](https://github.com/veronalabs/wp-scoper) into `vendor-prefixed/` (namespace `Merkushin\Wpstreak\Vendor`), and the `use` statements in `src/` are rewritten to match.
+3. Dependencies are prefixed with [wp-scoper](https://github.com/veronalabs/wp-scoper) into `vendor-prefixed/` (namespace `Merkushin\Inkstreak\Vendor`), and the `use` statements in `src/` are rewritten to match.
 4. `vendor/` and the Composer files are removed and the directory is zipped.
 
 `make smoke` then loads the build with stubbed WordPress functions and runs every code path, so a wpal class missing from the build fails CI rather than a site. Using a new wpal service needs no configuration: reference it in `src/` and the next build includes it.
@@ -51,7 +51,7 @@ This creates `streakfire.zip`. The build happens in `build/streakfire`, so the w
 
 ### Releasing
 
-1. Bump the version in `streakfire.php` (header), `readme.txt` (`Stable tag`), `Wpstreak::VERSION` and `package.json`, and add a changelog entry to `readme.txt`. `make version-check` confirms they match.
+1. Bump the version in `inkstreak.php` (header), `readme.txt` (`Stable tag`), `Plugin::VERSION` and `package.json`, and add a changelog entry to `readme.txt`. `make version-check` confirms they match.
 2. Push a tag with that version, e.g. `v1.0.1`. The release workflow builds the zip, deploys it to WordPress.org SVN with the listing assets from `.wordpress-org/`, and creates a GitHub release with the zip attached.
 
 The workflow needs the `SVN_USERNAME` and `SVN_PASSWORD` repository secrets (your WordPress.org username and SVN password). The very first version is submitted by hand at [wordpress.org/plugins/developers/add](https://wordpress.org/plugins/developers/add/); tags only deploy after the plugin is approved.

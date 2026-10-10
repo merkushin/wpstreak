@@ -1,14 +1,14 @@
 <?php declare( strict_types=1 );
 
-namespace MerkushinTest\Wpstreak;
+namespace MerkushinTest\Inkstreak;
 
 use Merkushin\Wpal\Service\Dates;
 use Merkushin\Wpal\Service\Hooks;
 use Merkushin\Wpal\Service\PostTypes;
 use Merkushin\Wpal\Service\Transient;
 use Merkushin\Wpal\ServiceFactory;
-use Merkushin\Wpstreak\PublishedPostDates;
-use Merkushin\Wpstreak\Streak;
+use Merkushin\Inkstreak\PublishedPostDates;
+use Merkushin\Inkstreak\Streak;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

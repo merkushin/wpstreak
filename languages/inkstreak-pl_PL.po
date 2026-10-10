@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Streakfire 1.0.0\n"
-"Report-Msgid-Bugs-To: https://github.com/merkushin/wpstreak/issues\n"
+"Project-Id-Version: Inkstreak 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/merkushin/inkstreak/issues\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -9,38 +9,38 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-10-08T18:32:07+00:00\n"
 "PO-Revision-Date: 2026-10-08 00:00+0000\n"
-"Language: fr_FR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Domain: streakfire\n"
+"Language: pl_PL\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Domain: inkstreak\n"
 
 #. Description of the plugin
-#: streakfire.php
+#: inkstreak.php
 msgid "Shows your current writing streak above the Posts list."
-msgstr "Affiche votre série d’écriture actuelle au-dessus de la liste des articles."
+msgstr "Wyświetla twoją aktualną serię pisania nad listą wpisów."
 
 #: src/views/streak_panel.php:27
 msgid "Start your next streak"
-msgstr "Commencez votre prochaine série"
+msgstr "Rozpocznij nową serię"
 
 #: src/views/streak_panel.php:29
 msgid "You are on fire today"
-msgstr "Vous êtes en feu aujourd’hui"
+msgstr "Dziś jesteś w świetnej formie"
 
 #: src/views/streak_panel.php:31
 msgid "You are still alive, publish today to keep it going"
-msgstr "Votre série tient toujours, publiez aujourd’hui pour la prolonger"
+msgstr "Seria wciąż trwa — opublikuj coś dziś, aby ją utrzymać"
 
 #: src/views/streak_panel.php:22
 msgid "Writing momentum"
-msgstr "Élan d’écriture"
+msgstr "Pisarski rozpęd"
 
 #: src/views/streak_panel.php:23
 msgid "Protect the streak. Build the habit."
-msgstr "Protégez la série. Ancrez l’habitude."
+msgstr "Chroń serię. Buduj nawyk."
 
 #: src/views/streak_panel.php:37
 msgid "Current run"
-msgstr "Série en cours"
+msgstr "Obecna seria"
 
 #. translators: %s: Number of days.
 #: src/views/streak_panel.php:41
@@ -48,63 +48,65 @@ msgstr "Série en cours"
 #, php-format
 msgid "%s day"
 msgid_plural "%s days"
-msgstr[0] "%s jour"
-msgstr[1] "%s jours"
+msgstr[0] "%s dzień"
+msgstr[1] "%s dni"
+msgstr[2] "%s dni"
 
 #: src/views/streak_panel.php:46
 msgid "Last published"
-msgstr "Dernière publication"
+msgstr "Ostatnia publikacja"
 
 #: src/views/streak_panel.php:47
 msgid "No published posts yet"
-msgstr "Aucun article publié pour l’instant"
+msgstr "Brak opublikowanych wpisów"
 
 #: src/views/streak_panel.php:50
 msgid "Next milestone"
-msgstr "Prochain palier"
+msgstr "Następny cel"
 
 #. translators: Unit shown after the large streak number, e.g. "12 days".
 #: src/views/streak_panel.php:67
 msgctxt "streak counter unit"
 msgid "day"
 msgid_plural "days"
-msgstr[0] "jour"
-msgstr[1] "jours"
+msgstr[0] "dzień"
+msgstr[1] "dni"
+msgstr[2] "dni"
 
 #: src/views/streak_panel.php:73
 msgid "Published today"
-msgstr "Publié aujourd’hui"
+msgstr "Opublikowano dziś"
 
 #: src/views/streak_panel.php:73
 msgid "Needs a post today"
-msgstr "Un article est attendu aujourd’hui"
+msgstr "Dziś potrzebny wpis"
 
 #: src/views/streak_panel.php:78
 msgid "Milestone progress"
-msgstr "Progression vers le palier"
+msgstr "Postęp do celu"
 
 #. translators: %s: Progress towards the next milestone, a number from 0 to 100.
 #: src/views/streak_panel.php:82
 #, php-format
 msgid "%s%%"
-msgstr "%s %%"
+msgstr "%s%%"
 
 #. Plugin URI of the plugin
-#: streakfire.php
-msgid "https://github.com/merkushin/wpstreak"
-msgstr "https://github.com/merkushin/wpstreak"
+#: inkstreak.php
+msgid "https://github.com/merkushin/inkstreak"
+msgstr "https://github.com/merkushin/inkstreak"
 
 #. Author of the plugin
-#: streakfire.php
+#: inkstreak.php
 msgid "Dmitry Merkushin"
 msgstr "Dmitry Merkushin"
 
 #. Plugin Name of the plugin
-#: streakfire.php
+#: inkstreak.php
 #: src/views/screen_option.php:11
-msgid "Streakfire"
-msgstr "Streakfire"
+msgid "Inkstreak"
+msgstr "Inkstreak"
 
 #: src/views/screen_option.php:14
 msgid "Writing streak panel"
-msgstr "Panneau de série d’écriture"
+msgstr "Panel serii pisania"

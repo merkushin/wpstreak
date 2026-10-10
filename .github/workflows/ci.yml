@@ -80,13 +80,13 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: streakfire
-          path: build/streakfire
+          name: inkstreak
+          path: build/inkstreak
           if-no-files-found: error
 
       # The checks WordPress.org runs on submissions, against the built plugin.
       - name: Plugin Check
         uses: WordPress/plugin-check-action@v1
         with:
-          build-dir: build/streakfire
-          slug: streakfire
+          build-dir: build/inkstreak
+          slug: inkstreak

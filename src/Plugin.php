@@ -1,6 +1,6 @@
 <?php declare( strict_types=1 );
 
-namespace Merkushin\Wpstreak;
+namespace Merkushin\Inkstreak;
 
 use Merkushin\Wpal\Service\Assets;
 use Merkushin\Wpal\Service\Dates;
@@ -14,10 +14,10 @@ use Merkushin\Wpal\ServiceFactory;
 
 defined( 'ABSPATH' ) || exit;
 
-class Wpstreak {
+class Plugin {
 	public const VERSION = '1.0.0';
 
-	public const TEXT_DOMAIN = 'streakfire';
+	public const TEXT_DOMAIN = 'inkstreak';
 
 	/**
 	 * The Posts list screen, where the panel is shown.
@@ -28,7 +28,7 @@ class Wpstreak {
 	 * Per-user setting for the panel's Screen Options checkbox: 'on' or 'off'.
 	 * Stored by WordPress' user settings; the admin script updates it with setUserSetting().
 	 */
-	public const PANEL_SETTING = 'streakfire_panel';
+	public const PANEL_SETTING = 'inkstreak_panel';
 
 	/**
 	 * Main plugin file path.
@@ -117,9 +117,9 @@ class Wpstreak {
 
 		$url = $this->plugins->plugin_dir_url( $this->plugin_file );
 
-		$this->assets->wp_enqueue_style( 'streakfire-admin', $url . 'assets/dist/styles/admin.css', [], self::VERSION );
+		$this->assets->wp_enqueue_style( 'inkstreak-admin', $url . 'assets/dist/styles/admin.css', [], self::VERSION );
 		// The script saves the Screen Options checkbox with setUserSetting() from WordPress' utils script.
-		$this->assets->wp_enqueue_script( 'streakfire-admin', $url . 'assets/dist/javascript/admin.js', [ 'utils' ], self::VERSION, true );
+		$this->assets->wp_enqueue_script( 'inkstreak-admin', $url . 'assets/dist/javascript/admin.js', [ 'utils' ], self::VERSION, true );
 	}
 
 	public function render_streak_panel(): void {
