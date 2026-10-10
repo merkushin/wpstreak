@@ -22,15 +22,15 @@ In a development checkout the plugin loads `vendor/autoload.php`, so it can be s
 
 ### Translations
 
-All user-facing text lives in `src/views/` and uses the `inkstreak` text domain. `languages/` holds the template (`inkstreak.pot`) and a `.po` file per locale: de_DE, es_ES, fr_FR, it_IT, ja, nl_NL, pl_PL, pt_BR, pt_PT, ru_RU, tr_TR, uk and zh_CN.
+All user-facing text lives in `src/views/` and uses the `inkstreak` text domain. The plugin ships no translation files: WordPress.org asks plugins to translate through [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/inkstreak/), and WordPress downloads and loads those language packs automatically.
+
+`languages/` holds the template (`inkstreak.pot`) and draft `.po` files for de_DE, es_ES, fr_FR, it_IT, ja, nl_NL, pl_PL, pt_BR, pt_PT, ru_RU, tr_TR, uk and zh_CN. They are not part of the release; they can be imported into translate.wordpress.org once the plugin is approved.
 
 After changing strings, regenerate the template and merge it into every `.po` file (needs [WP-CLI](https://wp-cli.org/)):
 
 ```bash
 make i18n
 ```
-
-Then translate the new entries. `.mo` and `.l10n.php` files are compiled during `make dist` and are not committed; run `make i18n-compile` to compile them in a development checkout. Once the plugin is on WordPress.org, language packs from translate.wordpress.org take precedence over the bundled files.
 
 ### Building a release
 
@@ -40,7 +40,7 @@ make dist
 
 This creates `inkstreak.zip`. The build happens in `build/inkstreak`, so the working copy is left untouched:
 
-1. Plugin files and built assets are copied to `build/inkstreak`, and translations are compiled.
+1. Plugin files and built assets are copied to `build/inkstreak`.
 2. Runtime dependencies are installed there. `bin/prune-wpal.php` finds the wpal services used in `src/` (`use Merkushin\Wpal\Service\…` and `ServiceFactory::create_…()`) and tells wp-scoper to copy only those plus `ServiceFactory`; wpal's PHP 8.4+ Api layer is always left out. The build fails if `src/` references a service wpal doesn't have.
 3. Dependencies are prefixed with [wp-scoper](https://github.com/veronalabs/wp-scoper) into `vendor-prefixed/` (namespace `Merkushin\Inkstreak\Vendor`), and the `use` statements in `src/` are rewritten to match.
 4. `vendor/` and the Composer files are removed and the directory is zipped.

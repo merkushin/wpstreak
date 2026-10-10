@@ -25,7 +25,7 @@ There is nothing to configure. The panel only appears on the Posts list screen, 
 
 = Translations =
 
-Inkstreak ships with translations for Chinese (Simplified), Dutch, French, German, Italian, Japanese, Polish, Portuguese (Brazil), Portuguese (Portugal), Russian, Spanish, Turkish and Ukrainian. You can help translate it on [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/inkstreak/).
+Inkstreak is ready to be translated into any language. You can help translate it on [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/inkstreak/).
 
 = Privacy =
 

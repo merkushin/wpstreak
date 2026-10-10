@@ -46,14 +46,6 @@ function checked( $checked, $current = true, bool $display = true ): string {
 	return $result;
 }
 
-function load_plugin_textdomain( $domain, $deprecated = false, $path = false ): bool {
-	return true;
-}
-
-function plugin_basename( string $file ): string {
-	return 'inkstreak/inkstreak.php';
-}
-
 function plugin_dir_url( string $file ): string {
 	return 'https://example.com/wp-content/plugins/inkstreak/';
 }

@@ -63,7 +63,6 @@ class PluginTest extends TestCase {
 
 		$plugins = $this->createMock( Plugins::class );
 		$plugins->method( 'plugin_dir_url' )->with( self::PLUGIN_FILE )->willReturn( self::PLUGIN_URL );
-		$plugins->method( 'plugin_basename' )->with( self::PLUGIN_FILE )->willReturn( 'inkstreak/inkstreak.php' );
 
 		$options = $this->createMock( Options::class );
 		$options->method( 'get_option' )->with( 'date_format' )->willReturn( 'd.m.Y' );
@@ -86,17 +85,6 @@ class PluginTest extends TestCase {
 		ServiceFactory::set_custom_options( null );
 		ServiceFactory::set_custom_user_settings( null );
 		ServiceFactory::set_custom_hooks( null );
-	}
-
-	public function testInit_Always_LoadsBundledTranslations(): void {
-		ServiceFactory::set_custom_hooks( $this->createMock( Hooks::class ) );
-
-		$this->localization
-			->expects( $this->once() )
-			->method( 'load_plugin_textdomain' )
-			->with( 'inkstreak', false, 'inkstreak/languages' );
-
-		( new Plugin( self::PLUGIN_FILE, $this->streak ) )->init();
 	}
 
 	public function testInit_Always_RegistersAdminHooksAndInitsStreak(): void {

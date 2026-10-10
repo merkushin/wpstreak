@@ -17,8 +17,6 @@ defined( 'ABSPATH' ) || exit;
 class Plugin {
 	public const VERSION = '1.0.0';
 
-	public const TEXT_DOMAIN = 'inkstreak';
-
 	/**
 	 * The Posts list screen, where the panel is shown.
 	 */
@@ -96,13 +94,7 @@ class Plugin {
 	}
 
 	public function init(): void {
-		// Bundled translations in languages/. Language packs from translate.wordpress.org take precedence.
-		$this->localization->load_plugin_textdomain(
-			self::TEXT_DOMAIN,
-			false,
-			dirname( $this->plugins->plugin_basename( $this->plugin_file ) ) . '/languages'
-		);
-
+		// Translations come from translate.wordpress.org language packs, which WordPress loads on demand.
 		$this->hooks->add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_assets' ] );
 		$this->hooks->add_action( 'all_admin_notices', [ $this, 'render_streak_panel' ] );
 		$this->hooks->add_filter( 'screen_settings', [ $this, 'add_screen_option' ], 10, 2 );

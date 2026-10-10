@@ -7,9 +7,9 @@ POT_ARGS := --slug=$(PLUGIN) --domain=$(PLUGIN) --include=$(PLUGIN).php,src --ex
 	--headers='{"Report-Msgid-Bugs-To":"https://github.com/merkushin/inkstreak/issues"}'
 
 # Files and directories that ship in the plugin zip.
-DIST_FILES := $(PLUGIN).php uninstall.php readme.txt src languages LICENSE
+DIST_FILES := $(PLUGIN).php uninstall.php readme.txt src LICENSE
 
-.PHONY: all install build-js test smoke lint lint-fix version-check i18n i18n-check i18n-compile dist clean
+.PHONY: all install build-js test smoke lint lint-fix version-check i18n i18n-check dist clean
 
 all: dist
 
@@ -61,21 +61,14 @@ i18n-check:
 	grep -v '^"POT-Creation-Date:' build/$(PLUGIN).pot > build/actual.pot
 	diff -u build/expected.pot build/actual.pot || (echo "languages/$(PLUGIN).pot is out of date, run 'make i18n'." && exit 1)
 
-# Compiles .po files into the .mo and .l10n.php files WordPress loads.
-i18n-compile:
-	$(WP) i18n make-mo languages
-	$(WP) i18n make-php languages
-
 # Builds a release zip in a separate directory, so the working copy is never modified:
-# copies the plugin files, compiles translations, installs runtime dependencies, keeps only
+# copies the plugin files, installs runtime dependencies, keeps only
 # the wpal services the plugin uses, prefixes them with wp-scoper into vendor-prefixed/ and
 # drops vendor/ and the Composer files.
 dist: clean install build-js
 	mkdir -p $(BUILD_DIR)/assets
 	cp -R $(DIST_FILES) composer.json composer.lock $(BUILD_DIR)/
 	cp -R assets/dist $(BUILD_DIR)/assets/
-	$(WP) i18n make-mo $(BUILD_DIR)/languages
-	$(WP) i18n make-php $(BUILD_DIR)/languages
 	composer install --working-dir=$(BUILD_DIR) --no-dev --no-plugins --no-scripts --no-autoloader --no-interaction --quiet
 	php bin/prune-wpal.php $(BUILD_DIR)
 	vendor/bin/wp-scoper $(BUILD_DIR)
@@ -83,4 +76,4 @@ dist: clean install build-js
 	cd build && zip -rq ../$(ZIP) $(PLUGIN)
 
 clean:
-	rm -rf build assets/dist $(ZIP) languages/*.mo languages/*.l10n.php
+	rm -rf build assets/dist $(ZIP)
