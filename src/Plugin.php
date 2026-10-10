@@ -82,11 +82,16 @@ class Plugin {
 	private $streak;
 
 	/**
+	 * @var GoalForm
+	 */
+	private $goal_form;
+
+	/**
 	 * @var Pro
 	 */
 	private $pro;
 
-	public function __construct( string $plugin_file, ?Streak $streak = null, ?Pro $pro = null ) {
+	public function __construct( string $plugin_file, ?Streak $streak = null, ?GoalForm $goal_form = null, ?Pro $pro = null ) {
 		$this->plugin_file   = $plugin_file;
 		$this->hooks         = ServiceFactory::create_hooks();
 		$this->assets        = ServiceFactory::create_assets();
@@ -97,6 +102,7 @@ class Plugin {
 		$this->options       = ServiceFactory::create_options();
 		$this->user_settings = ServiceFactory::create_user_settings();
 		$this->streak        = $streak ?? new Streak();
+		$this->goal_form     = $goal_form ?? new GoalForm( $this->streak );
 		$this->pro           = $pro ?? new Pro( self::VERSION );
 	}
 
@@ -107,6 +113,7 @@ class Plugin {
 		$this->hooks->add_filter( 'screen_settings', [ $this, 'add_screen_option' ], 10, 2 );
 
 		$this->streak->init();
+		$this->goal_form->init();
 		$this->pro->init();
 	}
 
@@ -127,21 +134,34 @@ class Plugin {
 			return;
 		}
 
-		$summary         = $this->streak->get_summary();
-		$streak          = $summary['streak'];
-		$is_active_today = $summary['is_active_today'];
-		$next_milestone  = $summary['next_milestone'];
-		$progress        = min( 100, (int) round( ( $streak / $next_milestone ) * 100 ) );
+		$summary        = $this->streak->get_summary();
+		$streak         = (int) $summary['streak'];
+		$is_weekly      = 'week' === ( $summary['unit'] ?? 'day' );
+		$is_goal_met    = (bool) ( $summary['is_goal_met'] ?? $summary['is_active_today'] );
+		$next_milestone = (int) $summary['next_milestone'];
+		$progress       = min( 100, (int) round( ( $streak / $next_milestone ) * 100 ) );
+		$goal_days      = (int) ( $summary['goal_days'] ?? 1 );
+		$period_days    = (int) ( $summary['period_days'] ?? 0 );
+		$days_needed    = max( 0, $goal_days - $period_days );
+		$days_left      = (int) ( $summary['days_left'] ?? 1 );
 
 		// The view holds all translatable text; it receives raw values plus their localized formatting.
-		$accent_class         = $is_active_today ? 'is-hot' : 'is-warm';
-		$status_key           = $this->get_status_key( $streak, $is_active_today );
+		$accent_class         = $is_goal_met ? 'is-hot' : 'is-warm';
+		$is_out_of_reach      = $is_weekly && $days_needed > $days_left;
+		$status_key           = $this->get_status_key( $streak, $is_goal_met, $is_out_of_reach );
 		$streak_label         = $this->format_number( $streak );
 		$next_milestone_label = $this->format_number( $next_milestone );
 		$progress_label       = $this->format_number( $progress );
 		$last_post_label      = $this->format_date( $summary['last_post_date'] );
+		$goal_days_label      = $this->format_number( $goal_days );
+		$period_days_label    = $this->format_number( $period_days );
+		$days_needed_label    = $this->format_number( $days_needed );
 		$is_panel_visible     = $this->is_panel_visible();
 		$reminders_url        = $this->pro->reminders_url();
+		$goal                 = $this->streak->goal();
+		$goal_options         = Goal::all();
+		$can_change_goal      = $this->goal_form->can_change();
+		$goal_action_url      = $this->goal_form->action_url();
 
 		include __DIR__ . '/views/streak_panel.php';
 	}
@@ -178,14 +198,45 @@ class Plugin {
 	}
 
 	/**
-	 * @return string One of 'start', 'on_fire' or 'alive'; the view maps it to a message.
+	 * Prints the goal choices for the panel's goal form.
 	 */
-	private function get_status_key( int $streak, bool $is_active_today ): string {
-		if ( 0 === $streak ) {
-			return 'start';
+	public function render_goal_options( Goal $selected ): void {
+		foreach ( Goal::all() as $goal ) {
+			printf(
+				'<option value="%1$s"%2$s>%3$s</option>',
+				esc_attr( $goal->key() ),
+				selected( $selected->key(), $goal->key(), false ),
+				esc_html( $this->goal_label( $goal ) )
+			);
+		}
+	}
+
+	/**
+	 * The goal in words, e.g. "Publish on 3 days a week".
+	 */
+	public function goal_label( Goal $goal ): string {
+		if ( ! $goal->is_weekly() ) {
+			return __( 'Publish every day', 'inkmeter' );
 		}
 
-		return $is_active_today ? 'on_fire' : 'alive';
+		/* translators: %s: Number of days. */
+		return sprintf( _n( 'Publish on %s day a week', 'Publish on %s days a week', $goal->days(), 'inkmeter' ), $this->format_number( $goal->days() ) );
+	}
+
+	/**
+	 * @param bool $is_out_of_reach Whether this week can no longer meet a weekly goal.
+	 *
+	 * @return string One of 'start', 'on_fire', 'alive' or 'out_of_reach'; the view maps it to a message.
+	 */
+	private function get_status_key( int $streak, bool $is_goal_met, bool $is_out_of_reach ): string {
+		if ( $is_goal_met ) {
+			return 'on_fire';
+		}
+		if ( $is_out_of_reach ) {
+			return 'out_of_reach';
+		}
+
+		return 0 === $streak ? 'start' : 'alive';
 	}
 
 	private function format_number( int $number ): string {

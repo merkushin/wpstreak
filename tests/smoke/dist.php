@@ -24,7 +24,10 @@ define( 'ABSPATH', __DIR__ . '/' );
 $GLOBALS['smoke_actions']    = [];
 $GLOBALS['smoke_enqueued']   = [];
 $GLOBALS['smoke_transients'] = [];
-$GLOBALS['smoke_options']    = [ 'date_format' => 'F j, Y' ];
+$GLOBALS['smoke_options']    = [
+	'date_format'   => 'F j, Y',
+	'start_of_week' => '1',
+];
 $GLOBALS['smoke_requests']   = [];
 $GLOBALS['smoke_cron']       = [];
 
@@ -307,7 +310,7 @@ if ( ! isset( $GLOBALS['smoke_actions']['init'], $GLOBALS['smoke_actions']['deac
 }
 smoke_do( 'init' );
 
-foreach ( [ 'admin_enqueue_scripts', 'all_admin_notices', 'screen_settings', 'save_post', 'delete_post', 'admin_menu', 'inkmeter_sync_days', 'inkmeter_sync_days_daily', 'admin_post_inkmeter_connect' ] as $hook ) {
+foreach ( [ 'admin_enqueue_scripts', 'all_admin_notices', 'screen_settings', 'save_post', 'delete_post', 'admin_menu', 'inkmeter_sync_days', 'inkmeter_sync_days_daily', 'admin_post_inkmeter_connect', 'admin_post_inkmeter_goal' ] as $hook ) {
 	if ( ! isset( $GLOBALS['smoke_actions'][ $hook ] ) ) {
 		smoke_fail( "no callback for {$hook}" );
 	}
@@ -321,11 +324,28 @@ if ( 2 !== count( $GLOBALS['smoke_enqueued'] ) ) {
 ob_start();
 smoke_do( 'all_admin_notices' );
 $text = trim( (string) preg_replace( '/\s+/', ' ', strip_tags( (string) ob_get_clean() ) ) );
-foreach ( [ 'Current run 3 days', 'Last published March 2, 2026', 'Next milestone 7 days', 'Published today', 'Get an email before your streak breaks' ] as $expected ) {
+foreach ( [ 'Current run 3 days', 'Last published March 2, 2026', 'Next milestone 7 days', 'Published today', 'Get an email before your streak breaks', 'Publish every day', 'Change goal' ] as $expected ) {
 	if ( false === strpos( $text, $expected ) ) {
 		smoke_fail( "panel is missing \"{$expected}\": {$text}" );
 	}
 }
+
+// A weekly goal: March 2, 2026 is a Monday, so this week has one day with a post so far.
+$GLOBALS['smoke_options']['inkmeter_goal'] = [
+	'type' => 'weekly',
+	'days' => 2,
+];
+$GLOBALS['smoke_transients']               = [];
+ob_start();
+smoke_do( 'all_admin_notices' );
+$weekly = trim( (string) preg_replace( '/\s+/', ' ', strip_tags( (string) ob_get_clean() ) ) );
+foreach ( [ 'Publish on 2 days a week', 'This week 1 of 2 days', '1 more day this week' ] as $expected ) {
+	if ( false === strpos( $weekly, $expected ) ) {
+		smoke_fail( "weekly panel is missing \"{$expected}\": {$weekly}" );
+	}
+}
+unset( $GLOBALS['smoke_options']['inkmeter_goal'] );
+$GLOBALS['smoke_transients'] = [];
 
 $screen_settings = (string) smoke_do( 'screen_settings', '', get_current_screen() );
 if ( false === strpos( $screen_settings, 'id="inkmeter-panel-toggle"' ) ) {
