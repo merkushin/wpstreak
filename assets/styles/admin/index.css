@@ -78,6 +78,71 @@
   font-size: 14px;
   line-height: 1.7;
 }
+.inkmeter-panel.notice .inkmeter-panel__freezes {
+  margin: 8px 0 0;
+  color: var(--inkmeter-muted);
+  font-size: 13px;
+}
+.inkmeter-panel__freezes::before {
+  content: "\2744\FE0F";
+  margin-right: 6px;
+}
+.inkmeter-panel.notice .inkmeter-panel__reminders {
+  margin: 0;
+  font-size: 13px;
+}
+.inkmeter-panel__reminders a {
+  color: var(--inkmeter-text);
+  text-decoration-color: var(--inkmeter-strong);
+  text-underline-offset: 3px;
+}
+.inkmeter-panel__reminders a:hover,
+.inkmeter-panel__reminders a:focus {
+  color: var(--inkmeter-text);
+  text-decoration-color: currentColor;
+}
+.inkmeter-panel__goal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin-top: 10px;
+  color: var(--inkmeter-text);
+  font-size: 13px;
+  font-weight: 600;
+}
+.inkmeter-panel__goal-change summary {
+  color: var(--inkmeter-muted);
+  font-weight: 400;
+  text-decoration: underline;
+  text-decoration-color: var(--inkmeter-strong);
+  text-underline-offset: 3px;
+  cursor: pointer;
+  list-style: none;
+}
+.inkmeter-panel__goal-change summary::-webkit-details-marker {
+  display: none;
+}
+.inkmeter-panel__goal-change summary:hover,
+.inkmeter-panel__goal-change summary:focus {
+  color: var(--inkmeter-text);
+}
+.inkmeter-panel__goal-change[open] summary {
+  display: none;
+}
+/* While choosing, the select already shows the current goal. */
+.inkmeter-panel__goal:has(.inkmeter-panel__goal-change[open]) > span {
+  display: none;
+}
+.inkmeter-panel__goal-change form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.inkmeter-panel__goal-change select {
+  min-height: 30px;
+}
 .inkmeter-panel__stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
