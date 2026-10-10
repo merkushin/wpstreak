@@ -8,9 +8,9 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 <fieldset class="metabox-prefs">
-	<legend><?php esc_html_e( 'Inkstreak', 'inkstreak' ); ?></legend>
-	<label for="inkstreak-panel-toggle">
-		<input type="checkbox" id="inkstreak-panel-toggle"<?php checked( $is_panel_visible ); ?> />
-		<?php esc_html_e( 'Writing streak panel', 'inkstreak' ); ?>
+	<legend><?php esc_html_e( 'Inkmeter', 'inkmeter' ); ?></legend>
+	<label for="inkmeter-panel-toggle">
+		<input type="checkbox" id="inkmeter-panel-toggle"<?php checked( $is_panel_visible ); ?> />
+		<?php esc_html_e( 'Writing streak panel', 'inkmeter' ); ?>
 	</label>
 </fieldset>

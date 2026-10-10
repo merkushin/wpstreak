@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Inkstreak 1.0.0\n"
-"Report-Msgid-Bugs-To: https://github.com/merkushin/inkstreak/issues\n"
+"Project-Id-Version: Inkmeter 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/merkushin/inkmeter/issues\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -9,38 +9,38 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-10-08T18:32:07+00:00\n"
 "PO-Revision-Date: 2026-10-08 00:00+0000\n"
-"Language: ru_RU\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Domain: inkstreak\n"
+"Language: fr_FR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Domain: inkmeter\n"
 
 #. Description of the plugin
-#: inkstreak.php
+#: inkmeter.php
 msgid "Shows your current writing streak above the Posts list."
-msgstr "Показывает вашу текущую серию публикаций над списком записей."
+msgstr "Affiche votre série d’écriture actuelle au-dessus de la liste des articles."
 
 #: src/views/streak_panel.php:27
 msgid "Start your next streak"
-msgstr "Начните новую серию"
+msgstr "Commencez votre prochaine série"
 
 #: src/views/streak_panel.php:29
 msgid "You are on fire today"
-msgstr "Сегодня вы в ударе"
+msgstr "Vous êtes en feu aujourd’hui"
 
 #: src/views/streak_panel.php:31
 msgid "You are still alive, publish today to keep it going"
-msgstr "Серия ещё жива — опубликуйте запись сегодня, чтобы её продолжить"
+msgstr "Votre série tient toujours, publiez aujourd’hui pour la prolonger"
 
 #: src/views/streak_panel.php:22
 msgid "Writing momentum"
-msgstr "Писательский ритм"
+msgstr "Élan d’écriture"
 
 #: src/views/streak_panel.php:23
 msgid "Protect the streak. Build the habit."
-msgstr "Берегите серию. Вырабатывайте привычку."
+msgstr "Protégez la série. Ancrez l’habitude."
 
 #: src/views/streak_panel.php:37
 msgid "Current run"
-msgstr "Текущая серия"
+msgstr "Série en cours"
 
 #. translators: %s: Number of days.
 #: src/views/streak_panel.php:41
@@ -48,65 +48,63 @@ msgstr "Текущая серия"
 #, php-format
 msgid "%s day"
 msgid_plural "%s days"
-msgstr[0] "%s день"
-msgstr[1] "%s дня"
-msgstr[2] "%s дней"
+msgstr[0] "%s jour"
+msgstr[1] "%s jours"
 
 #: src/views/streak_panel.php:46
 msgid "Last published"
-msgstr "Последняя публикация"
+msgstr "Dernière publication"
 
 #: src/views/streak_panel.php:47
 msgid "No published posts yet"
-msgstr "Опубликованных записей пока нет"
+msgstr "Aucun article publié pour l’instant"
 
 #: src/views/streak_panel.php:50
 msgid "Next milestone"
-msgstr "Следующая цель"
+msgstr "Prochain palier"
 
 #. translators: Unit shown after the large streak number, e.g. "12 days".
 #: src/views/streak_panel.php:67
 msgctxt "streak counter unit"
 msgid "day"
 msgid_plural "days"
-msgstr[0] "день"
-msgstr[1] "дня"
-msgstr[2] "дней"
+msgstr[0] "jour"
+msgstr[1] "jours"
 
 #: src/views/streak_panel.php:73
 msgid "Published today"
-msgstr "Опубликовано сегодня"
+msgstr "Publié aujourd’hui"
 
 #: src/views/streak_panel.php:73
 msgid "Needs a post today"
-msgstr "Сегодня нужна запись"
+msgstr "Un article est attendu aujourd’hui"
 
 #: src/views/streak_panel.php:78
 msgid "Milestone progress"
-msgstr "Прогресс к цели"
+msgstr "Progression vers le palier"
 
 #. translators: %s: Progress towards the next milestone, a number from 0 to 100.
 #: src/views/streak_panel.php:82
 #, php-format
 msgid "%s%%"
-msgstr "%s%%"
+msgstr "%s %%"
 
 #. Plugin URI of the plugin
-#: inkstreak.php
-msgid "https://github.com/merkushin/inkstreak"
-msgstr "https://github.com/merkushin/inkstreak"
+#: inkmeter.php
+msgid "https://github.com/merkushin/inkmeter"
+msgstr "https://github.com/merkushin/inkmeter"
 
 #. Author of the plugin
-#: inkstreak.php
+#: inkmeter.php
 msgid "Dmitry Merkushin"
-msgstr "Дмитрий Меркушин"
+msgstr "Dmitry Merkushin"
 
 #. Plugin Name of the plugin
-#: inkstreak.php
+#: inkmeter.php
 #: src/views/screen_option.php:11
-msgid "Inkstreak"
-msgstr "Inkstreak"
+msgid "Inkmeter"
+msgstr "Inkmeter"
 
 #: src/views/screen_option.php:14
 msgid "Writing streak panel"
-msgstr "Панель серии публикаций"
+msgstr "Panneau de série d’écriture"

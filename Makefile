@@ -1,10 +1,10 @@
-PLUGIN    := inkstreak
+PLUGIN    := inkmeter
 BUILD_DIR := build/$(PLUGIN)
 ZIP       := $(PLUGIN).zip
 WP        ?= wp
 
 POT_ARGS := --slug=$(PLUGIN) --domain=$(PLUGIN) --include=$(PLUGIN).php,src --exclude=build,vendor,node_modules,tests \
-	--headers='{"Report-Msgid-Bugs-To":"https://github.com/merkushin/inkstreak/issues"}'
+	--headers='{"Report-Msgid-Bugs-To":"https://github.com/merkushin/inkmeter/issues"}'
 
 # Files and directories that ship in the plugin zip.
 DIST_FILES := $(PLUGIN).php uninstall.php readme.txt src LICENSE

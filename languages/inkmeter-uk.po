@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Inkstreak 1.0.0\n"
-"Report-Msgid-Bugs-To: https://github.com/merkushin/inkstreak/issues\n"
+"Project-Id-Version: Inkmeter 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/merkushin/inkmeter/issues\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -11,10 +11,10 @@ msgstr ""
 "PO-Revision-Date: 2026-10-08 00:00+0000\n"
 "Language: uk\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Domain: inkstreak\n"
+"X-Domain: inkmeter\n"
 
 #. Description of the plugin
-#: inkstreak.php
+#: inkmeter.php
 msgid "Shows your current writing streak above the Posts list."
 msgstr "Показує вашу поточну серію публікацій над списком записів."
 
@@ -92,20 +92,20 @@ msgid "%s%%"
 msgstr "%s%%"
 
 #. Plugin URI of the plugin
-#: inkstreak.php
-msgid "https://github.com/merkushin/inkstreak"
-msgstr "https://github.com/merkushin/inkstreak"
+#: inkmeter.php
+msgid "https://github.com/merkushin/inkmeter"
+msgstr "https://github.com/merkushin/inkmeter"
 
 #. Author of the plugin
-#: inkstreak.php
+#: inkmeter.php
 msgid "Dmitry Merkushin"
 msgstr "Дмитрий Меркушин"
 
 #. Plugin Name of the plugin
-#: inkstreak.php
+#: inkmeter.php
 #: src/views/screen_option.php:11
-msgid "Inkstreak"
-msgstr "Inkstreak"
+msgid "Inkmeter"
+msgstr "Inkmeter"
 
 #: src/views/screen_option.php:14
 msgid "Writing streak panel"

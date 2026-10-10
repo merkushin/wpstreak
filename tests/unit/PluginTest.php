@@ -1,6 +1,6 @@
 <?php declare( strict_types=1 );
 
-namespace MerkushinTest\Inkstreak;
+namespace MerkushinTest\Inkmeter;
 
 use Merkushin\Wpal\Service\Assets;
 use Merkushin\Wpal\Service\Dates;
@@ -11,15 +11,15 @@ use Merkushin\Wpal\Service\Plugins;
 use Merkushin\Wpal\Service\Screen;
 use Merkushin\Wpal\Service\UserSettings;
 use Merkushin\Wpal\ServiceFactory;
-use Merkushin\Inkstreak\Streak;
-use Merkushin\Inkstreak\Plugin;
+use Merkushin\Inkmeter\Streak;
+use Merkushin\Inkmeter\Plugin;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class PluginTest extends TestCase {
-	private const PLUGIN_FILE = '/plugins/inkstreak/inkstreak.php';
+	private const PLUGIN_FILE = '/plugins/inkmeter/inkmeter.php';
 
-	private const PLUGIN_URL = 'https://example.com/wp-content/plugins/inkstreak/';
+	private const PLUGIN_URL = 'https://example.com/wp-content/plugins/inkmeter/';
 
 	/**
 	 * @var Assets&MockObject
@@ -119,11 +119,11 @@ class PluginTest extends TestCase {
 		$this->assets
 			->expects( $this->once() )
 			->method( 'wp_enqueue_style' )
-			->with( 'inkstreak-admin', self::PLUGIN_URL . 'assets/dist/styles/admin.css', [], Plugin::VERSION );
+			->with( 'inkmeter-admin', self::PLUGIN_URL . 'assets/dist/styles/admin.css', [], Plugin::VERSION );
 		$this->assets
 			->expects( $this->once() )
 			->method( 'wp_enqueue_script' )
-			->with( 'inkstreak-admin', self::PLUGIN_URL . 'assets/dist/javascript/admin.js', [ 'utils' ], Plugin::VERSION, true );
+			->with( 'inkmeter-admin', self::PLUGIN_URL . 'assets/dist/javascript/admin.js', [ 'utils' ], Plugin::VERSION, true );
 
 		( new Plugin( self::PLUGIN_FILE, $this->streak ) )->enqueue_admin_assets();
 	}
@@ -221,21 +221,21 @@ class PluginTest extends TestCase {
 	public function testRenderStreakPanel_PanelVisible_RendersWithoutHiddenAttribute(): void {
 		$html = $this->render_panel();
 
-		$this->assertStringContainsString( 'id="inkstreak-panel"', $html );
+		$this->assertStringContainsString( 'id="inkmeter-panel"', $html );
 		$this->assertStringNotContainsString( ' hidden', $html );
 	}
 
 	public function testRenderStreakPanel_PanelHiddenInScreenOptions_RendersHidden(): void {
 		$this->use_panel_setting( 'off' );
 
-		$this->assertMatchesRegularExpression( '/<div id="inkstreak-panel"[^>]* hidden>/', $this->render_panel() );
+		$this->assertMatchesRegularExpression( '/<div id="inkmeter-panel"[^>]* hidden>/', $this->render_panel() );
 	}
 
 	public function testAddScreenOption_PostsScreen_AppendsCheckedToggle(): void {
 		$settings = ( new Plugin( self::PLUGIN_FILE, $this->streak ) )->add_screen_option( '<p>core</p>', (object) [ 'id' => 'edit-post' ] );
 
 		$this->assertStringStartsWith( '<p>core</p>', $settings );
-		$this->assertStringContainsString( 'id="inkstreak-panel-toggle"', $settings );
+		$this->assertStringContainsString( 'id="inkmeter-panel-toggle"', $settings );
 		$this->assertStringContainsString( "checked='checked'", $settings );
 		$this->assertStringContainsString( 'Writing streak panel', $settings );
 	}
@@ -245,7 +245,7 @@ class PluginTest extends TestCase {
 
 		$settings = ( new Plugin( self::PLUGIN_FILE, $this->streak ) )->add_screen_option( '', (object) [ 'id' => 'edit-post' ] );
 
-		$this->assertStringContainsString( 'id="inkstreak-panel-toggle"', $settings );
+		$this->assertStringContainsString( 'id="inkmeter-panel-toggle"', $settings );
 		$this->assertStringNotContainsString( 'checked', $settings );
 	}
 

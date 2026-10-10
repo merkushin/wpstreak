@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name:       Inkstreak
- * Plugin URI:        https://github.com/merkushin/inkstreak
+ * Plugin Name:       Inkmeter
+ * Plugin URI:        https://github.com/merkushin/inkmeter
  * Description:       Shows your current writing streak above the Posts list.
  * Version:           1.0.0
  * Requires at least: 6.2
@@ -9,12 +9,12 @@
  * Author:            Dmitry Merkushin
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       inkstreak
+ * Text Domain:       inkmeter
  *
- * @package Merkushin\Inkstreak
+ * @package Merkushin\Inkmeter
  */
 
-namespace Merkushin\Inkstreak;
+namespace Merkushin\Inkmeter;
 
 defined( 'ABSPATH' ) || exit;
 

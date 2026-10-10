@@ -1,8 +1,8 @@
 <?php declare( strict_types=1 );
 
-namespace MerkushinTest\Inkstreak;
+namespace MerkushinTest\Inkmeter;
 
-use Merkushin\Inkstreak\StreakCalculator;
+use Merkushin\Inkmeter\StreakCalculator;
 use PHPUnit\Framework\TestCase;
 
 class StreakCalculatorTest extends TestCase {

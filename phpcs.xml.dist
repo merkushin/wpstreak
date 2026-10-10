@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<ruleset name="Inkstreak">
-	<description>Coding standards for Inkstreak.</description>
+<ruleset name="Inkmeter">
+	<description>Coding standards for Inkmeter.</description>
 
-	<file>inkstreak.php</file>
+	<file>inkmeter.php</file>
 	<file>uninstall.php</file>
 	<file>src</file>
 	<file>tests</file>
@@ -22,7 +22,7 @@
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array">
-				<element value="inkstreak"/>
+				<element value="inkmeter"/>
 			</property>
 		</properties>
 	</rule>
@@ -30,8 +30,8 @@
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<property name="prefixes" type="array">
-				<element value="inkstreak"/>
-				<element value="Merkushin\Inkstreak"/>
+				<element value="inkmeter"/>
+				<element value="Merkushin\Inkmeter"/>
 			</property>
 		</properties>
 	</rule>

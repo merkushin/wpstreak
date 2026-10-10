@@ -17,74 +17,74 @@
 
 defined( 'ABSPATH' ) || exit;
 ?>
-<div id="inkstreak-panel" class="inkstreak-panel notice <?php echo esc_attr( $accent_class ); ?>"<?php echo $is_panel_visible ? '' : ' hidden'; ?>>
-	<div class="inkstreak-panel__lead">
-		<div class="inkstreak-panel__eyebrow"><?php esc_html_e( 'Writing momentum', 'inkstreak' ); ?></div>
-		<h2 class="inkstreak-panel__title"><?php esc_html_e( 'Protect the streak. Build the habit.', 'inkstreak' ); ?></h2>
-		<p class="inkstreak-panel__description">
+<div id="inkmeter-panel" class="inkmeter-panel notice <?php echo esc_attr( $accent_class ); ?>"<?php echo $is_panel_visible ? '' : ' hidden'; ?>>
+	<div class="inkmeter-panel__lead">
+		<div class="inkmeter-panel__eyebrow"><?php esc_html_e( 'Writing momentum', 'inkmeter' ); ?></div>
+		<h2 class="inkmeter-panel__title"><?php esc_html_e( 'Protect the streak. Build the habit.', 'inkmeter' ); ?></h2>
+		<p class="inkmeter-panel__description">
 			<?php
 			if ( 'start' === $status_key ) {
-				esc_html_e( 'Start your next streak', 'inkstreak' );
+				esc_html_e( 'Start your next streak', 'inkmeter' );
 			} elseif ( 'on_fire' === $status_key ) {
-				esc_html_e( 'You are on fire today', 'inkstreak' );
+				esc_html_e( 'You are on fire today', 'inkmeter' );
 			} else {
-				esc_html_e( 'You are still alive, publish today to keep it going', 'inkstreak' );
+				esc_html_e( 'You are still alive, publish today to keep it going', 'inkmeter' );
 			}
 			?>
 		</p>
-		<div class="inkstreak-panel__stats">
-			<div class="inkstreak-panel__stat">
-				<span class="inkstreak-panel__stat-label"><?php esc_html_e( 'Current run', 'inkstreak' ); ?></span>
-				<span class="inkstreak-panel__stat-value">
+		<div class="inkmeter-panel__stats">
+			<div class="inkmeter-panel__stat">
+				<span class="inkmeter-panel__stat-label"><?php esc_html_e( 'Current run', 'inkmeter' ); ?></span>
+				<span class="inkmeter-panel__stat-value">
 					<?php
 					/* translators: %s: Number of days. */
-					echo esc_html( sprintf( _n( '%s day', '%s days', $streak, 'inkstreak' ), $streak_label ) );
+					echo esc_html( sprintf( _n( '%s day', '%s days', $streak, 'inkmeter' ), $streak_label ) );
 					?>
 				</span>
 			</div>
-			<div class="inkstreak-panel__stat">
-				<span class="inkstreak-panel__stat-label"><?php esc_html_e( 'Last published', 'inkstreak' ); ?></span>
-				<span class="inkstreak-panel__stat-value"><?php echo esc_html( $last_post_label ?? __( 'No published posts yet', 'inkstreak' ) ); ?></span>
+			<div class="inkmeter-panel__stat">
+				<span class="inkmeter-panel__stat-label"><?php esc_html_e( 'Last published', 'inkmeter' ); ?></span>
+				<span class="inkmeter-panel__stat-value"><?php echo esc_html( $last_post_label ?? __( 'No published posts yet', 'inkmeter' ) ); ?></span>
 			</div>
-			<div class="inkstreak-panel__stat">
-				<span class="inkstreak-panel__stat-label"><?php esc_html_e( 'Next milestone', 'inkstreak' ); ?></span>
-				<span class="inkstreak-panel__stat-value">
+			<div class="inkmeter-panel__stat">
+				<span class="inkmeter-panel__stat-label"><?php esc_html_e( 'Next milestone', 'inkmeter' ); ?></span>
+				<span class="inkmeter-panel__stat-value">
 					<?php
 					/* translators: %s: Number of days. */
-					echo esc_html( sprintf( _n( '%s day', '%s days', $next_milestone, 'inkstreak' ), $next_milestone_label ) );
+					echo esc_html( sprintf( _n( '%s day', '%s days', $next_milestone, 'inkmeter' ), $next_milestone_label ) );
 					?>
 				</span>
 			</div>
 		</div>
 	</div>
-	<div class="inkstreak-panel__meta">
+	<div class="inkmeter-panel__meta">
 		<div>
-			<div class="inkstreak-panel__score">
-				<span class="inkstreak-panel__score-value"><?php echo esc_html( $streak_label ); ?></span>
-				<span class="inkstreak-panel__score-unit">
+			<div class="inkmeter-panel__score">
+				<span class="inkmeter-panel__score-value"><?php echo esc_html( $streak_label ); ?></span>
+				<span class="inkmeter-panel__score-unit">
 					<?php
 					/* translators: Unit shown after the large streak number, e.g. "12 days". */
-					echo esc_html( _nx( 'day', 'days', $streak, 'streak counter unit', 'inkstreak' ) );
+					echo esc_html( _nx( 'day', 'days', $streak, 'streak counter unit', 'inkmeter' ) );
 					?>
 				</span>
 			</div>
-			<div class="inkstreak-panel__status">
-				<span class="inkstreak-panel__status-dot"></span>
-				<span><?php echo esc_html( $is_active_today ? __( 'Published today', 'inkstreak' ) : __( 'Needs a post today', 'inkstreak' ) ); ?></span>
+			<div class="inkmeter-panel__status">
+				<span class="inkmeter-panel__status-dot"></span>
+				<span><?php echo esc_html( $is_active_today ? __( 'Published today', 'inkmeter' ) : __( 'Needs a post today', 'inkmeter' ) ); ?></span>
 			</div>
 		</div>
 		<div>
-			<div class="inkstreak-panel__progress-copy">
-				<span><?php esc_html_e( 'Milestone progress', 'inkstreak' ); ?></span>
+			<div class="inkmeter-panel__progress-copy">
+				<span><?php esc_html_e( 'Milestone progress', 'inkmeter' ); ?></span>
 				<span>
 					<?php
 					/* translators: %s: Progress towards the next milestone, a number from 0 to 100. */
-					echo esc_html( sprintf( __( '%s%%', 'inkstreak' ), $progress_label ) );
+					echo esc_html( sprintf( __( '%s%%', 'inkmeter' ), $progress_label ) );
 					?>
 				</span>
 			</div>
-			<div class="inkstreak-panel__progress-track">
-				<div class="inkstreak-panel__progress-bar" style="width:<?php echo esc_attr( (string) $progress ); ?>%;"></div>
+			<div class="inkmeter-panel__progress-track">
+				<div class="inkmeter-panel__progress-bar" style="width:<?php echo esc_attr( (string) $progress ); ?>%;"></div>
 			</div>
 		</div>
 	</div>

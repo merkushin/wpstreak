@@ -1,6 +1,6 @@
 <?php declare( strict_types=1 );
 
-namespace Merkushin\Inkstreak;
+namespace Merkushin\Inkmeter;
 
 defined( 'ABSPATH' ) || exit;
 

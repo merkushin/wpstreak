@@ -1,6 +1,6 @@
 <?php declare( strict_types=1 );
 
-namespace Merkushin\Inkstreak;
+namespace Merkushin\Inkmeter;
 
 use Merkushin\Wpal\Service\Assets;
 use Merkushin\Wpal\Service\Dates;
@@ -26,7 +26,7 @@ class Plugin {
 	 * Per-user setting for the panel's Screen Options checkbox: 'on' or 'off'.
 	 * Stored by WordPress' user settings; the admin script updates it with setUserSetting().
 	 */
-	public const PANEL_SETTING = 'inkstreak_panel';
+	public const PANEL_SETTING = 'inkmeter_panel';
 
 	/**
 	 * Main plugin file path.
@@ -109,9 +109,9 @@ class Plugin {
 
 		$url = $this->plugins->plugin_dir_url( $this->plugin_file );
 
-		$this->assets->wp_enqueue_style( 'inkstreak-admin', $url . 'assets/dist/styles/admin.css', [], self::VERSION );
+		$this->assets->wp_enqueue_style( 'inkmeter-admin', $url . 'assets/dist/styles/admin.css', [], self::VERSION );
 		// The script saves the Screen Options checkbox with setUserSetting() from WordPress' utils script.
-		$this->assets->wp_enqueue_script( 'inkstreak-admin', $url . 'assets/dist/javascript/admin.js', [ 'utils' ], self::VERSION, true );
+		$this->assets->wp_enqueue_script( 'inkmeter-admin', $url . 'assets/dist/javascript/admin.js', [ 'utils' ], self::VERSION, true );
 	}
 
 	public function render_streak_panel(): void {

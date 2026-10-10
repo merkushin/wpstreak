@@ -80,13 +80,13 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: inkstreak
-          path: build/inkstreak
+          name: inkmeter
+          path: build/inkmeter
           if-no-files-found: error
 
       # The checks WordPress.org runs on submissions, against the built plugin.
       - name: Plugin Check
         uses: WordPress/plugin-check-action@v1
         with:
-          build-dir: build/inkstreak
-          slug: inkstreak
+          build-dir: build/inkmeter
+          slug: inkmeter

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Inkstreak 1.0.0\n"
-"Report-Msgid-Bugs-To: https://github.com/merkushin/inkstreak/issues\n"
+"Project-Id-Version: Inkmeter 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/merkushin/inkmeter/issues\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -9,38 +9,38 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-10-08T18:32:07+00:00\n"
 "PO-Revision-Date: 2026-10-08 00:00+0000\n"
-"Language: nl_NL\n"
+"Language: es_ES\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Domain: inkstreak\n"
+"X-Domain: inkmeter\n"
 
 #. Description of the plugin
-#: inkstreak.php
+#: inkmeter.php
 msgid "Shows your current writing streak above the Posts list."
-msgstr "Toont je huidige schrijfreeks boven de lijst met berichten."
+msgstr "Muestra tu racha de escritura actual encima de la lista de entradas."
 
 #: src/views/streak_panel.php:27
 msgid "Start your next streak"
-msgstr "Begin aan je volgende reeks"
+msgstr "Empieza tu próxima racha"
 
 #: src/views/streak_panel.php:29
 msgid "You are on fire today"
-msgstr "Je bent vandaag lekker bezig"
+msgstr "Hoy estás que ardes"
 
 #: src/views/streak_panel.php:31
 msgid "You are still alive, publish today to keep it going"
-msgstr "Je reeks leeft nog, publiceer vandaag om hem voort te zetten"
+msgstr "Sigues en racha: publica hoy para mantenerla"
 
 #: src/views/streak_panel.php:22
 msgid "Writing momentum"
-msgstr "Schrijfmomentum"
+msgstr "Impulso de escritura"
 
 #: src/views/streak_panel.php:23
 msgid "Protect the streak. Build the habit."
-msgstr "Bescherm de reeks. Bouw de gewoonte op."
+msgstr "Protege la racha. Crea el hábito."
 
 #: src/views/streak_panel.php:37
 msgid "Current run"
-msgstr "Huidige reeks"
+msgstr "Racha actual"
 
 #. translators: %s: Number of days.
 #: src/views/streak_panel.php:41
@@ -48,63 +48,63 @@ msgstr "Huidige reeks"
 #, php-format
 msgid "%s day"
 msgid_plural "%s days"
-msgstr[0] "%s dag"
-msgstr[1] "%s dagen"
+msgstr[0] "%s día"
+msgstr[1] "%s días"
 
 #: src/views/streak_panel.php:46
 msgid "Last published"
-msgstr "Laatst gepubliceerd"
+msgstr "Última publicación"
 
 #: src/views/streak_panel.php:47
 msgid "No published posts yet"
-msgstr "Nog geen gepubliceerde berichten"
+msgstr "Aún no hay entradas publicadas"
 
 #: src/views/streak_panel.php:50
 msgid "Next milestone"
-msgstr "Volgende mijlpaal"
+msgstr "Próximo hito"
 
 #. translators: Unit shown after the large streak number, e.g. "12 days".
 #: src/views/streak_panel.php:67
 msgctxt "streak counter unit"
 msgid "day"
 msgid_plural "days"
-msgstr[0] "dag"
-msgstr[1] "dagen"
+msgstr[0] "día"
+msgstr[1] "días"
 
 #: src/views/streak_panel.php:73
 msgid "Published today"
-msgstr "Vandaag gepubliceerd"
+msgstr "Publicado hoy"
 
 #: src/views/streak_panel.php:73
 msgid "Needs a post today"
-msgstr "Vandaag nog een bericht nodig"
+msgstr "Falta publicar hoy"
 
 #: src/views/streak_panel.php:78
 msgid "Milestone progress"
-msgstr "Voortgang naar mijlpaal"
+msgstr "Progreso hacia el hito"
 
 #. translators: %s: Progress towards the next milestone, a number from 0 to 100.
 #: src/views/streak_panel.php:82
 #, php-format
 msgid "%s%%"
-msgstr "%s%%"
+msgstr "%s %%"
 
 #. Plugin URI of the plugin
-#: inkstreak.php
-msgid "https://github.com/merkushin/inkstreak"
-msgstr "https://github.com/merkushin/inkstreak"
+#: inkmeter.php
+msgid "https://github.com/merkushin/inkmeter"
+msgstr "https://github.com/merkushin/inkmeter"
 
 #. Author of the plugin
-#: inkstreak.php
+#: inkmeter.php
 msgid "Dmitry Merkushin"
 msgstr "Dmitry Merkushin"
 
 #. Plugin Name of the plugin
-#: inkstreak.php
+#: inkmeter.php
 #: src/views/screen_option.php:11
-msgid "Inkstreak"
-msgstr "Inkstreak"
+msgid "Inkmeter"
+msgstr "Inkmeter"
 
 #: src/views/screen_option.php:14
 msgid "Writing streak panel"
-msgstr "Schrijfreekspaneel"
+msgstr "Panel de racha de escritura"
