@@ -13,6 +13,7 @@
  * @var int         $progress             Milestone progress, 0-100.
  * @var string      $progress_label       $progress formatted for the locale.
  * @var bool        $is_panel_visible     False when the user hid the panel in Screen Options.
+ * @var string|null $reminders_url        Settings page for Pro reminders; null when they're set up or the user can't manage them.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -32,6 +33,9 @@ defined( 'ABSPATH' ) || exit;
 			}
 			?>
 		</p>
+		<?php if ( null !== $reminders_url ) : ?>
+			<p class="inkmeter-panel__reminders"><a href="<?php echo esc_url( $reminders_url ); ?>"><?php esc_html_e( 'Get an email before your streak breaks', 'inkmeter' ); ?></a></p>
+		<?php endif; ?>
 		<div class="inkmeter-panel__stats">
 			<div class="inkmeter-panel__stat">
 				<span class="inkmeter-panel__stat-label"><?php esc_html_e( 'Current run', 'inkmeter' ); ?></span>

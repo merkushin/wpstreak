@@ -3,8 +3,9 @@
  * Smoke test for a release build: php tests/smoke/dist.php <build-dir>
  *
  * Loads the built plugin (scoped, with wpal pruned) using stand-ins for the WordPress
- * functions it calls, then runs every path: init, asset loading, rendering the panel and
- * clearing the cache. A wpal class missing from the build fails here with a fatal error.
+ * functions it calls, then runs every path: init, asset loading, rendering the panel,
+ * clearing the cache, the Inkmeter Pro settings page and syncing published days.
+ * A wpal class missing from the build fails here with a fatal error.
  *
  * @package Merkushin\Inkmeter
  */
@@ -23,15 +24,174 @@ define( 'ABSPATH', __DIR__ . '/' );
 $GLOBALS['smoke_actions']    = [];
 $GLOBALS['smoke_enqueued']   = [];
 $GLOBALS['smoke_transients'] = [];
+$GLOBALS['smoke_options']    = [ 'date_format' => 'F j, Y' ];
+$GLOBALS['smoke_requests']   = [];
+$GLOBALS['smoke_cron']       = [];
 
 function add_action( string $hook, callable $callback ): bool {
-	$GLOBALS['smoke_actions'][ $hook ] = $callback;
+	$GLOBALS['smoke_actions'][ $hook ][] = $callback;
 	return true;
 }
 
 function add_filter( string $hook, callable $callback, int $priority = 10, int $accepted_args = 1 ): bool {
-	$GLOBALS['smoke_actions'][ $hook ] = $callback;
+	return add_action( $hook, $callback );
+}
+
+/**
+ * Runs every callback on an action. Filters have one callback here, whose result is returned.
+ *
+ * @param mixed ...$args
+ * @return mixed
+ */
+function smoke_do( string $hook, ...$args ) {
+	$result = null;
+	foreach ( $GLOBALS['smoke_actions'][ $hook ] ?? [] as $callback ) {
+		$result = $callback( ...$args );
+	}
+	return $result;
+}
+
+function register_deactivation_hook( string $file, callable $callback ): void {
+	$GLOBALS['smoke_actions']['deactivate'][] = $callback;
+}
+
+function add_options_page( $page_title, $menu_title, $capability, $menu_slug, $callback = '' ): string {
+	add_action( 'smoke_render_settings', $callback );
+	return 'settings_page_' . $menu_slug;
+}
+
+function current_user_can( $capability ): bool {
 	return true;
+}
+
+function get_current_user_id(): int {
+	return 1;
+}
+
+function admin_url( string $path = '' ): string {
+	return 'https://example.com/wp-admin/' . $path;
+}
+
+function home_url( string $path = '' ): string {
+	return 'https://example.com' . $path;
+}
+
+function add_query_arg( ...$args ): string {
+	$url = (string) $args[1];
+	foreach ( (array) $args[0] as $key => $value ) {
+		$url .= ( false === strpos( $url, '?' ) ? '?' : '&' ) . $key . '=' . $value;
+	}
+	return $url;
+}
+
+function wp_timezone_string(): string {
+	return 'America/Mexico_City';
+}
+
+function human_time_diff( $from, $to = 0 ): string {
+	return '1 min';
+}
+
+function sanitize_text_field( $text ): string {
+	return trim( (string) $text );
+}
+
+function wp_unslash( $value ) {
+	return $value;
+}
+
+function wp_json_encode( $value, $flags = 0, $depth = 512 ) {
+	return json_encode( $value, $flags, $depth );
+}
+
+function is_wp_error( $thing ): bool {
+	return false;
+}
+
+/**
+ * Answers like the Inkmeter API, recording each request.
+ */
+function wp_remote_request( $url, $args = [] ): array {
+	$GLOBALS['smoke_requests'][] = $args['method'] . ' ' . $url;
+	$path                        = (string) wp_parse_url( $url, PHP_URL_PATH );
+	$bodies                      = [
+		'/v1/days'         => [ 'current' => 3 ],
+		'/v1/entitlements' => [
+			'plan'     => 'pro',
+			'features' => [ 'reminders' ],
+		],
+		'/v1/settings'     => [
+			'reminder_enabled' => true,
+			'reminder_hour'    => 19,
+		],
+		'/v1/streak'       => [ 'current' => 3 ],
+	];
+	return [
+		'code' => 200,
+		'body' => json_encode( $bodies[ $path ] ?? [] ),
+	];
+}
+
+function wp_parse_url( $url, $component = -1 ) {
+	return parse_url( $url, $component ); // phpcs:ignore WordPress.WP.AlternativeFunctions.parse_url_parse_url -- This is the stand-in.
+}
+
+function wp_remote_retrieve_response_code( $response ) {
+	return $response['code'];
+}
+
+function wp_remote_retrieve_body( $response ) {
+	return $response['body'];
+}
+
+function wp_next_scheduled( $hook, $args = [] ) {
+	return $GLOBALS['smoke_cron'][ $hook ] ?? false;
+}
+
+function wp_schedule_event( $timestamp, $recurrence, $hook, $args = [], $wp_error = false ): bool {
+	$GLOBALS['smoke_cron'][ $hook ] = $timestamp;
+	return true;
+}
+
+function wp_schedule_single_event( $timestamp, $hook, $args = [], $wp_error = false ): bool {
+	$GLOBALS['smoke_cron'][ $hook ] = $timestamp;
+	return true;
+}
+
+function wp_clear_scheduled_hook( $hook, $args = [], $wp_error = false ): int {
+	unset( $GLOBALS['smoke_cron'][ $hook ] );
+	return 1;
+}
+
+function update_option( $option, $value, $autoload = null ): bool {
+	$GLOBALS['smoke_options'][ $option ] = $value;
+	return true;
+}
+
+function delete_option( $option ): bool {
+	unset( $GLOBALS['smoke_options'][ $option ] );
+	return true;
+}
+
+function esc_url( string $url ): string {
+	return htmlspecialchars( $url, ENT_QUOTES );
+}
+
+function esc_html__( string $text, string $domain = 'default' ): string {
+	return esc_html( $text );
+}
+
+function selected( $selected, $current = true, bool $display = true ): string {
+	$result = (string) $selected === (string) $current ? " selected='selected'" : '';
+	if ( $display ) {
+		echo $result;
+	}
+	return $result;
+}
+
+function wp_nonce_field( $action = -1 ): string {
+	echo '<input type="hidden" name="_wpnonce" value="nonce" />';
+	return '';
 }
 
 function get_user_setting( $name, $default_value = false ) {
@@ -85,7 +245,7 @@ function get_post_type( $post = null ) {
 }
 
 function get_option( $option, $default_value = false ) {
-	return 'date_format' === $option ? 'F j, Y' : $default_value;
+	return $GLOBALS['smoke_options'][ $option ] ?? $default_value;
 }
 
 function wp_date( $format, $timestamp = null, $timezone = null ) {
@@ -142,39 +302,82 @@ function smoke_fail( string $message ): void {
 
 require $main_file;
 
-if ( ! isset( $GLOBALS['smoke_actions']['init'] ) ) {
-	smoke_fail( 'the plugin did not hook into init' );
+if ( ! isset( $GLOBALS['smoke_actions']['init'], $GLOBALS['smoke_actions']['deactivate'] ) ) {
+	smoke_fail( 'the plugin did not hook into init and deactivation' );
 }
-call_user_func( $GLOBALS['smoke_actions']['init'] );
+smoke_do( 'init' );
 
-foreach ( [ 'admin_enqueue_scripts', 'all_admin_notices', 'screen_settings', 'save_post', 'delete_post' ] as $hook ) {
+foreach ( [ 'admin_enqueue_scripts', 'all_admin_notices', 'screen_settings', 'save_post', 'delete_post', 'admin_menu', 'inkmeter_sync_days', 'inkmeter_sync_days_daily', 'admin_post_inkmeter_connect' ] as $hook ) {
 	if ( ! isset( $GLOBALS['smoke_actions'][ $hook ] ) ) {
 		smoke_fail( "no callback for {$hook}" );
 	}
 }
 
-call_user_func( $GLOBALS['smoke_actions']['admin_enqueue_scripts'] );
+smoke_do( 'admin_enqueue_scripts' );
 if ( 2 !== count( $GLOBALS['smoke_enqueued'] ) ) {
 	smoke_fail( 'expected 2 enqueued assets, got ' . count( $GLOBALS['smoke_enqueued'] ) );
 }
 
 ob_start();
-call_user_func( $GLOBALS['smoke_actions']['all_admin_notices'] );
+smoke_do( 'all_admin_notices' );
 $text = trim( (string) preg_replace( '/\s+/', ' ', strip_tags( (string) ob_get_clean() ) ) );
-foreach ( [ 'Current run 3 days', 'Last published March 2, 2026', 'Next milestone 7 days', 'Published today' ] as $expected ) {
+foreach ( [ 'Current run 3 days', 'Last published March 2, 2026', 'Next milestone 7 days', 'Published today', 'Get an email before your streak breaks' ] as $expected ) {
 	if ( false === strpos( $text, $expected ) ) {
 		smoke_fail( "panel is missing \"{$expected}\": {$text}" );
 	}
 }
 
-$screen_settings = (string) call_user_func( $GLOBALS['smoke_actions']['screen_settings'], '', get_current_screen() );
+$screen_settings = (string) smoke_do( 'screen_settings', '', get_current_screen() );
 if ( false === strpos( $screen_settings, 'id="inkmeter-panel-toggle"' ) ) {
 	smoke_fail( 'the Screen Options toggle is missing' );
 }
 
-call_user_func( $GLOBALS['smoke_actions']['save_post'], 1 );
+smoke_do( 'save_post', 1 );
 if ( [] !== $GLOBALS['smoke_transients'] ) {
 	smoke_fail( 'save_post did not clear the cache' );
+}
+if ( [] !== $GLOBALS['smoke_cron'] || [] !== $GLOBALS['smoke_requests'] ) {
+	smoke_fail( 'a site that is not connected scheduled a sync or called the API' );
+}
+
+// Inkmeter Pro, not connected: the settings page offers to connect.
+smoke_do( 'admin_menu' );
+ob_start();
+smoke_do( 'smoke_render_settings' );
+$settings_page = (string) ob_get_clean();
+if ( false === strpos( $settings_page, 'value="inkmeter_connect"' ) || [] !== $GLOBALS['smoke_requests'] ) {
+	smoke_fail( 'the settings page should offer to connect without calling the API' );
+}
+
+// Connected: a post change schedules a sync, which sends the published days.
+update_option(
+	'inkmeter_connection',
+	[
+		'token' => 'sfs_smoke',
+		'email' => 'writer@example.com',
+	]
+);
+smoke_do( 'save_post', 1 );
+if ( ! isset( $GLOBALS['smoke_cron']['inkmeter_sync_days'] ) ) {
+	smoke_fail( 'save_post did not schedule a sync' );
+}
+smoke_do( 'inkmeter_sync_days' );
+if ( [ 'PUT https://api.streakfire.org/v1/days' ] !== $GLOBALS['smoke_requests'] || ! isset( $GLOBALS['smoke_options']['inkmeter_connection']['synced_at'] ) ) {
+	smoke_fail( 'the sync did not send the days: ' . implode( ', ', $GLOBALS['smoke_requests'] ) );
+}
+
+ob_start();
+smoke_do( 'smoke_render_settings' );
+$settings_page = trim( (string) preg_replace( '/\s+/', ' ', strip_tags( (string) ob_get_clean() ) ) );
+foreach ( [ 'writer@example.com', 'Pro', 'Streak in your account 3 days', 'Last synced 1 min ago', 'Manage subscription' ] as $expected ) {
+	if ( false === strpos( $settings_page, $expected ) ) {
+		smoke_fail( "settings page is missing \"{$expected}\": {$settings_page}" );
+	}
+}
+
+smoke_do( 'deactivate' );
+if ( [] !== $GLOBALS['smoke_cron'] ) {
+	smoke_fail( 'deactivating left syncs scheduled' );
 }
 
 // Only the prefixed copy of wpal may be loaded, never the original namespace.

@@ -2,21 +2,24 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Inkmeter 1.0.0\n"
+"Project-Id-Version: Inkmeter 1.1.0\n"
 "Report-Msgid-Bugs-To: https://github.com/merkushin/inkmeter/issues\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-10T09:45:07+00:00\n"
+"POT-Creation-Date: 2026-10-10T09:57:24+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: inkmeter\n"
 
 #. Plugin Name of the plugin
 #: inkmeter.php
+#: src/Pro/SettingsPage.php:167
+#: src/Pro/SettingsPage.php:168
 #: src/views/screen_option.php:11
+#: src/views/settings_page.php:26
 msgid "Inkmeter"
 msgstr ""
 
@@ -35,77 +38,238 @@ msgstr ""
 msgid "Dmitry Merkushin"
 msgstr ""
 
+#: src/Pro/SettingsPage.php:359
+msgid "Your site is connected to Inkmeter."
+msgstr ""
+
+#: src/Pro/SettingsPage.php:360
+msgid "Your site is disconnected from Inkmeter. Your streak history is kept in your account."
+msgstr ""
+
+#: src/Pro/SettingsPage.php:361
+msgid "Reminder settings saved."
+msgstr ""
+
+#: src/Pro/SettingsPage.php:362
+msgid "Connecting didn't work. The link may have expired; please try again."
+msgstr ""
+
+#: src/Pro/SettingsPage.php:363
+msgid "This site is no longer connected to Inkmeter. Connect it again to keep using Pro."
+msgstr ""
+
+#: src/Pro/SettingsPage.php:364
+msgid "Inkmeter couldn't be reached. Please try again in a minute."
+msgstr ""
+
+#: src/Pro/SettingsPage.php:365
+msgid "Billing isn't available right now. Please try again later."
+msgstr ""
+
+#: src/Pro/SettingsPage.php:366
+msgid "Something went wrong. Please try again."
+msgstr ""
+
+#: src/Pro/SettingsPage.php:432
+msgid "Sorry, you are not allowed to manage Inkmeter."
+msgstr ""
+
 #: src/views/screen_option.php:14
 msgid "Writing streak panel"
 msgstr ""
 
-#: src/views/streak_panel.php:22
-msgid "Writing momentum"
+#: src/views/settings_page.php:33
+msgid "Inkmeter Pro"
 msgstr ""
 
-#: src/views/streak_panel.php:23
-msgid "Protect the streak. Build the habit."
+#: src/views/settings_page.php:34
+msgid "Never lose a streak by accident. With Inkmeter Pro:"
 msgstr ""
 
-#: src/views/streak_panel.php:27
-msgid "Start your next streak"
+#: src/views/settings_page.php:36
+msgid "You get an email at the hour you choose when you haven't published yet that day."
 msgstr ""
 
-#: src/views/streak_panel.php:29
-msgid "You are on fire today"
+#: src/views/settings_page.php:37
+msgid "Your streak history is kept in your Inkmeter account, so it survives reinstalls and site moves."
 msgstr ""
 
-#: src/views/streak_panel.php:31
-msgid "You are still alive, publish today to keep it going"
+#. translators: %s: Link to Inkmeter's privacy policy.
+#: src/views/settings_page.php:43
+#, php-format
+msgid "Connecting sends Inkmeter this site's address, its timezone and the dates you published on, never your posts. Nothing is sent until you connect. %s"
 msgstr ""
 
-#: src/views/streak_panel.php:37
-msgid "Current run"
+#: src/views/settings_page.php:44
+msgid "Privacy policy"
+msgstr ""
+
+#: src/views/settings_page.php:51
+msgid "Connect to Inkmeter"
+msgstr ""
+
+#: src/views/settings_page.php:55
+msgid "Inkmeter couldn't be reached, so some details are missing. Please reload the page in a minute."
+msgstr ""
+
+#: src/views/settings_page.php:60
+msgid "Account"
+msgstr ""
+
+#: src/views/settings_page.php:64
+msgid "Plan"
+msgstr ""
+
+#: src/views/settings_page.php:65
+msgid "Pro"
+msgstr ""
+
+#: src/views/settings_page.php:65
+msgid "Free"
+msgstr ""
+
+#: src/views/settings_page.php:69
+msgid "Streak in your account"
 msgstr ""
 
 #. translators: %s: Number of days.
-#: src/views/streak_panel.php:41
-#: src/views/streak_panel.php:54
+#: src/views/settings_page.php:73
+#: src/views/streak_panel.php:45
+#: src/views/streak_panel.php:58
 #, php-format
 msgid "%s day"
 msgid_plural "%s days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/views/streak_panel.php:46
-msgid "Last published"
+#: src/views/settings_page.php:79
+msgid "Last synced"
 msgstr ""
 
-#: src/views/streak_panel.php:47
-msgid "No published posts yet"
+#: src/views/settings_page.php:83
+msgid "Not yet"
+msgstr ""
+
+#. translators: %s: Time since the last sync, e.g. "5 mins".
+#: src/views/settings_page.php:86
+#, php-format
+msgid "%s ago"
+msgstr ""
+
+#: src/views/settings_page.php:94
+msgid "Reminders"
+msgstr ""
+
+#: src/views/settings_page.php:100
+msgid "Email reminder"
+msgstr ""
+
+#. translators: %s: Account email address.
+#: src/views/settings_page.php:106
+#, php-format
+msgid "Email %s when I haven't published yet"
+msgstr ""
+
+#: src/views/settings_page.php:112
+msgid "Send it at"
+msgstr ""
+
+#. translators: %s: The site's timezone, e.g. "America/Mexico_City".
+#: src/views/settings_page.php:120
+#, php-format
+msgid "In your site's timezone (%s)."
+msgstr ""
+
+#: src/views/settings_page.php:126
+msgid "Save reminders"
+msgstr ""
+
+#: src/views/settings_page.php:132
+msgid "Manage subscription"
+msgstr ""
+
+#: src/views/settings_page.php:135
+#: src/views/settings_page.php:140
+msgid "Upgrade to Pro"
+msgstr ""
+
+#: src/views/settings_page.php:136
+msgid "Get an email at the hour you choose when you haven't published yet that day."
+msgstr ""
+
+#: src/views/settings_page.php:144
+#: src/views/settings_page.php:154
+msgid "Disconnect"
+msgstr ""
+
+#. translators: %s: This site's address.
+#: src/views/settings_page.php:148
+#, php-format
+msgid "Stops sending %s's publishing days to Inkmeter. Your streak history stays in your account, and connecting again picks it up."
+msgstr ""
+
+#: src/views/streak_panel.php:23
+msgid "Writing momentum"
+msgstr ""
+
+#: src/views/streak_panel.php:24
+msgid "Protect the streak. Build the habit."
+msgstr ""
+
+#: src/views/streak_panel.php:28
+msgid "Start your next streak"
+msgstr ""
+
+#: src/views/streak_panel.php:30
+msgid "You are on fire today"
+msgstr ""
+
+#: src/views/streak_panel.php:32
+msgid "You are still alive, publish today to keep it going"
+msgstr ""
+
+#: src/views/streak_panel.php:37
+msgid "Get an email before your streak breaks"
+msgstr ""
+
+#: src/views/streak_panel.php:41
+msgid "Current run"
 msgstr ""
 
 #: src/views/streak_panel.php:50
+msgid "Last published"
+msgstr ""
+
+#: src/views/streak_panel.php:51
+msgid "No published posts yet"
+msgstr ""
+
+#: src/views/streak_panel.php:54
 msgid "Next milestone"
 msgstr ""
 
 #. translators: Unit shown after the large streak number, e.g. "12 days".
-#: src/views/streak_panel.php:67
+#: src/views/streak_panel.php:71
 msgctxt "streak counter unit"
 msgid "day"
 msgid_plural "days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/views/streak_panel.php:73
+#: src/views/streak_panel.php:77
 msgid "Published today"
 msgstr ""
 
-#: src/views/streak_panel.php:73
+#: src/views/streak_panel.php:77
 msgid "Needs a post today"
 msgstr ""
 
-#: src/views/streak_panel.php:78
+#: src/views/streak_panel.php:82
 msgid "Milestone progress"
 msgstr ""
 
 #. translators: %s: Progress towards the next milestone, a number from 0 to 100.
-#: src/views/streak_panel.php:82
+#: src/views/streak_panel.php:86
 #, php-format
 msgid "%s%%"
 msgstr ""

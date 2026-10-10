@@ -20,6 +20,17 @@ CI (`.github/workflows/ci.yml`) runs the linter, checks that `languages/inkmeter
 
 In a development checkout the plugin loads `vendor/autoload.php`, so it can be symlinked into a local WordPress install as-is.
 
+### Inkmeter Pro
+
+The optional Pro features (Settings → Inkmeter) talk to the service at streakfire.org, whose server lives in [creogen/streakfire](https://github.com/creogen/streakfire). To develop against a local copy of it, add to `wp-config.php`:
+
+```php
+define( 'INKMETER_API_URL', 'http://localhost:8080' );  // Called by WordPress itself (from Docker: http://host.docker.internal:8080).
+define( 'INKMETER_SITE_URL', 'http://localhost:8080' ); // Opened in the browser for connecting.
+```
+
+Without an Emailit key, the local server prints the connect email, with its confirmation link, to its log.
+
 ### Translations
 
 All user-facing text lives in `src/views/` and uses the `inkmeter` text domain. The plugin ships no translation files: WordPress.org asks plugins to translate through [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/inkmeter/), and WordPress downloads and loads those language packs automatically.

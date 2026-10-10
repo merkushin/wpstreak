@@ -4,7 +4,7 @@ Tags: writing, streak, habit, productivity, motivation
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,13 +23,32 @@ A streak stays alive until the end of the day after your last post, so you alway
 
 There is nothing to configure. The panel only appears on the Posts list screen, each user can hide it under **Screen Options**, and the plugin loads nothing on the front end of your site.
 
+= Inkmeter Pro (optional) =
+
+Connect your site to Inkmeter Pro under **Settings → Inkmeter** to get an email at the hour you choose when you haven't published yet that day, before your streak breaks. Your streak history is kept in your account, so it survives reinstalls and site moves, and several sites can share one streak.
+
+Inkmeter Pro is a paid subscription. Everything above works without it, and nothing is sent anywhere unless you connect.
+
 = Translations =
 
 Inkmeter is ready to be translated into any language. You can help translate it on [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/inkmeter/).
 
 = Privacy =
 
-Inkmeter does not collect, store or send any personal data. It reads the dates of your published posts and caches the result in a transient, which is removed when you delete the plugin. If you hide the panel, that choice is saved in WordPress' own per-user screen settings.
+Without Inkmeter Pro, Inkmeter does not collect, store or send any personal data. It reads the dates of your published posts and caches the result in a transient, which is removed when you delete the plugin. If you hide the panel, that choice is saved in WordPress' own per-user screen settings.
+
+If you connect to Inkmeter Pro, the data described under External services is sent to the Inkmeter Pro service. Disconnecting stops it, and deleting the plugin removes the connection from your site.
+
+= External services =
+
+Inkmeter Pro, which is optional, uses a web service at streakfire.org, run by Dmitrii Merkushin. Nothing is sent to it unless an administrator connects the site under **Settings → Inkmeter**.
+
+* **When connecting:** your browser opens streakfire.org, where you enter your email address; the plugin then sends this site's address and timezone to api.streakfire.org.
+* **After connecting:** a minute after posts change, and once a day, the plugin sends api.streakfire.org the dates on which this site published at least one post, and its timezone. It never sends your posts' titles, content or any other details about them.
+* **When you open Settings → Inkmeter, change reminders, upgrade or manage your subscription:** the plugin asks api.streakfire.org for your plan, reminder settings, streak, and checkout or billing links. Payments happen on Lemon Squeezy, the service's reseller.
+* **When you disconnect or delete the plugin:** the plugin tells api.streakfire.org to revoke this site's access.
+
+The service's [Terms of service](https://streakfire.org/terms) and [Privacy policy](https://streakfire.org/privacy).
 
 = Source code =
 
@@ -63,6 +82,10 @@ No. The streak stays alive until the end of today. Publish a post today to exten
 
 Anyone who can open the Posts list in the dashboard.
 
+= What does Inkmeter Pro send? =
+
+Only this site's address, its timezone and the dates you published on, so it can tell whether you've published today. Never your posts or anything about them. See **External services** above.
+
 = Can I hide the panel? =
 
 Yes. On the Posts screen, open **Screen Options** at the top right and uncheck **Writing streak panel**. The choice is saved for your user only; check the box again to bring the panel back.
@@ -73,10 +96,16 @@ Yes. On the Posts screen, open **Screen Options** at the top right and uncheck *
 
 == Changelog ==
 
+= 1.1.0 =
+* New: optional Inkmeter Pro under Settings → Inkmeter: an email reminder before your streak breaks, and streak history kept in your account.
+
 = 1.0.0 =
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+Adds optional Inkmeter Pro reminders. Nothing changes unless you connect.
 
 = 1.0.0 =
 Initial release.
